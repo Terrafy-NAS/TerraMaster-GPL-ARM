@@ -1,0 +1,35 @@
+<script type="text/javascript">//<![CDATA[
+	XHR.poll(5, '<%=luci.dispatcher.build_url("admin/network/bluetooth_status")%>', null,
+		function(x, st)
+		{
+			var tb = document.getElementById('bluetooth_status');
+			if (st && tb)
+			{
+				if (st.running)
+				{
+					tb.innerHTML = String.format(
+						'<%:Bluetooth is running..%>'
+					);
+				}
+				else
+				{
+					tb.innerHTML = '<em><%:Bluetooth is not running..%></em>';
+				}
+			}
+		}
+	);
+//]]></script>
+
+<fieldset class="cbi-section">
+	<legend><%:Bluetooth Status%></legend>
+	<p id="bluetooth_status">
+		<em><%:Collecting data...%></em>
+	</p>
+</fieldset>
+
+<fieldset class="cbi-section">
+        <legend><%:Bluetooth Advertisement%></legend>
+        <input type="button" class="cbi-button cbi-button-apply" onclick="location.href='<%=luci.dispatcher.build_url("admin/network/bluetooth_advertise")%>'" value="<%:Enable Advertising%>" />
+        <input type="button" class="cbi-button cbi-button-reset" onclick="location.href='<%=luci.dispatcher.build_url("admin/network/bluetooth_no_advertise")%>'" value="<%:Disable Advertising%>" />
+</fieldset>
+

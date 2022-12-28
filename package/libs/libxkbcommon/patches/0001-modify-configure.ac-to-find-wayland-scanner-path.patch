@@ -1,0 +1,32 @@
+From bb020ff8d8a88055fc5bf048abb117ae39e9c3b2 Mon Sep 17 00:00:00 2001
+From: Wenlin Hung <wenlin.hung@realtek.com>
+Date: Wed, 2 Aug 2017 10:58:04 +0800
+Subject: [PATCH] modify configure.ac to find wayland-scanner path
+
+---
+ configure.ac | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 725915b..49aca53 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -194,7 +194,14 @@ AS_IF([test "x$enable_wayland" = xyes], [
+         [AC_MSG_ERROR([Wayland utilities require libwayland-client >= 1.2 which was not found. \
+ You can disable Wayland support with --disable-wayland.])])
+     AC_PATH_PROG([wayland_scanner], [wayland-scanner])
+-    wayland_scanner=`$PKG_CONFIG --variable=wayland_scanner wayland-scanner`
++    if test x$wayland_scanner = x; then
++            if test "x$cross_compiling" != "xyes"; then
++                    PKG_CHECK_MODULES(WAYLAND_SCANNER, [wayland-scanner])
++                    wayland_scanner=`$PKG_CONFIG --variable=wayland_scanner wayland-scanner`
++            else
++                    AC_MSG_WARN([You are cross compiling without wayland-scanner in your path.  make check will fail.])
++            fi
++    fi
+     ac_wayland_protocols_pkgdatadir=`$PKG_CONFIG --variable=pkgdatadir wayland-protocols`
+     AC_SUBST(WAYLAND_PROTOCOLS_DATADIR, $ac_wayland_protocols_pkgdatadir)
+ ], [enable_wayland=no])
+-- 
+2.7.4
+

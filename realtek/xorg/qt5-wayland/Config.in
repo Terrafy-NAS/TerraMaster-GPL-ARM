@@ -1,0 +1,15 @@
+choice
+	prompt "qt5 plugin platforms"
+	default QT5_PLATFORM_QTWAYLAND
+
+config QT5_PLATFORM_EGLFS
+	bool "eglfs platform"
+	help
+	  Use QT5 eglfs platform.
+
+config QT5_PLATFORM_QTWAYLAND
+	bool "QtWayland platform"
+	help
+	  Use QTWayland platform.
+
+endchoice

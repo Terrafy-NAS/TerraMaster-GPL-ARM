@@ -1,0 +1,31 @@
+Source-Makefile: feeds/realtek/armcl/Makefile
+Package: armcl
+Submenu: Mali
+Version: 17.12-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libstdcpp +kmod-lib-mali +mali-opencl
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: ARM Compute Library for computer vision and machine learning
+Maintainer: 
+Source: v17.12.tar.gz
+License: MIT
+Type: ipkg
+Description:        The Compute Library is a collection of low-level functions optimized
+       for Arm CPU and GPU architectures targeted at image processing,
+       computer vision, and machine learning. It is available free of charge
+       under a permissive MIT open source license.
+
+       The Compute Library contains a comprehensive collection of software
+       functions implemented for the Arm Cortex-A family of CPU processors
+       and the Arm Mali family of GPUs. It is a convenient repository of
+       low-level optimized functions that developers can source individually
+       or use as part of complex pipelines in order to accelerate their
+       algorithms and applications.
+https://developer.arm.com/technologies/compute-library
+
+@@
+
+

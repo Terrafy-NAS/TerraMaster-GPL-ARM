@@ -1,0 +1,10 @@
+--- a/ext/libav/gstavauddec.c	2018-04-02 15:48:45.481695041 +0800
++++ b/ext/libav/gstavauddec.c	2018-04-02 15:49:48.716328069 +0800
+@@ -208,6 +208,7 @@
+ static gboolean
+ gst_ffmpegauddec_start (GstAudioDecoder * decoder)
+ {
++  gst_audio_decoder_set_estimate_rate (decoder, TRUE);
+   GstFFMpegAudDec *ffmpegdec = (GstFFMpegAudDec *) decoder;
+   GstFFMpegAudDecClass *oclass;
+ 

@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/zenlib/Makefile
+Package: zenlib
+Version: 0.7.97-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libstdcpp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utilities
+Category: Multimedia
+Title: Zenlib for MediaInfo
+Maintainer: 
+Source: zenlib-0.7.97.tar.bz2
+Type: ipkg
+Description:   Zenlib is a library for MediaInfo
+https://mediaarea.net/en/MediaInfo
+
+@@
+
+

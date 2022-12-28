@@ -1,0 +1,67 @@
+Source-Makefile: feeds/realtek/rtk-transcode/Makefile
+Package: rtk-transcode
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +openmax +mediainfo +rtk-supplicant
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek Transcode
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates hardware acceleration transcode feature
+
+@@
+
+Package: rtk-audio-out
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 rtk-transcode +alsa-lib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Enable Audio Output
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SOUND=y CONFIG_SND=y CONFIG_SND_TIMER=y CONFIG_SND_PCM=y CONFIG_SND_HWDEP=y CONFIG_SND_RAWMIDI=y CONFIG_SND_COMPRESS_OFFLOAD=y CONFIG_SND_JACK=y CONFIG_SND_PCM_TIMER=y CONFIG_SND_HRTIMER=y CONFIG_SND_SUPPORT_OLD_API=y CONFIG_SND_PROC_FS=y CONFIG_SND_VERBOSE_PROCFS=y CONFIG_SND_DRIVERS=y CONFIG_SND_HDA_PREALLOC_SIZE=64 CONFIG_SND_ARM=y CONFIG_SND_ARMAACI=n CONFIG_SND_REALTEK=y CONFIG_SND_USB=y CONFIG_SND_USB_AUDIO=y CONFIG_SND_SOC=y CONFIG_SND_SOC_COMPRESS=y 
+Description: Enable Audio Output
+
+@@
+
+Package: gstreamer-hw-transcode
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +gst1-plugins-base-rtk +gstreamer1-plugins-good-rtk +gst1-plugins-good-rtk +gstreamer1-plugins-bad-rtk +gst1-plugins-bad-rtk +gstreamer1-plugins-ugly-rtk +gst1-plugins-ugly-rtk +gstreamer1-plugins-rtk +gst1-omx-1-2 +gst1-libav rtk-transcode
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek GStreamer Transcode
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates transcode feature by gstreamer
+
+@@
+
+Package: ffmpeg-hw-transcode
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +ffmpeg rtk-transcode
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek FFMPEG Transcode
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates transcode feature by ffmpeg
+
+@@
+
+

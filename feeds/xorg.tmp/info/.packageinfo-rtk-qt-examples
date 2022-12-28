@@ -1,0 +1,19 @@
+Source-Makefile: feeds/xorg/rtk-qt-examples/Makefile
+Package: rtk-qt-examples
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +rtk-nvr +rtkMediaLib +qt5-wayland
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: +libstdcpp
+Section: nas
+Category: Realtek
+Title: QT examples for Realtek
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   This package activates qt examples for Realtek
+
+@@
+
+

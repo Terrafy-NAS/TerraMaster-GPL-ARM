@@ -1,0 +1,21 @@
+Source-Makefile: feeds/realtek/gst1-omx-1-2/Makefile
+Package: gst1-omx-1-2
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +gstreamer1-plugins-base-rtk +openmax +libgst1audio-rtk +libgst1pbutils-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: openmax libgstreamer1-rtk gstreamer1-plugins-base-rtk
+Section: multimedia
+Category: Multimedia
+Title: GStreamer OpenMAX plugin v
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  GStreamer OpenMAX IL wrapper plugin
+ This plugin wraps available OpenMAX IL components and makes
+ them available as standard GStreamer elements.
+
+@@
+
+

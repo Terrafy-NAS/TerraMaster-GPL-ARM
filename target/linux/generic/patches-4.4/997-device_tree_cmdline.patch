@@ -1,0 +1,28 @@
+Index: linux-4.4.18/arch/mips/kernel/prom.c
+===================================================================
+--- linux-4.4.18.orig/arch/mips/kernel/prom.c	2017-02-23 16:55:18.457942119 +0800
++++ linux-4.4.18/arch/mips/kernel/prom.c	2017-02-23 17:03:02.893953192 +0800
+@@ -51,6 +51,9 @@
+ 
+ void __init __dt_setup_arch(void *bph)
+ {
++	if (boot_command_line[0] == '\0')
++		strcpy(boot_command_line, arcs_cmdline);
++
+ 	if (!early_init_dt_scan(bph))
+ 		return;
+ 
+Index: linux-4.4.18/drivers/of/fdt.c
+===================================================================
+--- linux-4.4.18.orig/drivers/of/fdt.c	2017-02-23 16:55:18.457942119 +0800
++++ linux-4.4.18/drivers/of/fdt.c	2017-02-23 17:02:25.261952295 +0800
+@@ -1065,6 +1065,9 @@
+ 			strlcpy(cmdline, p, min((int)l, COMMAND_LINE_SIZE));
+ 		}
+ 	}
++	p = of_get_flat_dt_prop(node, "bootargs-append", &l);
++	if (p != NULL && l > 0)
++		strlcat(data, p, min_t(int, strlen(data) + (int)l, COMMAND_LINE_SIZE));
+ 
+ #ifdef CONFIG_CMDLINE_EXTEND_NAS
+ 	p = of_get_flat_dt_prop(node, "nasargs", &l);

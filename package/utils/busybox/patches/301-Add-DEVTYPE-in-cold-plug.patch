@@ -1,0 +1,54 @@
+--- a/util-linux/mdev.c
++++ b/util-linux/mdev.c
+@@ -552,6 +552,9 @@ static void make_device(char *device_nam
+ {
+ 	int major, minor, type, len;
+ 	char *path_end = path + strlen(path);
++	char *devtype = NULL;
++	char *dev_end = path_end;
++	char *d = NULL;
+ 
+ 	/* Try to read major/minor string.  Note that the kernel puts \n after
+ 	 * the data, so we don't need to worry about null terminating the string
+@@ -597,10 +600,16 @@ static void make_device(char *device_nam
+ 		if (device_name) {
+ 			device_name += sizeof("\nDEVNAME=")-1;
+ 			strchrnul(device_name, '\n')[0] = '\0';
++			dev_end = device_name + strlen(device_name);
+ 		} else {
+ 			/* Fall back to just basename */
+ 			device_name = (char*) bb_basename(path);
+ 		}
++		devtype = strstr(dev_end + 1, "DEVTYPE=");
++		if (devtype) {
++			devtype += sizeof("DEVTYPE=")-1;
++			strchrnul(devtype, '\n')[0] = '\0';
++		}
+ 	}
+ 	/* Determine device type */
+ 	/*
+@@ -613,6 +622,12 @@ static void make_device(char *device_nam
+ 	if (strstr(path, "/block/") || (G.subsystem && strncmp(G.subsystem, "block", 5) == 0))
+ 		type = S_IFBLK;
+ 
++	/* Ensure DEVTYPE environment variable */
++	if(!getenv("DEVTYPE") && devtype) {
++		d = xasprintf("%s=%s", "DEVTYPE", devtype);
++		putenv(d);
++	}
++
+ #if ENABLE_FEATURE_MDEV_CONF
+ 	G.rule_idx = 0; /* restart from the beginning (think mdev -s) */
+ #endif
+@@ -806,6 +821,11 @@ static void make_device(char *device_nam
+ 		if (!ENABLE_FEATURE_MDEV_CONF || !rule->keep_matching)
+ 			break;
+ 	} /* for (;;) */
++
++	if(d) {
++		bb_unsetenv_and_free(d);
++		d = NULL;
++	}
+ }
+ 
+ /* File callback for /sys/ traversal */

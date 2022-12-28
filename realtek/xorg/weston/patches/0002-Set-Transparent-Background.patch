@@ -1,0 +1,25 @@
+From 0c84edab33ecb8e2fe861cd5a741a82691a962ea Mon Sep 17 00:00:00 2001
+From: "william.lee" <william.lee@realtek.com>
+Date: Fri, 24 Nov 2017 15:09:19 +0800
+Subject: [PATCH] Set Transparent Background
+
+---
+ desktop-shell/shell.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/desktop-shell/shell.c b/desktop-shell/shell.c
+index 1f99efe3..fb0ab7fa 100644
+--- a/desktop-shell/shell.c
++++ b/desktop-shell/shell.c
+@@ -2944,7 +2944,7 @@ desktop_shell_set_background(struct wl_client *client,
+ 	wl_list_for_each_safe(view, next, &surface->views, surface_link)
+ 		weston_view_destroy(view);
+ 	view = weston_view_create(surface);
+-
++	view->alpha = 0.0;
+ 	surface->committed = background_committed;
+ 	surface->committed_private = shell;
+ 	weston_surface_set_label_func(surface, background_get_label);
+-- 
+2.11.0
+

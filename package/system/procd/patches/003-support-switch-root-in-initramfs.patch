@@ -1,0 +1,113 @@
+--- a/initd/init.c
++++ b/initd/init.c
+@@ -16,6 +16,7 @@
+ #include <sys/types.h>
+ #include <sys/stat.h>
+ #include <sys/reboot.h>
++#include <sys/mount.h>
+ 
+ #include <libubox/uloop.h>
+ #include <libubus.h>
+@@ -34,6 +35,8 @@
+ #include "../watchdog.h"
+ 
+ unsigned int debug = 0;
++static unsigned int initramfs = 0;
++static const char *bootdev = NULL;
+ 
+ static void
+ signal_shutdown(int signal, siginfo_t *siginfo, void *data)
+@@ -53,7 +56,7 @@ static struct sigaction sa_shutdown = {
+ };
+ 
+ static void
+-cmdline(void)
++cmdline(bool is_first_stage)
+ {
+ 	char line[20];
+ 	char* res;
+@@ -65,12 +68,54 @@ cmdline(void)
+ 		if ((r != LONG_MIN) && (r != LONG_MAX))
+ 			debug = (int) r;
+ 	}
++
++	if(is_first_stage) {
++		res = get_cmdline_val("rdinit", line, sizeof(line));
++		if (res != NULL) {
++			initramfs = 1;
++		}
++
++		res = get_cmdline_val("BOOTDEV", line, sizeof(line));
++		if (res != NULL) {
++			bootdev = strdup(line);
++		}
++	}
++}
++
++static void
++checkdo_switch_root(void)
++{
++	int i;
++	char *switchr[] = { "/sbin/switch_root", "/root", "/etc/init", "--second-stage", NULL };
++	char *envp[] = { NULL };
++
++	if(!initramfs || !bootdev) return;
++
++	LOG("- switch root -\n");
++
++	for (i = 0; i < 1200; i++) {
++		usleep(10 * 1000);
++                if(!access(bootdev, F_OK)) break;
++	}
++	if(i >= 1200 \
++		|| mount(bootdev, "/root", "squashfs",  MS_RDONLY, 0) < 0) {
++		LOG("- switch root -: bootdev is not ready\n");
++		return;
++	}
++
++	if (access("/init", F_OK)) {
++		close(open("/init", O_WRONLY|O_CREAT|O_CLOEXEC, 0000));
++	}
++	execve(switchr[0], switchr, envp);
++	ERROR("Failed to switch root\n");
++	exit(-1);
+ }
+ 
+ int
+ main(int argc, char **argv)
+ {
+ 	pid_t pid;
++	bool is_first_stage = (argc == 1) || (strcmp(argv[1], "--second-stage") != 0);
+ 
+ 	ulog_open(ULOG_KMSG, LOG_DAEMON, "init");
+ 
+@@ -79,7 +124,9 @@ main(int argc, char **argv)
+ 	sigaction(SIGUSR2, &sa_shutdown, NULL);
+ 
+ 	early();
+-	cmdline();
++	cmdline(is_first_stage);
++	if(initramfs) setenv("INITRAMFS", "1", 1);
++	if(!initramfs || !bootdev)
+ 	watchdog_init(1);
+ 
+ 	pid = fork();
+@@ -89,6 +136,10 @@ main(int argc, char **argv)
+ 		if (debug < 3)
+ 			patch_stdio("/dev/null");
+ 
++		if(initramfs && bootdev) {
++			kmod[1] = NULL;
++		}
++
+ 		execvp(kmod[0], kmod);
+ 		ERROR("Failed to start kmodloader\n");
+ 		exit(-1);
+@@ -105,6 +156,7 @@ main(int argc, char **argv)
+ 			watchdog_ping();
+ 		}
+ 	}
++	if(is_first_stage) checkdo_switch_root();
+ 	uloop_init();
+ 	preinit();
+ 	uloop_run();

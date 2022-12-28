@@ -1,0 +1,24 @@
+Source-Makefile: feeds/realtek/zulu/Makefile
+Package: zulu
+Submenu: Java
+Version: 1.8.0_152-8.25.0.79-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +zlib +libstdcpp +alsa-lib +libfreetype +libX11 +libXfixes +libXext +libthread_db +libXext +libXi +libXrender +libXtst
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: lang
+Category: Languages
+Title: Java SE standard Based on OpenJDK
+Maintainer: 
+Source: ezdk-1.8.0_152-8.25.0.79-eval-linux_aarch64.tar.gz
+Type: ipkg
+Kernel-Config: CONFIG_ARMV8_DEPRECATED=y CONFIG_COMPAT_NETLINK_MESSAGES=y CONFIG_CP15_BARRIER_EMULATION=y CONFIG_SETEND_EMULATION=y CONFIG_SWP_EMULATION=y
+Description:   Zulu® Embedded is a certified build of OpenJDK that is fully compliant with the Java SE standard
+https://www.azul.com/
+
+@@
+Config:
+	source "realtek/realtek/zulu/Config.in"
+@@
+
+

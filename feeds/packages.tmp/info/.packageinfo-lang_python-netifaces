@@ -1,0 +1,21 @@
+Source-Makefile: feeds/packages/lang/python-netifaces/Makefile
+Package: python-netifaces
+Submenu: Python
+Version: 0.10.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: lang
+Category: Languages
+Title: python-netifaces
+Maintainer: 
+Source: release_0_10_0.tar.gz
+Type: ipkg
+Description:   netifaces can get the address(es) of the machine's network interfaces from Python.
+https://bitbucket.org/al45tair/netifaces
+
+@@
+
+

@@ -1,0 +1,12 @@
+Index: libminigui-gpl-3.0.12/configure.in
+===================================================================
+--- libminigui-gpl-3.0.12.orig/configure.in	2012-01-15 19:31:42.000000000 +0800
++++ libminigui-gpl-3.0.12/configure.in	2017-03-02 17:38:50.123190186 +0800
+@@ -58,6 +58,7 @@
+ AC_PROG_INSTALL
+ AC_PROG_LN_S
+ AC_PROG_MAKE_SET
++LT_INIT
+ 
+ dnl ========================================================================
+ dnl Checks for header files.

@@ -1,0 +1,6 @@
+config ZULU_32BIT_JVM
+	bool
+	prompt "Use 32-bit JVM"
+	depends on !PACKAGE_kmod-rtd1295-64k && PACKAGE_zulu
+	default y
+

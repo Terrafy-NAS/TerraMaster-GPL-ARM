@@ -1,0 +1,47 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2010 OpenWrt.org
+
+START=50
+
+BIN=/usr/sbin/proftpd
+HOME=/home/ftpdir
+RUN_D=/var
+PID_F=$RUN_D/proftpd.pid
+CONFIG_D=/etc/proftpd
+CONFIG_F="$CONFIG_D/proftpd.conf"
+LOG_D=/var/log/proftpd
+
+RUN_USER=ftp
+RUN_GROUP=$RUN_USER
+
+EXTRA_COMMANDS="suspend resume"
+EXTRA_HELP="	suspend	Suspend the service
+	resume	Resume the service"
+
+start() {
+	[ -d $HOME ] || ( mkdir -p $HOME && chown $RUN_USER:$RUN_GROUP $HOME )
+	[ -d $CONFIG_D ] || mkdir -m 0755 -p $CONFIG_D
+	[ -d $LOG_D ] || mkdir -m 0755 -p $LOG_D
+
+	[ ! -f $PID_F ] && $BIN -c $CONFIG_F
+}
+
+stop() {
+	[ -f $PID_F ] && kill $(cat $PID_F)
+}
+
+reload() {
+	[ -f $PID_F ] && kill -HUP $(cat $PID_F)
+}
+
+suspend() {
+	echo "Suspending NOW"
+	ftpshut now "Maintenance in progress"
+}
+
+resume() {
+	[ -f /etc/shutmsg ] && {
+		echo "Allowing sessions again"
+		ftpshut -R > /dev/null
+	}
+}

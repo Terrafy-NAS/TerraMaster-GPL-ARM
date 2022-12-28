@@ -1,0 +1,50 @@
+Source-Makefile: feeds/realtek/rtk-nvr/Makefile
+Package: rtk-qt5-wayland
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 rtk-nvr +qt5-wayland +weston
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Support QT Weston
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates qt5 wayland feature
+
+@@
+
+Package: rtk-nvr
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +libgst1app-rtk +libgst1audio-rtk +libgst1pbutils-rtk +libgst1riff-rtk +libgst1rtp-rtk +libgst1rtsp-rtk +libgst1sdp-rtk +libgst1tag-rtk +libgst1video-rtk +gst1-mod-alsa-rtk +gst1-mod-app-rtk +gst1-mod-audioconvert-rtk +gst1-mod-audioresample-rtk +gst1-mod-playback-rtk +gst1-mod-ogg-rtk +gst1-mod-tcp-rtk +gst1-mod-typefindfunctions-rtk +gst1-mod-videoconvert-rtk +gst1-mod-videoscale-rtk +gst1-mod-volume-rtk +gstreamer1-plugins-good-rtk +gst1-mod-audioparsers-rtk +gst1-mod-debug-rtk +gst1-mod-isomp4-rtk +gst1-mod-jpeg-rtk +gst1-mod-rtpmanager-rtk +gst1-mod-rtp-rtk +gst1-mod-rtsp-rtk +gst1-mod-udp-rtk +gstreamer1-plugins-bad-rtk +gst1-mod-adaptivedemux-rtk +gst1-mod-uridownloader-rtk +gst1-mod-codecparsers-rtk +gst1-mod-mpegts-rtk +gst1-mod-faad-rtk +gst1-mod-fragmented-rtk +gst1-mod-jpegformat-rtk +gst1-mod-mpegtsdemux-rtk +gst1-mod-mpegtsmux-rtk +gst1-mod-rtpbad-rtk +gst1-mod-videoparsersbad-rtk +gst1-mod-vfbdevsink-rtk +gstreamer1-plugins-rtk +gst1-rtk +gst1-omx-1-2 +rtk-supplicant +supportlibs +rtkMediaLib +kmod-rtk-nvr
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek NVR
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates network video recorder (NVR) feature with the least packages
+
+@@
+
+Package: rtk-nvr-full
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +gst1-plugins-base-rtk +gstreamer1-plugins-good-rtk +gst1-plugins-good-rtk +gstreamer1-plugins-bad-rtk +gst1-plugins-bad-rtk +gstreamer1-plugins-ugly-rtk +gst1-plugins-ugly-rtk +gstreamer1-plugins-rtk +gst1-rtk +gst1-omx-1-2 +gst1-libav +rtk-supplicant +supportlibs +kmod-rtk-nvr +mali-egl +mali-wayland rtk-nvr
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek NVR FULL
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates network video recorder (NVR) feature with full-featured NVR shared libraries (gstreamer, mali)
+
+@@
+
+

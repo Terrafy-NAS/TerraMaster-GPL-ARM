@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ "$SUBSYSTEM" = "input" ] || exit0
+
+if [ "$ACTION" = "add" ] && [ -n "$MAJOR" ] && [ -n "$MINOR" ]; then
+	mkdir -p /tmp/run/udev/data
+	/sbin/udevadm test-builtin input_id /sys/class/input/$DEVICENAME | sed 's/^/E:/' >> /tmp/run/udev/data/c$MAJOR:$MINOR
+fi
+
+if [ "$ACTION" = "remove" ] && [ -n "$MAJOR" ] && [ -n "$MINOR" ]; then
+	rm -r /tmp/run/udev/data/c$MAJOR:$MINOR
+fi

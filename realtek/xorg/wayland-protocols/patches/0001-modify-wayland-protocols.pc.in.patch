@@ -1,0 +1,24 @@
+From 741b5bbeb1ec60d1bfbfa42c564139f042680d01 Mon Sep 17 00:00:00 2001
+From: Wenlin Hung <wenlin.hung@realtek.com>
+Date: Mon, 31 Jul 2017 23:29:30 +0800
+Subject: [PATCH] modify wayland-protocols.pc.in
+
+---
+ wayland-protocols.pc.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/wayland-protocols.pc.in b/wayland-protocols.pc.in
+index a26744c..a63b42a 100644
+--- a/wayland-protocols.pc.in
++++ b/wayland-protocols.pc.in
+@@ -1,6 +1,6 @@
+ prefix=@prefix@
+ datarootdir=@datarootdir@
+-pkgdatadir=@datadir@/@PACKAGE@
++pkgdatadir=${prefix}/share/@PACKAGE@
+ 
+ Name: Wayland Protocols
+ Description: Wayland protocol files
+-- 
+2.7.4
+

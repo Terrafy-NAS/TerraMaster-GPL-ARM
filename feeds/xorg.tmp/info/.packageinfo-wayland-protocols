@@ -1,0 +1,22 @@
+Source-Makefile: feeds/xorg/wayland-protocols/Makefile
+Package: wayland-protocols
+Submenu: proto
+Version: 1.8-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-framework
+Category: Xorg
+Title: Wayland-protocols
+Maintainer: 
+Source: wayland-protocols-1.8.tar.xz
+Type: ipkg
+Description: 	The Wayland-Protocols package contains additional Wayland
+	protocols that add functionality outside of protocols 
+	already in the Wayland core. 
+http://wayland.freedesktop.org/
+
+@@
+
+

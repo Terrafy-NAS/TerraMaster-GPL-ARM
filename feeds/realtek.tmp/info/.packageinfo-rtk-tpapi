@@ -1,0 +1,18 @@
+Source-Makefile: feeds/realtek/rtk-tpapi/Makefile
+Package: rtk-tpapi
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +rtkMediaLib rtk-nvr +supportlibs
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek tp API
+Maintainer: 
+Source: rtkdl-rtk-tpapi.tar.gz
+Type: ipkg
+Description:  This package provides tp API for network video recorder (NVR) feature
+
+@@
+
+

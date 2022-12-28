@@ -1,0 +1,20 @@
+Source-Makefile: feeds/realtek/bwmon/Makefile
+Package: bwmon
+Submenu: CPU tools
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +jansson +libstdcpp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Bandwidth monitor for Realtek SoC
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_UIO=y CONFIG_UIO_ASSIGN_MINOR=y CONFIG_UIO_RTK_RBUS=y CONFIG_UIO_RTK_REFCLK=y CONFIG_UIO_RTK_SE=y CONFIG_UIO_RTK_MD=y
+Description:  Realtek SoC bandwidth monitor
+
+@@
+
+

@@ -1,0 +1,101 @@
+choice
+	prompt "Chip version"
+	depends on PACKAGE_u-boot64
+	help
+	  Specify the chip version
+
+config UBoot_CHIP_A
+	bool "A"
+
+config UBoot_CHIP_B
+	bool "B"
+
+endchoice
+
+choice
+	prompt "DDR Type for the Board"
+	depends on PACKAGE_u-boot64
+	help
+	  Define DDR3/DDR4.
+
+config UBoot_DDR3
+	bool "DDR3"
+
+config UBoot_DDR4
+	bool "DDR4"
+
+endchoice
+
+choice
+	prompt "Number of DDR banks"
+	depends on PACKAGE_u-boot64
+	help
+	  Specify the # of DDR Banks (1295:2, 1296:4)
+
+config UBoot_DDR_2BANK
+	bool "2 banks"
+
+config UBoot_DDR_4BANK
+	bool "4 banks"
+        depends on RTK_BOARD_CHIP_1296
+
+endchoice
+
+choice
+	prompt "DDR Frequency"
+	depends on PACKAGE_u-boot64
+	help
+	  Specify the frequency of DDR
+
+config UBoot_DDR_1600
+	bool "1600"
+
+config UBoot_DDR_1866
+	bool "1866"
+
+config UBoot_DDR_2133
+	bool "2133"
+	depends on UBoot_DDR4
+
+endchoice
+
+config UBoot_CHIP_TYPE
+	string
+	default "0001" if UBoot_CHIP_A
+	default "0002" if UBoot_CHIP_B
+
+config UBoot_DDR_TYPE
+	string
+	default "DDR3" if UBoot_DDR3
+	default "DDR4" if UBoot_DDR4
+
+config UBoot_DDR_BANK
+	string
+	default "2" if UBoot_DDR_2BANK
+	default "4" if UBoot_DDR_4BANK
+
+config UBoot_DDR_SIZE
+	string
+	depends on PACKAGE_u-boot64
+	default "4Gb" if (RTK_BOARD_DDR_1GB && RTK_BOARD_CHIP_1295) || (RTK_BOARD_DDR_2GB && RTK_BOARD_CHIP_1296) || (RTK_BOARD_DDR_1GB && RTK_BOARD_CHIP_1296)
+	default "8+4Gb" if (RTK_BOARD_DDR_3GB && RTK_BOARD_CHIP_1296)
+	default "8Gb" if (RTK_BOARD_DDR_2GB && RTK_BOARD_CHIP_1295) || (RTK_BOARD_DDR_4GB && RTK_BOARD_CHIP_1296)
+
+config UBoot_DDR_FREQ
+	string
+	default "1600" if UBoot_DDR_1600
+	default "1866" if UBoot_DDR_1866
+	default "2133" if UBoot_DDR_2133
+
+config UBoot_BOARD
+	string
+	depends on PACKAGE_u-boot64
+	default "RTD1295" if RTK_BOARD_CHIP_1295
+	default "RTD1296" if RTK_BOARD_CHIP_1296
+
+config PACKAGE_u-boot64_envtools
+	bool "read/modify U-Boot bootloader environment"
+	depends on PACKAGE_u-boot64 && RTK_BOARD_MTD_LAYOUT
+	default y
+	help
+		This package includes tools to read and modify U-Boot bootloader environment.

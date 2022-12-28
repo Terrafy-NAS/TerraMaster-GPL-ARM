@@ -1,0 +1,25 @@
+From 9d000ccb3b9fb7218091449f8aa3348660440b79 Mon Sep 17 00:00:00 2001
+From: "william.lee" <william.lee@realtek.com>
+Date: Wed, 12 Jul 2017 16:56:00 +0800
+Subject: [PATCH] [DEVFIX] Ignore Fatal Error for lib Searching
+
+---
+ GLES/driver/product/bldsys/monolithic.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/GLES/driver/product/bldsys/monolithic.py b/GLES/driver/product/bldsys/monolithic.py
+index 212cb4c..db5148d 100644
+--- a/GLES/driver/product/bldsys/monolithic.py
++++ b/GLES/driver/product/bldsys/monolithic.py
+@@ -1101,7 +1101,7 @@ def _find_library_details( env, lib_name, libs_paths ):
+ 			return declared_libs[found_lib_name]
+ 
+ 	# We haven't found the library - the build will almost certainly fail.
+-	_fatal_error( "_find_library_details - failed to find details for known library: %s in paths %s" % (lib_name, (libs_paths)))
++	#_fatal_error( "_find_library_details - failed to find details for known library: %s in paths %s" % (lib_name, (libs_paths)))
+ 	return None
+ 
+ 
+-- 
+2.11.0
+

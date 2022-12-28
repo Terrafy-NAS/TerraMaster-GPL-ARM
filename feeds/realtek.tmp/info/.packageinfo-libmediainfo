@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/libmediainfo/Makefile
+Package: libmediainfo
+Version: 0.7.97-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +zenlib +zlib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utilities
+Category: Multimedia
+Title: LibMediainfo for MediaInfo
+Maintainer: 
+Source: libmediainfo-0.7.97.tar.bz2
+Type: ipkg
+Description:   Libmediainfo is a library for MediaInfo
+https://mediaarea.net/en/MediaInfo
+
+@@
+
+

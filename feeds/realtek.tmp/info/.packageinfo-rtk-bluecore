@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/rtk-bluecore/Makefile
+Package: rtk-bluecore
+Default: y
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @(TARGET_rtd1295&&!TARGET_rtd1295_mnas_emmc)
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: multimedia
+Category: Multimedia
+Title: Bluecore Libraries
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Realtek Bluecore libraries
+
+@@
+
+

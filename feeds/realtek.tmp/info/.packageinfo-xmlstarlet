@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/xmlstarlet/Makefile
+Package: xmlstarlet
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libxslt +libxml2 +libexslt
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: An xml editor
+Maintainer: Mikhail Grushinskiy
+Source: 
+Type: ipkg
+Description:   XMLStarlet is open source free software under MIT license which allows free use and distribution for both commercial and non-commercial projects.
+http://xmlstar.sourceforge.net/
+Mikhail Grushinskiy
+@@
+
+

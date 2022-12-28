@@ -1,0 +1,11 @@
+menu "Select Transcode options"
+	depends on PACKAGE_rtk-transcoding
+
+config FFMPEG-Transcode
+	bool "Enable FFMPEG Hardware Accelerator"
+
+config Gstreamer-Transcode
+	bool "Enable Gstreamer Openmax Hardware Accelerator"
+
+endmenu
+

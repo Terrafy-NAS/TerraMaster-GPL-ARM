@@ -1,0 +1,46 @@
+--- a/iwinfo_nl80211.c
++++ b/iwinfo_nl80211.c
+@@ -233,11 +233,11 @@ static struct nl80211_msg_conveyor * nl8
+ 	return nl80211_new(nls->nlctrl, cmd, flags);
+ }
+ 
+-static int nl80211_phy_idx_from_uci_path(struct uci_section *s)
++static int nl80211_phy_idx_from_uci_path(struct uci_section *s, const char *name)
+ {
+ 	const char *opt;
+ 	char buf[128];
+-	int idx = -1;
++	int idx = -1, tmpidx = -1, i, radioidx;
+ 	glob_t gl;
+ 
+ 	opt = uci_lookup_option_string(uci_ctx, s, "path");
+@@ -251,6 +251,20 @@ static int nl80211_phy_idx_from_uci_path
+ 	if (gl.gl_pathc > 0)
+ 		idx = nl80211_readint(gl.gl_pathv[0]);
+ 
++	//for multiple phy in the same bus path
++	if (gl.gl_pathc > 1) {
++		radioidx = atoi(&name[strlen("radio")]);
++		for (i=0; i < gl.gl_pathc; i++) {
++			tmpidx = nl80211_readint(gl.gl_pathv[i]);
++
++			//shall make sure radio"X" matches phy"X"
++			if (tmpidx == radioidx) {
++				idx = tmpidx;
++				break;
++			}
++		}
++	}
++
+ 	globfree(&gl);
+ 
+ 	return idx;
+@@ -312,7 +326,7 @@ static int nl80211_phy_idx_from_uci(cons
+ 	if (!s)
+ 		goto free;
+ 
+-	idx = nl80211_phy_idx_from_uci_path(s);
++	idx = nl80211_phy_idx_from_uci_path(s, name);
+ 
+ 	if (idx < 0)
+ 		idx = nl80211_phy_idx_from_uci_macaddr(s);

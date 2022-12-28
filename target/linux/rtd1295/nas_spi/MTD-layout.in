@@ -1,0 +1,137 @@
+# Args: source destination alignment(opt)
+# Use $@ as src and dest if no args
+define Build/padding-hash
+	dd if=$(if $(1),$(1),$@) $(if $(3),bs=$(3) conv=sync) > $(FW_PAD_IMG)
+	head -c $(if $(3),-32,-0) $(FW_PAD_IMG) | openssl dgst -sha256 -binary > $(FW_HASH_FILE)
+	head -c $(if $(3),-32,-0) $(FW_PAD_IMG) $(if $(2),>> $(2),> $(@))
+	cat $(FW_HASH_FILE) >> $(if $(2),$(2),$(@))
+	rm -f $(FW_PAD_IMG) $(FW_HASH_FILE)
+endef
+
+define Build/append-dtb
+	$(CP) $(DTS_DIR)/realtek/$(RTK_CHIP)-$(basename $(subst GB-,GB.,$(PROFILE)))$(DTB_SUFFIX).dts $(DTS_FILE)
+	$(SED) 's|\(bootargs\)\s*=\s*"|\1="$(CMDLINE) |g' $(DTS_FILE)
+	grep -q "ROOTFS_RESCUE_START" $(DTS_FILE) || \
+	    $(SED) "/SYS_BOOTCODE_MEMBASE/a\/memreserve/ ROOTFS_RESCUE_START ROOTFS_RESCUE_SIZE;" $(DTS_FILE)
+	grep -q "linux,initrd-start" $(DTS_FILE) || \
+	    $(SED) "/bootargs/a\linux,initrd-start=<ROOTFS_RESCUE_START>;\nlinux,initrd-end=<ROOTFS_RESCUE_END>;" $(DTS_FILE)
+	[ "$(CONFIG_RTD_1295_HWNAT)" != "y" ] || \
+	    $(SED) '$$e cat $(CURDIR)/../dts/patches/001-Enable-router-mac-but-disable-umac.patch' $(DTS_FILE)
+	$(call Image/BuildDTB,$(DTS_FILE),$(DTB_FILE),"-p 8192")
+	$(call Build/padding-hash,$(DTB),$@,$(1))
+endef
+
+define Build/append-env
+	dd if=/dev/zero bs=$(1) conv=sync count=1 >> $@
+endef
+
+define Build/append-factory
+	mkdir -p tmp/factory
+	[ -z "`ls -A $(IMAGE_DIR)/factory/`" ] || $(CP) $(IMAGE_DIR)/factory/* tmp/factory/
+	$(TAR) cf $(FACTORY_NAME) tmp/factory
+	$(CURDIR)/files/rtk_factory $(FACTORY_NAME)
+	$(call Build/padding-hash,$(FACTORY_NAME),$@,$(1))
+	rm -rf tmp/factory $(FACTORY_NAME)
+endef
+
+define Build/append-uboot
+	$(call Build/padding-hash,$(UBOOT_FILE),$@,$(1))
+endef
+
+define Build/append-logo
+	$(CP) $(IMAGE_DIR)/$(LOGO_NAME) .
+	$(STAGING_DIR_HOST)/bin/lzma e $(LOGO_NAME) -lc1 -lp2 -pb2 $(LOGO_NAME).lzma
+	$(call Build/padding-hash,$(LOGO_NAME).lzma,$@,$(1))
+	rm -f $(LOGO_NAME) $(LOGO_NAME).lzma
+endef
+
+define Build/append-afw
+	$(AFW_CMD)
+	$(STAGING_DIR_HOST)/bin/lzma e $(AFW_NAME) -lc1 -lp2 -pb2 $(AFW_NAME).lzma
+	$(call Build/padding-hash,$(AFW_NAME).lzma,$@,$(1))
+	rm -f $(AFW_NAME) $(AFW_NAME).lzma
+endef
+
+define Build/append-kernel-w-hash
+	$(call Build/padding-hash,$(word 1,$^),$@,$(1))
+endef
+
+define Build/append-rootfs-w-hash
+	$(call Build/padding-hash,$(word 2,$^),$@,$(1))
+endef
+
+define Device/Default
+  DTB := $(DTB_FILE)
+ifeq ($(CONFIG_RTK_MTD_NVR),y)
+  DTB_SUFFIX:=-HDMI
+else ifeq ($(CONFIG_RTK_MTD_TRANSCODE),y)
+  DTB_SUFFIX:=-MM
+endif
+  UBOOT_FILE := $(BIN_DIR)/u-boot64/openwrt-$(BOARD)-bootcode.bin
+  FACTORY_NAME := factory.tar
+  LOGO_NAME := bootfile.image
+  AFW_NAME := bluecore.audio
+ifeq ($(CONFIG_PACKAGE_rtk-bluecore),)
+  AFW_CMD = $(STAGING_DIR_HOST)/bin/unzip -o $(CURDIR)/files/$$(AUDIO_FW_NAME)
+else ifneq ($(CONFIG_RTK_MTD_NVR)$(CONFIG_RTK_MTD_TRANSCODE),)
+  AFW_CMD = cp $(TOPDIR)/realtek/realtek/rtk-bluecore/files/bluecore.audio $$(AFW_NAME)
+else
+  AFW_CMD = cp $(TOPDIR)/realtek/realtek/rtk-bluecore/files/bluecore.audio.slim $$(AFW_NAME)
+endif
+
+  FW_PAD_IMG:= fw_pad.img
+  FW_HASH_FILE:= sha256.chk
+  BOARDNAME :=
+  KERNEL := kernel-bin | lzma -d20
+  KERNEL_NAME := Image
+  KERNEL_SIZE := $(CONFIG_RTK_MTD_KERNEL_SIZE)k
+  UBOOT_SIZE := $(CONFIG_RTK_MTD_UBOOT_SIZE)k
+  LOGO_SIZE := $(CONFIG_RTK_MTD_LOGO_SIZE)k
+  AFW_SIZE := $(CONFIG_RTK_MTD_AFW_SIZE)k
+  DTB_SIZE := $(CONFIG_RTK_MTD_DTB_SIZE)k
+  ROOTFS_SIZE := $(CONFIG_RTK_MTD_ROOTFS_SIZE)k
+  MTDPARTS = RtkSFC:128k(factory),$$(UBOOT_SIZE)(uboot),$$(LOGO_SIZE)(logo),$$(AFW_SIZE)(afw),$$(DTB_SIZE)(dtb),$$(KERNEL_SIZE)(kernel),$$(ROOTFS_SIZE)(initrd)
+  BLOCKSIZE := 64k
+  #CONSOLE = ttyS0,115200
+  CMDLINE:=rdinit=/sbin/init
+  CMDLINE += $$(if $$(BOARDNAME),board=$$(BOARDNAME)) $$(if $$(MTDPARTS),mtdparts=$$(MTDPARTS)) $$(if $$(CONSOLE),console=$$(CONSOLE))
+  COMPILE :=
+  FILESYSTEMS := initrd
+  IMAGES := default
+  IMAGE/uboot = append-uboot $$(UBOOT_SIZE)
+  IMAGE/default = append-logo $$(LOGO_SIZE) | append-afw $$(AFW_SIZE) | append-dtb $$(DTB_SIZE) | append-kernel-w-hash $$(KERNEL_SIZE) | append-rootfs-w-hash $$(ROOTFS_SIZE)
+  IMAGE/full = append-uboot $$(UBOOT_SIZE) | $$$$(IMAGE/default)
+  IMAGE/mp = append-env $$(BLOCKSIZE) | append-factory $$(BLOCKSIZE) | append-uboot $$(UBOOT_SIZE) | $$$$(IMAGE/default)
+  IMAGE/rootfs = append-rootfs-w-hash $$(ROOTFS_SIZE)
+  IMAGE/kernel = append-dtb $$(DTB_SIZE) | append-kernel-w-hash $$(KERNEL_SIZE)
+  IMAGE/dtb = append-dtb $$(DTB_SIZE)
+  IMAGE/afw = append-afw $$(AFW_SIZE)
+  IMAGE/logo = append-logo $$(LOGO_SIZE)
+  IMAGE/pack = padding-hash | check-size $$$$(1)
+endef
+
+define RealtekDevice
+  define Device/rtk-$(1)
+    # 7552kb + 32 byte
+    #IMAGE_FW_SIZE = 7733280
+    IMAGE_FW_SIZE = $$$$(LOGO_SIZE)+$$$$(AFW_SIZE)+$$$$(DTB_SIZE)+$$$$(KERNEL_SIZE)+$$$$(ROOTFS_SIZE)+32+1
+    IMAGE_FULL_SIZE = $$$$(IMAGE_FW_SIZE)+$$$$(UBOOT_SIZE)
+    IMAGES := sysupgrade.bin
+    IMAGES += rootfs.bin kernel.bin dtb.bin afw.bin logo.bin
+ifeq ($(CONFIG_PACKAGE_u-boot64),y)
+    IMAGES += uboot.bin full.bin mp.bin
+endif
+    IMAGE/uboot.bin = $$$$(IMAGE/uboot) | $$$$(IMAGE/pack) $$$$(UBOOT_SIZE)+32+1
+    IMAGE/full.bin = $$$$(IMAGE/full) | $$$$(IMAGE/pack) $$$$(IMAGE_FULL_SIZE)
+    IMAGE/mp.bin = $$$$(IMAGE/mp) | $$$$(IMAGE/pack) $$$$(IMAGE_FULL_SIZE)+131072
+    IMAGE/sysupgrade.bin = $$$$(IMAGE/default) | $$$$(IMAGE/pack) $$$$(IMAGE_FW_SIZE)
+    IMAGE/rootfs.bin = $$$$(IMAGE/rootfs) | $$$$(IMAGE/pack) $$$$(ROOTFS_SIZE)+32+1
+    IMAGE/kernel.bin = $$$$(IMAGE/kernel) | $$$$(IMAGE/pack) $$$$(DTB_SIZE)+$$$$(KERNEL_SIZE)+32+1
+    IMAGE/dtb.bin = $$$$(IMAGE/dtb) | $$$$(IMAGE/pack) $$$$(DTB_SIZE)+32+1
+    IMAGE/afw.bin = $$$$(IMAGE/afw) | $$$$(IMAGE/pack) $$$$(AFW_SIZE)+32+1
+    IMAGE/logo.bin = $$$$(IMAGE/logo) | $$$$(IMAGE/pack) $$$$(LOGO_SIZE)+32+1
+  endef
+  TARGET_DEVICES += rtk-$(1)
+endef
+
+$(eval $(call RealtekDevice,spi-8M))

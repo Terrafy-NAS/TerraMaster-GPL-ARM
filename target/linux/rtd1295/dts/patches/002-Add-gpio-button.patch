@@ -1,0 +1,9 @@
+
+    gpio-keys {
+        compatible = "gpio-keys";
+        power-button {
+            label = "Power Button";
+            gpios = <&rtk_iso_gpio 10 0 1>;
+            linux,code = <116>; /* KEY_POWER */
+        };
+    };

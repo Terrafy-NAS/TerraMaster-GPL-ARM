@@ -1,0 +1,19 @@
+--- a/Makefile
++++ b/Makefile
+@@ -184,16 +184,6 @@ else
+    # Chuck add an auto-check of toolchain
+    TOPDIR  := $(shell /bin/pwd)
+    ARM_SRC_ROOT := $(TOPDIR)/..
+-   #TOOLCHAIN_PREFIX := asdk-4.4.7-a9-EL-3.7-0.9.33-a32nt-130429
+-   TOOLCHAIN_PREFIX := asdk-4.8.1-a7-EL-3.10-0.9.33-a32nt-130828
+-   TOOLCHAIN_READY := $(wildcard ../tmp/$(TOOLCHAIN_PREFIX))
+-   ifeq ($(strip $(TOOLCHAIN_READY)),)
+-      $(warning toolchain is not ready, intalling...)
+-      $(shell mkdir -p $(ARM_SRC_ROOT)/tmp)
+-      $(shell tar xfj $(ARM_SRC_ROOT)/toolchain/$(TOOLCHAIN_PREFIX).tar.bz2 -C $(ARM_SRC_ROOT)/tmp)
+-   endif
+-
+-   CROSS_COMPILE = $(ARM_SRC_ROOT)/tmp/$(TOOLCHAIN_PREFIX)/bin/asdk-linux-
+ endif
+ 
+ # load other configuration

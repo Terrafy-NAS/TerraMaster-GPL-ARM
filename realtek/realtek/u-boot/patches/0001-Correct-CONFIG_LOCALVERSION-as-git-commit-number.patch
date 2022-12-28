@@ -1,0 +1,25 @@
+From ad1f2787d5e1556f03a9b9201be8e2b41cf83196 Mon Sep 17 00:00:00 2001
+From: eccheng <eccheng@realtek.com>
+Date: Thu, 2 Nov 2017 15:06:13 +0800
+Subject: [PATCH] localversion
+
+---
+ scripts/setlocalversion | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/setlocalversion b/scripts/setlocalversion
+index 8564bed..5340ee9 100755
+--- a/scripts/setlocalversion
++++ b/scripts/setlocalversion
+@@ -158,7 +158,7 @@ if test ! "$srctree" -ef .; then
+ fi
+ 
+ # CONFIG_LOCALVERSION and LOCALVERSION (if set)
+-res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}"
++res="${res}${LOCALVERSION}"
+ 
+ # scm version string if not at a tagged commit
+ if test "$CONFIG_LOCALVERSION_AUTO" = "y"; then
+-- 
+1.9.1
+

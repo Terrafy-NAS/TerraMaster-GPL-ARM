@@ -1,0 +1,20 @@
+The IPPORT_RESERVED is declared in netdb.h. This fixes the following
+compile error with musl libc:
+
+bindresvport.c: In function 'bindresvport_sa':
+bindresvport.c:67:18: error: 'IPPORT_RESERVED' undeclared (first use in
+this function)
+ #define ENDPORT (IPPORT_RESERVED - 1)
+
+Signed-off-by: Natanael Copa <ncopa@...>
+
+--- a/src/bindresvport.c
++++ b/src/bindresvport.c
+@@ -37,6 +37,7 @@
+ #include <sys/types.h>
+ #include <sys/socket.h>
+ 
++#include <netdb.h>
+ #include <netinet/in.h>
+ 
+ #include <errno.h>

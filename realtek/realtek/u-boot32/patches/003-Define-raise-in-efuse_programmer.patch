@@ -1,0 +1,12 @@
+--- a/examples/efuse_programmer/start.S
++++ b/examples/efuse_programmer/start.S
+@@ -44,4 +44,8 @@ run_secondary:
+      MOV   r0, r0
+      MOV   r0, r0
+      MOV   r0, r0
+-	
++
++.globl raise
++raise:
++     nop
++     mov pc, lr

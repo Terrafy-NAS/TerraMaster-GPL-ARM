@@ -1,0 +1,21 @@
+Source-Makefile: feeds/realtek/libmgplus/Makefile
+Package: libmgplus
+Version: 1.2.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libminigui-gpl +libstdcpp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libminigui-gpl
+Section: multimedia
+Category: Extra packages
+Title: Minigui Plus
+Maintainer: 
+Source: libmgplus-1.2.4.tar.gz
+License: GPLv3
+Type: ipkg
+Description: Minigui Plus
+http://www.minigui.org
+
+@@
+
+

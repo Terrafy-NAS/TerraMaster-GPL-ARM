@@ -1,0 +1,652 @@
+--- a/bfd/archures.c
++++ b/bfd/archures.c
+@@ -1037,6 +1037,12 @@ bfd_default_scan (const bfd_arch_info_type *info, const char *string)
+   unsigned long number;
+   enum bfd_architecture arch;
+   const char *printable_name_colon;
++  char newname[16]; /* for arch name translation */
++
++  if (strncmp(string, "rlx", 3) == 0) {
++    sprintf(newname, "mips%s", string + 3);
++    string = newname;
++  }
+ 
+   /* Exact match of the architecture name (ARCH_NAME) and also the
+      default architecture?  */
+--- a/bfd/bfd-in2.h
++++ b/bfd/bfd-in2.h
+@@ -1900,6 +1900,8 @@ enum bfd_architecture
+   bfd_arch_spu,       /* PowerPC SPU */
+ #define bfd_mach_spu           256
+   bfd_arch_mips,      /* MIPS Rxxxx */
++#define bfd_mach_mips4281              4281
++#define bfd_mach_mips5281              5281
+ #define bfd_mach_mips3000              3000
+ #define bfd_mach_mips3900              3900
+ #define bfd_mach_mips4000              4000
+--- a/bfd/cpu-mips.c
++++ b/bfd/cpu-mips.c
+@@ -62,6 +62,8 @@ mips_compatible (const bfd_arch_info_type *a, const bfd_arch_info_type *b)
+ 
+ enum
+ {
++  I_mips4281,
++  I_mips5281,
+   I_mips3000,
+   I_mips3900,
+   I_mips4000,
+@@ -106,6 +108,8 @@ enum
+ 
+ static const bfd_arch_info_type arch_info_struct[] =
+ {
++  N (32, 32, bfd_mach_mips4281, "mips:4281",      FALSE, NN(I_mips4281)),
++  N (32, 32, bfd_mach_mips5281, "mips:5281",      FALSE, NN(I_mips5281)),
+   N (32, 32, bfd_mach_mips3000, "mips:3000",      FALSE, NN(I_mips3000)),
+   N (32, 32, bfd_mach_mips3900, "mips:3900",      FALSE, NN(I_mips3900)),
+   N (64, 64, bfd_mach_mips4000, "mips:4000",      FALSE, NN(I_mips4000)),
+--- a/gas/config/tc-mips.c
++++ b/gas/config/tc-mips.c
+@@ -311,6 +311,10 @@ static int file_ase_mips16;
+ 			      || mips_opts.isa == ISA_MIPS64		\
+ 			      || mips_opts.isa == ISA_MIPS64R2)
+ 
++/* True if ISA supports RLX */
++#define CPU_IS_RLX (mips_opts.arch == CPU_RLX4281			\
++		    || mips_opts.arch == CPU_RLX5281)
++
+ /* True if any microMIPS code was produced.  */
+ static int file_ase_micromips;
+ 
+@@ -458,7 +462,8 @@ static int mips_32bitmode = 0;
+ 
+ /* True, if CPU has support for ldc1 and sdc1. */
+ #define CPU_HAS_LDC1_SDC1(CPU)	\
+-   ((mips_opts.isa != ISA_MIPS1) && ((CPU) != CPU_R5900))
++   (((mips_opts.isa != ISA_MIPS1) && ((CPU) != CPU_R5900)) \
++    || CPU == CPU_RLX4281 || CPU == CPU_RLX5281)
+ 
+ /* True if mflo and mfhi can be immediately followed by instructions
+    which write to the HI and LO registers.
+@@ -477,6 +482,7 @@ static int mips_32bitmode = 0;
+    || mips_opts.isa == ISA_MIPS32R2                   \
+    || mips_opts.isa == ISA_MIPS64                     \
+    || mips_opts.isa == ISA_MIPS64R2                   \
++   || CPU_IS_RLX                                      \
+    || mips_opts.arch == CPU_R4010                     \
+    || mips_opts.arch == CPU_R5900                     \
+    || mips_opts.arch == CPU_R10000                    \
+@@ -488,6 +494,12 @@ static int mips_32bitmode = 0;
+    || mips_opts.micromips                             \
+    )
+ 
++/* Whether the processor support dual-issue. */
++#define dual_issue                      \
++  (mips_opts.arch == CPU_RLX4281        \
++   || mips_opts.arch == CPU_RLX5281     \
++  )
++
+ /* Whether the processor uses hardware interlocks to protect reads
+    from the GPRs after they are loaded from memory, and thus does not
+    require nops to be inserted.  This applies to instructions marked
+@@ -495,6 +507,8 @@ static int mips_32bitmode = 0;
+    level I and microMIPS mode instructions are always interlocked.  */
+ #define gpr_interlocks                                \
+   (mips_opts.isa != ISA_MIPS1                         \
++   || mips_opts.arch == CPU_RLX4281                   \
++   || mips_opts.arch == CPU_RLX5281                   \
+    || mips_opts.arch == CPU_R3900                     \
+    || mips_opts.arch == CPU_R5900                     \
+    || mips_opts.micromips                             \
+@@ -513,6 +527,8 @@ static int mips_32bitmode = 0;
+   ((mips_opts.isa != ISA_MIPS1                        \
+     && mips_opts.isa != ISA_MIPS2                     \
+     && mips_opts.isa != ISA_MIPS3)                    \
++   || mips_opts.arch == CPU_RLX4281                   \
++   || mips_opts.arch == CPU_RLX5281                   \
+    || mips_opts.arch == CPU_R4300                     \
+    || mips_opts.micromips                             \
+    )
+@@ -525,6 +541,8 @@ static int mips_32bitmode = 0;
+    always interlocked.  */
+ #define cop_mem_interlocks                            \
+   (mips_opts.isa != ISA_MIPS1                         \
++   || mips_opts.arch == CPU_RLX4281                   \
++   || mips_opts.arch == CPU_RLX5281                   \
+    || mips_opts.micromips                             \
+    )
+ 
+@@ -554,6 +572,9 @@ static int mips_big_got = 0;
+    instructions.  */
+ static int mips_trap = 0;
+ 
++/* 1 if we should avoid put load in branch delay slot */
++static int fix_bdsl = 1;
++
+ /* 1 if double width floating point constants should not be constructed
+    by assembling two single width halves into two single width floating
+    point registers which just happen to alias the double width destination
+@@ -1283,6 +1304,13 @@ static int relaxed_branch_length (fragS *, asection *, int);
+ static int relaxed_micromips_16bit_branch_length (fragS *, asection *, int);
+ static int relaxed_micromips_32bit_branch_length (fragS *, asection *, int);
+ 
++/* check assembly codes in noreorder section. */
++static void rlx_check_noreorder_insns (struct mips_cl_insn *);
++/* raise warning for bdsl at noreorder section (for bug of taroko < 1.3) */
++static void rlx_warn_bdsl (const struct mips_cl_insn *);
++
++static unsigned long mips16_immed_extend (offsetT, unsigned int);
++
+ /* Table and functions used to map between CPU/ISA names, and
+    ISA levels, and CPU numbers.  */
+ 
+@@ -1398,6 +1426,7 @@ enum options
+     OPTION_NO_PDR,
+     OPTION_MVXWORKS_PIC,
+     OPTION_NAN,
++    OPTION_FIX_BDSL,
+     OPTION_END_OF_ENUM
+   };
+ 
+@@ -1514,6 +1543,7 @@ struct option md_longopts[] =
+   {"mno-pdr", no_argument, NULL, OPTION_NO_PDR},
+   {"mvxworks-pic", no_argument, NULL, OPTION_MVXWORKS_PIC},
+   {"mnan", required_argument, NULL, OPTION_NAN},
++  {"ffix-bdsl", no_argument, NULL, OPTION_FIX_BDSL},
+ 
+   {NULL, no_argument, NULL, 0}
+ };
+@@ -2363,6 +2393,7 @@ struct regname {
+ #define RTYPE_R5900_Q	0x0100000
+ #define RTYPE_R5900_R	0x0200000
+ #define RTYPE_R5900_ACC	0x0400000
++#define RTYPE_LX_CP0	0x4000000
+ #define RWARN		0x8000000
+ 
+ #define GENERIC_REGISTER_NUMBERS \
+@@ -2567,6 +2598,18 @@ struct regname {
+     {"$ac2",	RTYPE_ACC | 2}, \
+     {"$ac3",	RTYPE_ACC | 3}
+ 
++#define RLX_LEXRA_CP0_REGISTER_NAMES \
++    {"$estatus",	RTYPE_LX_CP0 | 0},  \
++    {"$ecause",		RTYPE_LX_CP0 | 1},  \
++    {"$intvec",		RTYPE_LX_CP0 | 2},  \
++    {"$cvstag",		RTYPE_LX_CP0 | 3},  \
++    {"$bpctl",		RTYPE_LX_CP0 | 4},  \
++    {"$wmpctl",		RTYPE_LX_CP0 | 5},  \
++    {"$wmpstatus",	RTYPE_LX_CP0 | 6},  \
++    {"$wmpvaddr",	RTYPE_LX_CP0 | 7},  \
++    {"$tlptr",		RTYPE_LX_CP0 | 8},  \
++    {"$wmpextramask",	RTYPE_LX_CP0 | 19}
++
+ static const struct regname reg_names[] = {
+   GENERIC_REGISTER_NUMBERS,
+   FPU_REGISTER_NAMES,
+@@ -2589,6 +2632,11 @@ static const struct regname reg_names[] = {
+   {0, 0}
+ };
+ 
++static const struct regname reg_names_lexra_cp0[] = {
++  RLX_LEXRA_CP0_REGISTER_NAMES,
++  {0, 0}
++};
++
+ static const struct regname reg_names_o32[] = {
+   O32_SYMBOLIC_REGISTER_NAMES,
+   {0, 0}
+@@ -3090,7 +3138,7 @@ is_opcode_valid (const struct mips_opcode *mo)
+ static bfd_boolean
+ is_opcode_valid_16 (const struct mips_opcode *mo)
+ {
+-  return opcode_is_member (mo, mips_opts.isa, 0, mips_opts.arch);
++  return opcode_is_member (mo, mips_opts.isa, mips_opts.ase, mips_opts.arch);
+ }
+ 
+ /* Return TRUE if the size of the microMIPS opcode MO matches one
+@@ -3214,7 +3262,7 @@ validate_mips_insn (const struct mips_opcode *opcode,
+ 	      used_bits &= ~(mask & 0x700);
+ 	  }
+ 	/* Skip prefix characters.  */
+-	if (decode_operand && (*s == '+' || *s == 'm'))
++	if (decode_operand && (*s == '+' || *s == 'm' || *s == '='))
+ 	  ++s;
+ 	opno += 1;
+ 	break;
+@@ -3434,6 +3482,10 @@ md_begin (void)
+     symbol_table_insert (symbol_new (reg_names[i].name, reg_section,
+ 				     reg_names[i].num, /* & RNUM_MASK, */
+ 				     &zero_address_frag));
++  for (i = 0; reg_names_lexra_cp0[i].name; i++)
++    symbol_table_insert (symbol_new (reg_names_lexra_cp0[i].name, reg_section,
++				     reg_names_lexra_cp0[i].num, /* & RNUM_MASK, */
++				     &zero_address_frag));
+   if (HAVE_NEWABI)
+     for (i = 0; reg_names_n32n64[i].name; i++) 
+       symbol_table_insert (symbol_new (reg_names_n32n64[i].name, reg_section,
+@@ -4357,6 +4409,9 @@ convert_reg_type (const struct mips_opcode *opcode,
+     case OP_REG_GP:
+       return RTYPE_NUM | RTYPE_GP;
+ 
++    case OP_REG_LEXRA_CP0:
++      return RTYPE_NUM | RTYPE_LX_CP0;
++
+     case OP_REG_FP:
+       /* Allow vector register names for MDMX if the instruction is a 64-bit
+ 	 FPR load, store or move (including moves to and from GPRs).  */
+@@ -5884,6 +5939,20 @@ nops_for_insn (int ignore, const struct mips_cl_insn *hist,
+   return nops;
+ }
+ 
++/* Fix branch delay slot filling bug */
++static inline int
++rlx_is_insn_swappable(const struct mips_cl_insn *h)
++{
++  int swappable = 1;
++
++  if (fix_bdsl == 1
++      && ((h->insn_mo->pinfo & INSN_LOAD_MEMORY_DELAY) != 0
++          || mips_opts.mips16))
++    swappable = 0;
++
++  return swappable;
++}
++
+ /* The variable arguments provide NUM_INSNS extra instructions that
+    might be added to HIST.  Return the largest number of nops that
+    would be needed after the extended sequence, ignoring hazards
+@@ -6064,6 +6133,10 @@ can_swap_branch_p (struct mips_cl_insn *ip, expressionS *address_expr,
+   if (nops_for_sequence (2, 0, history + 1, ip, history) > 0)
+     return FALSE;
+ 
++  /* Check for BDSL issue.  */
++  if (CPU_IS_RLX && !rlx_is_insn_swappable(history))
++    return FALSE;
++
+   /* If the branch reads a register that the previous
+      instruction sets, we can not swap.  */
+   gpr_read = gpr_read_mask (ip);
+@@ -6801,6 +6874,8 @@ append_insn (struct mips_cl_insn *ip, expressionS *address_expr,
+   switch (method)
+     {
+     case APPEND_ADD:
++      if (mips_opts.noreorder && CPU_IS_RLX)
++        rlx_check_noreorder_insns(ip);
+       insert_into_history (0, 1, ip);
+       break;
+ 
+@@ -7218,7 +7293,7 @@ match_insn (struct mips_cl_insn *insn, const struct mips_opcode *opcode,
+ 	abort ();
+ 
+       /* Skip prefixes.  */
+-      if (*args == '+' || *args == 'm')
++      if (*args == '+' || *args == 'm' || *args == '=')
+ 	args++;
+ 
+       if (mips_optional_operand_p (operand)
+@@ -13724,6 +13799,10 @@ md_parse_option (int c, char *arg)
+ 	}
+       break;
+ 
++    case OPTION_FIX_BDSL:
++      fix_bdsl = 1;
++      break;
++
+     default:
+       return 0;
+     }
+@@ -17666,6 +17745,10 @@ static const struct mips_cpu_info mips_cpu_info_table[] =
+   { "mips64",         MIPS_CPU_IS_ISA, 0,	ISA_MIPS64,   CPU_MIPS64 },
+   { "mips64r2",       MIPS_CPU_IS_ISA, 0,	ISA_MIPS64R2, CPU_MIPS64R2 },
+ 
++  /* RLX */
++  { "4281",           0, ASE_4281,		ISA_MIPS1,    CPU_RLX4281 },
++  { "5281",           0, ASE_5281,		ISA_MIPS1,    CPU_RLX5281 },
++
+   /* MIPS I */
+   { "r3000",          0, 0,			ISA_MIPS1,    CPU_R3000 },
+   { "r2000",          0, 0,			ISA_MIPS1,    CPU_R3000 },
+@@ -17833,7 +17916,13 @@ mips_matching_cpu_name_p (const char *canonical, const char *given)
+   /* If not, try comparing based on numerical designation alone.
+      See if GIVEN is an unadorned number, or 'r' followed by a number.  */
+   if (TOLOWER (*given) == 'r')
+-    given++;
++    {
++      /* Add to parse LX/RX CPUs */
++      if (TOLOWER (given[1]) == 'l' && TOLOWER (given[2]) == 'x')
++        given += 3;
++      else
++        given++;
++    }
+   if (!ISDIGIT (*given))
+     return FALSE;
+ 
+@@ -17844,7 +17933,14 @@ mips_matching_cpu_name_p (const char *canonical, const char *given)
+   else if (TOLOWER (canonical[0]) == 'r' && TOLOWER (canonical[1]) == 'm')
+     canonical += 2;
+   else if (TOLOWER (canonical[0]) == 'r')
+-    canonical += 1;
++    {
++      if (TOLOWER (canonical[1]) == 'l' && TOLOWER (canonical[2]) == 'x')
++        canonical += 3;
++      else if (TOLOWER (canonical[1]) == 'm')
++        canonical += 2;
++      else
++        canonical += 1;
++    }
+ 
+   return mips_strict_matching_cpu_name_p (canonical, given);
+ }
+@@ -18121,3 +18217,42 @@ tc_mips_regname_to_dw2regnum (char *regname)
+ 
+   return regnum;
+ }
++
++static void
++rlx_check_noreorder_insns (struct mips_cl_insn *ip)
++{
++    char *file;
++    unsigned line;
++    /* get current file & line */
++    as_where(&file, &line);
++    if (fix_bdsl)
++      rlx_warn_bdsl (ip);
++}
++
++/* Raise warning for possible branch-delay-slot-use
++   (to detect the bug in Taroko < 1.3).  */
++/* Ex:
++          .set noreorder
++          bnez  $2, tt
++          lw    $3,0($1) -> load (or any mips16 instruction)
++          ...
++      tt:
++          bnez  $2, foobar
++          addu  $3,$3,$2 -> use
++*/
++static void
++rlx_warn_bdsl (const struct mips_cl_insn *insn2)
++{
++    struct mips_cl_insn *insn1 = history;
++
++    if ((insn1->insn_mo->pinfo
++          & (INSN_UNCOND_BRANCH_DELAY
++            | INSN_COND_BRANCH_DELAY)) != 0
++        && ((insn2->insn_mo->pinfo & INSN_LOAD_MEMORY_DELAY) != 0
++            || (mips_opts.mips16
++		&& strcmp(insn2->insn_mo->name, "nop") != 0)))
++      {
++	as_warn (_("Branch-Deay-Slot-Load at noreorder section for `%s'"),
++	    insn2->insn_mo->name);
++      }
++}
+--- a/include/opcode/mips.h
++++ b/include/opcode/mips.h
+@@ -454,7 +454,10 @@ enum mips_reg_operand_type {
+   OP_REG_R5900_I,
+   OP_REG_R5900_Q,
+   OP_REG_R5900_R,
+-  OP_REG_R5900_ACC
++  OP_REG_R5900_ACC,
++
++  /* Lexra user registers.  */
++  OP_REG_LEXRA_CP0
+ };
+ 
+ /* Base class for all operands.  */
+@@ -1116,6 +1119,11 @@ static const unsigned int mips_isa_table[] =
+ #define ASE_VIRT		0x00000200
+ #define ASE_VIRT64		0x00000400
+ 
++/* RLX ASE */
++#define ASE_RLX			0x80000000
++#define ASE_4281		ASE_RLX
++#define ASE_5281		ASE_RLX
++
+ /* MIPS ISA defines, use instead of hardcoding ISA level.  */
+ 
+ #define       ISA_UNKNOWN     0               /* Gas internal use.  */
+@@ -1173,6 +1181,9 @@ static const unsigned int mips_isa_table[] =
+ #define CPU_OCTEON2	6502
+ #define CPU_XLR     	887682   	/* decimal 'XLR'   */
+ 
++#define CPU_RLX4281     4281      	/* RLX4281 */
++#define CPU_RLX5281     5281      	/* RLX5281 */
++
+ /* Return true if the given CPU is included in INSN_* mask MASK.  */
+ 
+ static inline bfd_boolean
+--- a/opcodes/mips-dis.c
++++ b/opcodes/mips-dis.c
+@@ -67,6 +67,21 @@ static const char * const mips_gpr_names_oldabi[32] =
+   "t8",   "t9",   "k0",   "k1",   "gp",   "sp",   "s8",   "ra"
+ };
+ 
++/* extend to from 14 to 32 to prevent
++ * undefined pattern from crashing objdump
++ */
++static const char *const rlx_cplxc0_names_alias[32] = {
++  "estatus",  "ecause",   "intvec",   "cvstag",
++  "bpctl", "wmpctl", "wmpstatus", "wmpvaddr",
++  "tlptr", "reserved", "reserved", "reserved",
++  "reserved", "reserved", "reserved", "reserved",
++  "reserved", "reserved", "reserved", "wmpextramask",
++  "reserved", "reserved", "reserved", "reserved",
++  "reserved", "reserved", "reserved", "reserved",
++  "reserved", "reserved", "reserved", "reserved"
++};
++
++
+ static const char * const mips_gpr_names_newabi[32] =
+ {
+   "zero", "at",   "v0",   "v1",   "a0",   "a1",   "a2",   "a3",
+@@ -435,6 +450,11 @@ const struct mips_arch_choice mips_arch_choices[] =
+   { "numeric",	0, 0, 0, 0, 0,
+     mips_cp0_names_numeric, NULL, 0, mips_hwr_names_numeric },
+ 
++  { "4281",     1, bfd_mach_mips4281, CPU_RLX4281, ISA_MIPS1, ASE_4281,
++    mips_cp0_names_numeric, NULL, 0, mips_hwr_names_numeric },
++  { "5281",     1, bfd_mach_mips5281, CPU_RLX5281, ISA_MIPS1, ASE_5281,
++    mips_cp0_names_numeric, NULL, 0, mips_hwr_names_numeric },
++
+   { "r3000",	1, bfd_mach_mips3000, CPU_R3000, ISA_MIPS1, 0,
+     mips_cp0_names_r3000, NULL, 0, mips_hwr_names_numeric },
+   { "r3900",	1, bfd_mach_mips3900, CPU_R3900, ISA_MIPS1, 0,
+@@ -941,6 +961,13 @@ print_reg (struct disassemble_info *info, const struct mips_opcode *opcode,
+     case OP_REG_R5900_ACC:
+       info->fprintf_func (info->stream, "$ACC");
+       break;
++
++    case OP_REG_LEXRA_CP0:
++      if (regno > 31 || regno < 0)
++        info->fprintf_func (info->stream, "INVALID");
++      else
++        info->fprintf_func (info->stream, "%s", rlx_cplxc0_names_alias[regno]);
++      break;
+     }
+ }
+ 
+@@ -1325,7 +1352,7 @@ print_insn_args (struct disassemble_info *info,
+ 	  else
+ 	    print_insn_arg (info, &state, opcode, operand, base_pc,
+ 			    mips_extract_operand (operand, insn));
+-	  if (*s == 'm' || *s == '+')
++	  if (*s == 'm' || *s == '+' || *s =='=')
+ 	    ++s;
+ 	  break;
+ 	}
+@@ -1749,7 +1776,8 @@ print_insn_mips16 (bfd_vma memaddr, struct disassemble_info *info)
+     {
+       if (op->pinfo != INSN_MACRO
+ 	  && !(no_aliases && (op->pinfo2 & INSN2_ALIAS))
+-	  && (insn & op->mask) == op->match)
++	  && (insn & op->mask) == op->match
++	  && opcode_is_member (op, mips_isa, mips_ase, mips_processor))
+ 	{
+ 	  const char *s;
+ 
+--- a/opcodes/mips-opc.c
++++ b/opcodes/mips-opc.c
+@@ -93,6 +93,15 @@ decode_mips_operand (const char *p)
+ 	}
+       break;
+ 
++    /* DMP CE and Taroko operand.  */
++    case '=':
++      switch (p[1])
++        {
++        case 'S': UINT (6, 0); /* 6-bits selection bits */
++        case 'd': REG (5, 11, LEXRA_CP0);
++        }
++      break;
++
+     case '<': BIT (5, 6, 0);			/* (0 .. 31) */
+     case '>': BIT (5, 6, 32);			/* (32 .. 63) */
+     case '%': UINT (3, 21);
+@@ -218,6 +227,9 @@ decode_mips_operand (const char *p)
+ #define WR_MACC INSN2_WRITE_MDMX_ACC
+ #define RD_MACC INSN2_READ_MDMX_ACC
+ 
++#define RD_LXC0 INSN_COP
++#define WR_LXC0 INSN_COP
++
+ #define I1	INSN_ISA1
+ #define I2	INSN_ISA2
+ #define I3	INSN_ISA3
+@@ -242,6 +254,9 @@ decode_mips_operand (const char *p)
+ /* MIPS64 MDMX ASE support.  */
+ #define MX      ASE_MDMX
+ 
++/* RLX ASE Support.  */
++#define RLX      ASE_RLX
++
+ #define IL2E    (INSN_LOONGSON_2E)
+ #define IL2F    (INSN_LOONGSON_2F)
+ #define IL3A    (INSN_LOONGSON_3A)
+@@ -862,7 +877,7 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"flushd",		"",		0xbc020000, 0xffffffff, 0, 			0,		L1,		0,	0 },
+ {"flushid",		"",		0xbc030000, 0xffffffff, 0, 			0,		L1,		0,	0 },
+ {"wb",			"o(b)",		0xbc040000, 0xfc1f0000, RD_2|SM,		0,		L1,		0,	0 },
+-{"cache",		"k,o(b)",	0xbc000000, 0xfc000000, RD_3,           	0,		I3_32|T3,	0,	0},
++{"cache",		"k,o(b)",	0xbc000000, 0xfc000000, RD_3,           	0,		I3_32|T3,	RLX,	0},
+ {"cache",		"k,A(b)",	0,    (int) M_CACHE_AB, INSN_MACRO,		0,		I3_32|T3,	0,	0},
+ {"ceil.l.d",		"D,S",		0x4620000a, 0xffff003f, WR_1|RD_2|FP_D,		0,		I3_33,		0,	0 },
+ {"ceil.l.s",		"D,S",		0x4600000a, 0xffff003f, WR_1|RD_2|FP_S|FP_D,	0,		I3_33,		0,	0 },
+@@ -920,7 +935,7 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ /* dctr and dctw are used on the r5000.  */
+ {"dctr",		"o(b)",	 	0xbc050000, 0xfc1f0000, RD_2,			0,		I3,		0,	0 },
+ {"dctw",		"o(b)",		0xbc090000, 0xfc1f0000, RD_2,			0,		I3,		0,	0 },
+-{"deret",		"",		0x4200001f, 0xffffffff, NODS, 			0,		I32|G2,		0,	0 },
++{"deret",		"",		0x4200001f, 0xffffffff, NODS, 			0,		I32|G2,		RLX,	0 },
+ {"dext",		"t,r,+A,+H",	0x7c000003, 0xfc00003f, WR_1|RD_2,    		0,		I65,		0,	0 },
+ {"dext",		"t,r,+A,+G",	0x7c000001, 0xfc00003f, WR_1|RD_2,    		0,		I65,		0,	0 }, /* dextm */
+ {"dext",		"t,r,+E,+H",	0x7c000002, 0xfc00003f, WR_1|RD_2,    		0,		I65,		0,	0 }, /* dextu */
+@@ -1161,8 +1176,8 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"li.d",		"T,L",		0,    (int) M_LI_DD,	INSN_MACRO,		INSN2_M_FP_D,	I1,		0,	SF },
+ {"li.s",		"t,f",		0,    (int) M_LI_S,	INSN_MACRO,		INSN2_M_FP_S,	I1,		0,	0 },
+ {"li.s",		"T,l",		0,    (int) M_LI_SS,	INSN_MACRO,		INSN2_M_FP_S,	I1,		0,	0 },
+-{"ll",			"t,o(b)",	0xc0000000, 0xfc000000, WR_1|RD_3|LDD,		0,		I2,		0,	EE },
+-{"ll",			"t,A(b)",	0,    (int) M_LL_AB,	INSN_MACRO,		0,		I2,		0,	EE },
++{"ll",			"t,o(b)",	0xc0000000, 0xfc000000, WR_1|RD_3|LDD,		0,		I2,		RLX,	EE },
++{"ll",			"t,A(b)",	0,    (int) M_LL_AB,	INSN_MACRO,		0,		I2,		RLX,	EE },
+ {"lld",			"t,o(b)",	0xd0000000, 0xfc000000, WR_1|RD_3|LDD,		0,		I3,		0,	EE },
+ {"lld",			"t,A(b)",	0,    (int) M_LLD_AB,	INSN_MACRO,		0,		I3,		0,	EE },
+ {"lq",			"t,o(b)",	0x78000000, 0xfc000000, WR_1|RD_3,		0,		MMI,		0,	0 },
+@@ -1304,7 +1319,7 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"movf.l",		"X,Y,N",	0x46a00011, 0xffe3003f, WR_1|RD_2|RD_CC|FP_D,	0,		SB1,		MX,	0 },
+ {"movf.s",		"D,S,N",	0x46000011, 0xffe3003f, WR_1|RD_2|RD_CC|FP_S,   0,		I4_32,		0,	0 },
+ {"movf.ps",		"D,S,N",	0x46c00011, 0xffe3003f, WR_1|RD_2|RD_CC|FP_D,	0,		I5_33,		0,	0 },
+-{"movn",		"d,v,t",	0x0000000b, 0xfc0007ff, WR_1|RD_2|RD_3, 	0,		I4_32|IL2E|IL2F|EE, 0,	0 },
++{"movn",		"d,v,t",	0x0000000b, 0xfc0007ff, WR_1|RD_2|RD_3, 	0,		I4_32|IL2E|IL2F|EE, RLX,	0 },
+ {"movnz",		"d,v,t",	0x0000000b, 0xfc0007ff, WR_1|RD_2|RD_3, 	0,		IL2E|IL2F|IL3A,	0,	0 },
+ {"ffc",			"d,v",		0x0000000b, 0xfc1f07ff,	WR_1|RD_2,		0,		L1,		0,	0 },
+ {"movn.d",		"D,S,t",	0x46200013, 0xffe0003f, WR_1|RD_2|RD_3|FP_D,    0,		I4_32,		0,	0 },
+@@ -1318,7 +1333,7 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"movt.l",		"X,Y,N",	0x46a10011, 0xffe3003f, WR_1|RD_2|RD_CC|FP_D,   0,		SB1,		MX,	0 },
+ {"movt.s",		"D,S,N",	0x46010011, 0xffe3003f, WR_1|RD_2|RD_CC|FP_S,   0,		I4_32,		0,	0 },
+ {"movt.ps",		"D,S,N",	0x46c10011, 0xffe3003f, WR_1|RD_2|RD_CC|FP_D,	0,		I5_33,		0,	0 },
+-{"movz",		"d,v,t",	0x0000000a, 0xfc0007ff, WR_1|RD_2|RD_3, 	0,		I4_32|IL2E|IL2F|EE, 0,	0 },
++{"movz",		"d,v,t",	0x0000000a, 0xfc0007ff, WR_1|RD_2|RD_3, 	0,		I4_32|IL2E|IL2F|EE, RLX,	0 },
+ {"ffs",			"d,v",		0x0000000a, 0xfc1f07ff,	WR_1|RD_2,		0,		L1,		0,	0 },
+ {"movz.d",		"D,S,t",	0x46200012, 0xffe0003f, WR_1|RD_2|RD_3|FP_D,    0,		I4_32,		0,	0 },
+ {"movz.l",		"D,S,t",	0x46a00012, 0xffe0003f, WR_1|RD_2|RD_3|FP_D,    0,		SB1,		MX,	0 },
+@@ -1347,11 +1362,11 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"msub.ps",		"D,S,T",	0x45600019, 0xffe0003f,	WR_1|RD_2|RD_3|FP_D,	0,		IL2E,		0,	0 },
+ {"msub.ps",		"D,S,T",	0x72c00019, 0xffe0003f,	WR_1|RD_2|RD_3|FP_D,	0,		IL2F,		0,	0 },
+ {"msub",		"s,t",		0x0000001e, 0xfc00ffff, RD_1|RD_2|WR_HILO,	0,		L1,		0,	0 },
+-{"msub",		"s,t",		0x70000004, 0xfc00ffff, RD_1|RD_2|MOD_HILO,     0,		I32|N55,	0,	0 },
++{"msub",		"s,t",		0x70000004, 0xfc00ffff, RD_1|RD_2|MOD_HILO,     0,		I32|N55,	RLX,	0 },
+ {"msub",		"7,s,t",	0x70000004, 0xfc00e7ff, RD_2|RD_3|MOD_a,        0,              0,		D32,	0 },
+ {"msuba.s",		"S,T",		0x4600001f, 0xffe007ff,	RD_1|RD_2|FP_S,		0,		EE,		0,	0 },
+ {"msubu",		"s,t",		0x0000001f, 0xfc00ffff, RD_1|RD_2|WR_HILO,	0,		L1,		0,	0 },
+-{"msubu",		"s,t",		0x70000005, 0xfc00ffff, RD_1|RD_2|MOD_HILO,     0,		I32|N55,	0,	0 },
++{"msubu",		"s,t",		0x70000005, 0xfc00ffff, RD_1|RD_2|MOD_HILO,     0,		I32|N55,	RLX,	0 },
+ {"msubu",		"7,s,t",	0x70000005, 0xfc00e7ff, RD_2|RD_3|MOD_a,        0,              0,		D32,	0 },
+ {"mtbpc",		"t",		0x4080c000, 0xffe0ffff,	RD_1|WR_C0|COD,		0,		EE,		0,	0 },
+ {"mtdab",		"t",		0x4080c004, 0xffe0ffff,	RD_1|WR_C0|COD,		0,		EE,		0,	0 },
+@@ -1664,8 +1679,8 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"saad",		"t,(b)",	0x70000019, 0xfc00ffff,	RD_1|RD_2|SM,		0,		IOCTP,		0,	0 },
+ {"sb",			"t,o(b)",	0xa0000000, 0xfc000000,	RD_1|RD_3|SM,		0,		I1,		0,	0 },
+ {"sb",			"t,A(b)",	0,    (int) M_SB_AB,	INSN_MACRO,		0,		I1,		0,	0 },
+-{"sc",			"t,o(b)",	0xe0000000, 0xfc000000, MOD_1|RD_3|SM,		0,		I2,		0,	EE },
+-{"sc",			"t,A(b)",	0,    (int) M_SC_AB,	INSN_MACRO,		0,		I2,		0,	EE },
++{"sc",			"t,o(b)",	0xe0000000, 0xfc000000, MOD_1|RD_3|SM,		0,		I2,		RLX,	EE },
++{"sc",			"t,A(b)",	0,    (int) M_SC_AB,	INSN_MACRO,		0,		I2,		RLX,	EE },
+ {"scd",			"t,o(b)",	0xf0000000, 0xfc000000, MOD_1|RD_3|SM,		0,		I3,		0,	EE },
+ {"scd",			"t,A(b)",	0,    (int) M_SCD_AB,	INSN_MACRO,		0,		I3,		0,	EE },
+ /* The macro has to be first to handle o32 correctly.  */
+@@ -1674,8 +1689,8 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"sdbbp",		"",		0x0000000e, 0xffffffff,	TRAP,           	0,		G2,		0,	0 },
+ {"sdbbp",		"c",		0x0000000e, 0xfc00ffff,	TRAP,			0,		G2,		0,	0 },
+ {"sdbbp",		"c,q",		0x0000000e, 0xfc00003f,	TRAP,			0,		G2,		0,	0 },
+-{"sdbbp",		"",		0x7000003f, 0xffffffff, TRAP,           	0,		I32,		0,	0 },
+-{"sdbbp",		"B",		0x7000003f, 0xfc00003f, TRAP,           	0,		I32,		0,	0 },
++{"sdbbp",		"",		0x7000003f, 0xffffffff, TRAP,           	0,		I32,		RLX,	0 },
++{"sdbbp",		"B",		0x7000003f, 0xfc00003f, TRAP,           	0,		I32,		RLX,	0 },
+ {"sdc1",		"T,o(b)",	0xf4000000, 0xfc000000, RD_1|RD_3|SM|FP_D,	0,		I2,		0,	SF },
+ {"sdc1",		"E,o(b)",	0xf4000000, 0xfc000000, RD_1|RD_3|SM|FP_D,	0,		I2,		0,	SF },
+ {"sdc1",		"T,A(b)",	0,    (int) M_SDC1_AB,	INSN_MACRO,		INSN2_M_FP_D,	I2,		0,	SF },
+@@ -1835,8 +1850,8 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"sync_release",	"",		0x0000048f, 0xffffffff,	NODS,			0,		I33,		0,	0 },
+ {"sync_rmb",		"",		0x000004cf, 0xffffffff,	NODS,			0,		I33,		0,	0 },
+ {"sync_wmb",		"",		0x0000010f, 0xffffffff,	NODS,			0,		I33,		0,	0 },
+-{"sync",		"",		0x0000000f, 0xffffffff,	NODS,			0,		I2|G1,		0,	0 },
+-{"sync",		"1",		0x0000000f, 0xfffff83f,	NODS,			0,		I32,		0,	0 },
++{"sync",		"",		0x0000000f, 0xffffffff,	NODS,			0,		I2|G1,		RLX,	0 },
++{"sync",		"1",		0x0000000f, 0xfffff83f,	NODS,			0,		I32,		RLX,	0 },
+ {"sync.p",		"",		0x0000040f, 0xffffffff,	NODS,			0,		I2,		0,	0 },
+ {"sync.l",		"",		0x0000000f, 0xffffffff,	NODS,			0,		I2,		0,	0 },
+ {"synci",		"o(b)",		0x041f0000, 0xfc1f0000,	RD_2|SM,		0,		I33,		0,	0 },
+@@ -1927,6 +1942,13 @@ const struct mips_opcode mips_builtin_opcodes[] =
+ {"zcb",			"(b)",		0x7000071f, 0xfc1fffff, RD_1|SM,		0,		IOCT2,		0,	0 },
+ {"zcbt",		"(b)",		0x7000075f, 0xfc1fffff, RD_1|SM,		0,		IOCT2,		0,	0 },
+ 
++{"mflxc0",		"t,=d",		0x40600000, 0xffe007ff, WR_1|RD_LXC0|LCD,	0,		0,		RLX,	0 },
++{"mflxc0",		"t,=d,=S",	0x40600000, 0xffe007c0, WR_1|RD_LXC0|LCD, 	0,		0,		RLX,	0 },
++{"mtlxc0",		"t,=d",		0x40e00000, 0xffe007ff, RD_1|WR_LXC0|WR_CC|COD,	0,		0,		RLX,	0 },
++{"mtlxc0",		"t,=d,=S",	0x40e00000, 0xffe007c0, RD_1|WR_LXC0|WR_CC|COD, 0,		0,		RLX,	0 },
++
++{"sleep",		"",		0x42000038, 0xffffffff, 0, 			0,		0,		RLX,	0 },
++
+ /* User Defined Instruction.  */
+ {"udi0",		"s,t,d,+1",	0x70000010, 0xfc00003f,	UDI,			0,		I33,		0,	0 },
+ {"udi0",		"s,t,+2",	0x70000010, 0xfc00003f,	UDI,			0,		I33,		0,	0 },
+--- a/opcodes/mips16-opc.c
++++ b/opcodes/mips16-opc.c
+@@ -180,6 +180,8 @@ decode_mips16_operand (char type, bfd_boolean extended_p)
+ #define I64	INSN_ISA64
+ #define T3	INSN_3900
+ 
++#define RLX	ASE_RLX
++
+ const struct mips_opcode mips16_opcodes[] =
+ {
+ /* name,    args,	match,	mask,		pinfo,	         	pinfo2, membership */
+@@ -352,7 +354,7 @@ const struct mips_opcode mips16_opcodes[] =
+   /* MIPS16e additions */
+ {"restore", "M",	0x6400, 0xff80,		WR_31|NODS,		MOD_SP,		I32,	0,	0 },
+ {"save",    "m",	0x6480, 0xff80,		NODS,			RD_31|MOD_SP,	I32,	0,	0 },
+-{"sdbbp",   "6",	0xe801, 0xf81f,		TRAP,			0,		I32,	0,	0 },
++{"sdbbp",   "6",	0xe801, 0xf81f,		TRAP,			0,		I32,	RLX,	0 },
+ {"seb",	    "x",	0xe891, 0xf8ff,		MOD_1,			0,		I32,	0,	0 },
+ {"seh",	    "x",	0xe8b1, 0xf8ff,		MOD_1,			0,		I32,	0,	0 },
+ {"sew",	    "x",	0xe8d1, 0xf8ff,		MOD_1,			0,		I64,	0,	0 },

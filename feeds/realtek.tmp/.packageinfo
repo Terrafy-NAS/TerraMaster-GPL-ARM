@@ -1,0 +1,5528 @@
+Source-Makefile: feeds/realtek/ecryptfs-utils/Makefile
+Package: ecryptfs-utils
+Submenu: Filesystem
+Version: 106-2
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +keyutils +openssl +libecryptfs +libc-bin +gettext-tools
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: intltool/host
+Section: utils
+Category: Utilities
+Title: eCryptfs utilities
+Maintainer: 
+Source: ecryptfs-utils_106.orig.tar.gz
+Type: ipkg
+Description: 	eCryptfs utilities
+http://ecryptfs-utils.sourceforge.net/
+
+@@
+
+Package: libecryptfs
+Submenu: Filesystem
+Version: 106-2
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgcrypt +libkeyutils +libopenssl
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: intltool/host
+Section: libs
+Category: Libraries
+Title: eCryptfs Library
+Maintainer: 
+Source: ecryptfs-utils_106.orig.tar.gz
+Type: ipkg
+Description: 	eCryptfs library
+
+@@
+Config:
+  if PACKAGE_libecryptfs
+	config PACKAGE_libecryptfs-hp
+		select PACKAGE_kmod-rtd1295-64k
+		bool "High performance mode"
+		depends on !PACKAGE_kmod-lib-mali
+		default n
+		help
+		  Increase ecryptfs throughput by increasing page size.
+  endif
+@@
+
+
+Source-Makefile: feeds/realtek/gst1-plugins-bad-rtk/Makefile
+Package: libgst1adaptivedemux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1app-rtk +libgst1uridownloader-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer adaptivedemux library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer adaptivedemux library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1photography-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer photography library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer photography library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1basecamerabinsrc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1app-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer basecamerabinsrc library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer basecamerabinsrc library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1uridownloader-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer uridownloader library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer uridownloader library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1codecparsers-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer codecparsers library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer codecparsers library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1mpegts-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer mpegts library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer mpegts library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-adpcmdec-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer adpcm decoding support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer adpcm decoding support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-adpcmenc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer adpcm encoding support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer adpcm encoding support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-aiff-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer aiff support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer aiff support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-asfmux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1rtp-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer asf muxing support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer asf muxing support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-autoconvert-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer autoconvert support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer autoconvert support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-bayer-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer bayer support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer bayer support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-camerabin2-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1basecamerabinsrc-rtk +libgst1photography-rtk +libgst1tag-rtk +libgst1pbutils-rtk +libgst1app-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer camerabin support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer camerabin support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-dataurisrc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer dataurisrc support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer dataurisrc support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-debugutilsbad-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer debugutils support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer debugutils support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-dvdspu-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer dvdspu support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer dvdspu support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-faac-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +libfaac
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer faac support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer faac support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-faad-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libfaad2
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer faad support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer faad support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-fdkaac-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +fdk-aac
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer fdkaac support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer fdkaac support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-fbdevsink-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer fbdev support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer fbdev support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-festival-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer festival support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer festival support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-fragmented-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1pbutils-rtk +libgst1adaptivedemux-rtk +libnettle
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer fragmented support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer fragmented support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-frei0r-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1controller-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer frei0r support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer frei0r support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-id3tag-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer id3tag support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer id3tag support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-jpegformat-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer jpegformat support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer jpegformat support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-liveadder-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer liveadder support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer liveadder support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-mpegpsdemux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1pbutils-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer mpegpsdemux support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer mpegpsdemux support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-mpegpsmux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer mpegpsmux support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer mpegpsmux support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-mpegtsdemux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1codecparsers-rtk +libgst1mpegts-rtk +libgst1pbutils-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer mpegtsdemux support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer mpegtsdemux support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-mpegtsmux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk +libgst1mpegts-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer mpegtsmux support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer mpegtsmux support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-mxf-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer mxf support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer mxf support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-opus-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +libgst1rtp-rtk +libopus
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer OPUS plugin library plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer OPUS plugin library plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-pcapparse-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer pcapparse support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer pcapparse support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-pnm-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer pnm support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer pnm support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-rawparse-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer rawparse support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer rawparse support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-rfbsrc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer librfb support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer librfb support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-rtpbad-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1codecparsers-rtk +libgst1rtp-rtk +libgst1tag-rtk +libgst1pbutils-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RTP plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RTP plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-sdpelem-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1rtp-rtk +libgst1sdp-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer sdp support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer sdp support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-segmentclip-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer segmentclip support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer segmentclip support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-shm-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +librt
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer POSIX shared memory source and sink plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer POSIX shared memory source and sink plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-siren-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1rtp-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer siren support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer siren support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-speed-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer speed support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer speed support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-subenc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1controller-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer subenc support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer subenc support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-videoparsersbad-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1codecparsers-rtk +libgst1pbutils-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer videoparse support plugin (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer videoparse support plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gstreamer1-plugins-bad-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +ALL:gst1-plugins-bad-rtk +gstreamer1-plugins-base-rtk +openmax
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Description: GStreamer plugins collection (bad)
+http://gstreamer.freedesktop.org/
+
+@@
+Config:
+    menu "Select GStreamer bad modules and libraries"
+      depends on PACKAGE_gstreamer1-plugins-bad-rtk
+
+
+    config gst1-plugins-bad-rtk-all
+      bool "Include all GStreamer bad plugins"
+      select PACKAGE_gst1-plugins-bad-rtk
+
+    comment "Modules"
+
+    config PACKAGE_gst1-mod-adpcmdec-rtk
+      prompt "GStreamer adpcmdec module"
+
+     config PACKAGE_gst1-mod-adpcmenc-rtk
+      prompt "GStreamer adpcmenc module"
+
+     config PACKAGE_gst1-mod-aiff-rtk
+      prompt "GStreamer aiff module"
+
+     config PACKAGE_gst1-mod-asfmux-rtk
+      prompt "GStreamer asfmux module"
+
+     config PACKAGE_gst1-mod-autoconvert-rtk
+      prompt "GStreamer autoconvert module"
+
+     config PACKAGE_gst1-mod-bayer-rtk
+      prompt "GStreamer bayer module"
+
+     config PACKAGE_gst1-mod-camerabin2-rtk
+      prompt "GStreamer camerabin2 module"
+
+     config PACKAGE_gst1-mod-dataurisrc-rtk
+      prompt "GStreamer dataurisrc module"
+
+     config PACKAGE_gst1-mod-debugutilsbad-rtk
+      prompt "GStreamer debugutilsbad module"
+
+     config PACKAGE_gst1-mod-dvdspu-rtk
+      prompt "GStreamer dvdspu module"
+
+     config PACKAGE_gst1-mod-faac-rtk
+      prompt "GStreamer faac module"
+
+     config PACKAGE_gst1-mod-faad-rtk
+      prompt "GStreamer faad module"
+
+     config PACKAGE_gst1-mod-fdkaac-rtk
+      prompt "GStreamer fdkaac module"
+
+     config PACKAGE_gst1-mod-fbdevsink-rtk
+      prompt "GStreamer fbdevsink module"
+
+     config PACKAGE_gst1-mod-festival-rtk
+      prompt "GStreamer festival module"
+
+     config PACKAGE_gst1-mod-fragmented-rtk
+      prompt "GStreamer fragmented module"
+
+     config PACKAGE_gst1-mod-frei0r-rtk
+      prompt "GStreamer frei0r module"
+
+     config PACKAGE_gst1-mod-id3tag-rtk
+      prompt "GStreamer id3tag module"
+
+     config PACKAGE_gst1-mod-jpegformat-rtk
+      prompt "GStreamer jpegformat module"
+
+     config PACKAGE_gst1-mod-liveadder-rtk
+      prompt "GStreamer liveadder module"
+
+     config PACKAGE_gst1-mod-mpegpsdemux-rtk
+      prompt "GStreamer mpegpsdemux module"
+
+     config PACKAGE_gst1-mod-mpegpsmux-rtk
+      prompt "GStreamer mpegpsmux module"
+
+     config PACKAGE_gst1-mod-mpegtsdemux-rtk
+      prompt "GStreamer mpegtsdemux module"
+
+     config PACKAGE_gst1-mod-mpegtsmux-rtk
+      prompt "GStreamer mpegtsmux module"
+
+     config PACKAGE_gst1-mod-mxf-rtk
+      prompt "GStreamer mxf module"
+
+     config PACKAGE_gst1-mod-opus-rtk
+      prompt "GStreamer opus module"
+
+     config PACKAGE_gst1-mod-pcapparse-rtk
+      prompt "GStreamer pcapparse module"
+
+     config PACKAGE_gst1-mod-pnm-rtk
+      prompt "GStreamer pnm module"
+
+     config PACKAGE_gst1-mod-rawparse-rtk
+      prompt "GStreamer rawparse module"
+
+     config PACKAGE_gst1-mod-rfbsrc-rtk
+      prompt "GStreamer rfbsrc module"
+
+     config PACKAGE_gst1-mod-rtpbad-rtk
+      prompt "GStreamer rtpbad module"
+
+     config PACKAGE_gst1-mod-sdpelem-rtk
+      prompt "GStreamer sdpelem module"
+
+     config PACKAGE_gst1-mod-segmentclip-rtk
+      prompt "GStreamer segmentclip module"
+
+     config PACKAGE_gst1-mod-shm-rtk
+      prompt "GStreamer shm module"
+
+     config PACKAGE_gst1-mod-siren-rtk
+      prompt "GStreamer siren module"
+
+     config PACKAGE_gst1-mod-speed-rtk
+      prompt "GStreamer speed module"
+
+     config PACKAGE_gst1-mod-subenc-rtk
+      prompt "GStreamer subenc module"
+
+     config PACKAGE_gst1-mod-videoparsersbad-rtk
+      prompt "GStreamer videoparsersbad module"
+
+   
+
+    comment "Libraries"
+
+    config PACKAGE_libgst1adaptivedemux-rtk
+      prompt "GStreamer adaptivedemux library"
+
+     config PACKAGE_libgst1photography-rtk
+      prompt "GStreamer photography library"
+
+     config PACKAGE_libgst1basecamerabinsrc-rtk
+      prompt "GStreamer basecamerabinsrc library"
+
+     config PACKAGE_libgst1uridownloader-rtk
+      prompt "GStreamer uridownloader library"
+
+     config PACKAGE_libgst1codecparsers-rtk
+      prompt "GStreamer codecparsers library"
+
+     config PACKAGE_libgst1mpegts-rtk
+      prompt "GStreamer mpegts library"
+
+   
+
+  endmenu
+
+@@
+
+Package: gst1-plugins-bad-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1adaptivedemux-rtk +libgst1photography-rtk +libgst1basecamerabinsrc-rtk +libgst1uridownloader-rtk +libgst1codecparsers-rtk +libgst1mpegts-rtk +gst1-mod-adpcmdec-rtk +gst1-mod-adpcmenc-rtk +gst1-mod-aiff-rtk +gst1-mod-asfmux-rtk +gst1-mod-autoconvert-rtk +gst1-mod-bayer-rtk +gst1-mod-camerabin2-rtk +gst1-mod-dataurisrc-rtk +gst1-mod-debugutilsbad-rtk +gst1-mod-dvdspu-rtk +gst1-mod-faac-rtk +gst1-mod-faad-rtk +gst1-mod-fdkaac-rtk +gst1-mod-fbdevsink-rtk +gst1-mod-festival-rtk +gst1-mod-fragmented-rtk +gst1-mod-frei0r-rtk +gst1-mod-id3tag-rtk +gst1-mod-jpegformat-rtk +gst1-mod-liveadder-rtk +gst1-mod-mpegpsdemux-rtk +gst1-mod-mpegpsmux-rtk +gst1-mod-mpegtsdemux-rtk +gst1-mod-mpegtsmux-rtk +gst1-mod-mxf-rtk +gst1-mod-opus-rtk +gst1-mod-pcapparse-rtk +gst1-mod-pnm-rtk +gst1-mod-rawparse-rtk +gst1-mod-rfbsrc-rtk +gst1-mod-rtpbad-rtk +gst1-mod-sdpelem-rtk +gst1-mod-segmentclip-rtk +gst1-mod-shm-rtk +gst1-mod-siren-rtk +gst1-mod-speed-rtk +gst1-mod-subenc-rtk +gst1-mod-videoparsersbad-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (bad)
+Maintainer: 
+Source: rtkdl-gst1-plugins-bad-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description: GStreamer plugins collection (bad)
+http://gstreamer.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/realtek/gst1-plugins-base-rtk/Makefile
+Package: libgst1allocators-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer allocators library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer allocators library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1app-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer app library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer app library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1audio-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1fft-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer FFT library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer FFT library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1pbutils-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer utils library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer utils library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1riff-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RIFF media library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RIFF media library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1rtp-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RTP library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RTP library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1rtsp-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RTSP library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RTSP library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1sdp-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer SDP library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer SDP library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1tag-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer tag support library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer tag support library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: libgst1video-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer video library (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer video library.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-alsa-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +alsa-lib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer ALSA plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer ALSA plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-app-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1app-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer app plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer app plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-audioconvert-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio format conversion plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio format conversion plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-audiorate-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio rate adjusting plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio rate adjusting plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-audioresample-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio resampling plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio resampling plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-audiotestsrc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +libgst1controller-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio test plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio test plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-playback-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1pbutils-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer media decoder (v2) plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer media decoder (v2) plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-gio-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer GIO plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer GIO plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-ogg-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1riff-rtk +libgst1tag-rtk +libgst1pbutils-rtk +libgst1video-rtk +libogg
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer Ogg plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer Ogg plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-tcp-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1net-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer TCP plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer TCP plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-theora-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1tag-rtk +libgst1video-rtk +libogg +libtheora
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer Theora plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer Theora plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-typefindfunctions-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +libgst1tag-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer 'typefind' functions plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer 'typefind' functions plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-videoconvert-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer video format conversion plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer video format conversion plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-videorate-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer Adjusts video frames plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer Adjusts video frames plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-videoscale-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer Resizes video plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer Resizes video plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-videotestsrc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk +liboil
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer video test plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer video test plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-volume-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1controller-rtk +liboil
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer volume plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer volume plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gst1-mod-vorbis-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +gst1-mod-ogg-rtk +libvorbis
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer Vorbis plugin (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer Vorbis plugin.
+http://gstreamer.freedesktop.org/
+
+@@
+
+Package: gstreamer1-plugins-base-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +ALL:gst1-plugins-base-rtk +gstreamer1-libs-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Description: GStreamer plugins collection (base)
+http://gstreamer.freedesktop.org/
+
+@@
+Config:
+    menu "Select GStreamer base modules and libraries"
+      depends on PACKAGE_gstreamer1-plugins-base-rtk
+
+
+    config gst1-plugins-base-rtk-all
+      bool "Include all GStreamer base plugins"
+      select PACKAGE_gst1-plugins-base-rtk
+
+    comment "Modules"
+
+    config PACKAGE_gst1-mod-alsa-rtk
+      prompt "GStreamer alsa module"
+
+     config PACKAGE_gst1-mod-app-rtk
+      prompt "GStreamer app module"
+
+     config PACKAGE_gst1-mod-audioconvert-rtk
+      prompt "GStreamer audioconvert module"
+
+     config PACKAGE_gst1-mod-audiorate-rtk
+      prompt "GStreamer audiorate module"
+
+     config PACKAGE_gst1-mod-audioresample-rtk
+      prompt "GStreamer audioresample module"
+
+     config PACKAGE_gst1-mod-audiotestsrc-rtk
+      prompt "GStreamer audiotestsrc module"
+
+     config PACKAGE_gst1-mod-playback-rtk
+      prompt "GStreamer playback module"
+
+     config PACKAGE_gst1-mod-gio-rtk
+      prompt "GStreamer gio module"
+
+     config PACKAGE_gst1-mod-ogg-rtk
+      prompt "GStreamer ogg module"
+
+     config PACKAGE_gst1-mod-tcp-rtk
+      prompt "GStreamer tcp module"
+
+     config PACKAGE_gst1-mod-theora-rtk
+      prompt "GStreamer theora module"
+
+     config PACKAGE_gst1-mod-typefindfunctions-rtk
+      prompt "GStreamer typefindfunctions module"
+
+     config PACKAGE_gst1-mod-videoconvert-rtk
+      prompt "GStreamer videoconvert module"
+
+     config PACKAGE_gst1-mod-videorate-rtk
+      prompt "GStreamer videorate module"
+
+     config PACKAGE_gst1-mod-videoscale-rtk
+      prompt "GStreamer videoscale module"
+
+     config PACKAGE_gst1-mod-videotestsrc-rtk
+      prompt "GStreamer videotestsrc module"
+
+     config PACKAGE_gst1-mod-volume-rtk
+      prompt "GStreamer volume module"
+
+     config PACKAGE_gst1-mod-vorbis-rtk
+      prompt "GStreamer vorbis module"
+
+   
+
+    comment "Libraries"
+
+    config PACKAGE_libgst1allocators-rtk
+      prompt "GStreamer allocators library"
+
+     config PACKAGE_libgst1app-rtk
+      prompt "GStreamer app library"
+
+     config PACKAGE_libgst1audio-rtk
+      prompt "GStreamer audio library"
+
+     config PACKAGE_libgst1fft-rtk
+      prompt "GStreamer fft library"
+
+     config PACKAGE_libgst1pbutils-rtk
+      prompt "GStreamer pbutils library"
+
+     config PACKAGE_libgst1riff-rtk
+      prompt "GStreamer riff library"
+
+     config PACKAGE_libgst1rtp-rtk
+      prompt "GStreamer rtp library"
+
+     config PACKAGE_libgst1rtsp-rtk
+      prompt "GStreamer rtsp library"
+
+     config PACKAGE_libgst1sdp-rtk
+      prompt "GStreamer sdp library"
+
+     config PACKAGE_libgst1tag-rtk
+      prompt "GStreamer tag library"
+
+     config PACKAGE_libgst1video-rtk
+      prompt "GStreamer video library"
+
+   
+
+  endmenu
+
+@@
+
+Package: gst1-plugins-base-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1allocators-rtk +libgst1app-rtk +libgst1audio-rtk +libgst1fft-rtk +libgst1pbutils-rtk +libgst1riff-rtk +libgst1rtp-rtk +libgst1rtsp-rtk +libgst1sdp-rtk +libgst1tag-rtk +libgst1video-rtk +gst1-mod-alsa-rtk +gst1-mod-app-rtk +gst1-mod-audioconvert-rtk +gst1-mod-audiorate-rtk +gst1-mod-audioresample-rtk +gst1-mod-audiotestsrc-rtk +gst1-mod-playback-rtk +gst1-mod-gio-rtk +gst1-mod-ogg-rtk +gst1-mod-tcp-rtk +gst1-mod-theora-rtk +gst1-mod-typefindfunctions-rtk +gst1-mod-videoconvert-rtk +gst1-mod-videorate-rtk +gst1-mod-videoscale-rtk +gst1-mod-videotestsrc-rtk +gst1-mod-volume-rtk +gst1-mod-vorbis-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (base)
+Maintainer: 
+Source: rtkdl-gst1-plugins-base-rtk.tar.gz
+License: LGPLv2 GPLv2
+LicenseFiles: COPYING.LIB COPYING
+Type: ipkg
+Hidden: 1
+Description: GStreamer plugins collection (base)
+http://gstreamer.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/realtek/gstreamer1-rtk/Makefile
+Package: libgst1check-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +libgstreamer1-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer check unit testing library (core)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gstreamer-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer check unit testing library.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: libgst1controller-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +libgstreamer1-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer dynamic parameter control library (core)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gstreamer-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer dynamic parameter control library.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: libgst1net-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +libgstreamer1-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer network classes library (core)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gstreamer-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer network classes library.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: libgstreamer1-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +glib2 +libpthread +libxml2
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer library (core)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gstreamer-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:   GStreamer open source multimedia framework
+ .
+ This package contains the GStreamer core library.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gstreamer1-libs-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +ALL:gstreamer1-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer core libraries
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gstreamer-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Description:   GStreamer open source multimedia framework
+ .
+ This meta package contains only dependencies on the other GStreamer
+ componenents.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+Config:
+    menu "Select GStreamer libraries"
+      depends on PACKAGE_gstreamer1-libs-rtk
+
+    config gstreamer1-rtk-all
+      bool "Include all GStreamer1 core libraries"
+      select PACKAGE_gstreamer1-rtk
+
+#    comment "Libraries"
+
+ #   #   config PACKAGE_libgstreamer1
+ #     prompt "GStreamer core library libgstreamer1"
+
+  #   #   config PACKAGE_libgst1check
+ #     prompt "GStreamer core library libgst1check"
+
+  #   #   config PACKAGE_libgst1controller
+ #     prompt "GStreamer core library libgst1controller"
+
+  #   #   config PACKAGE_libgst1net
+ #     prompt "GStreamer core library libgst1net"
+
+  # 
+
+  endmenu
+
+@@
+
+Package: gstreamer1-utils-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +BUILD_NLS:libiconv-full +BUILD_NLS:libintl-full +libgstreamer1-rtk +gstreamer1-libs-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer utilities
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gstreamer-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Description:   GStreamer open source multimedia framework
+ .
+ This package contains the GStreamer utilities.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gstreamer1-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +libgst1check-rtk +libgst1controller-rtk +libgst1net-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer (All libraries)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gstreamer-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description: GStreamer (All libraries)
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+
+Source-Makefile: feeds/realtek/libc-bin/Makefile
+Package: libc-bin
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: util
+Category: Utilities
+Title: Binaries for GNU C libraries
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Binaries for GNU C libraries
+http://www.eglibc.org
+
+@@
+
+
+Source-Makefile: feeds/realtek/libgssglue/Makefile
+Package: libgssglue
+Version: 0.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libtool libintl libiconv
+Section: libs
+Category: Libraries
+Title: Library libgssglue
+Maintainer: 
+Source: libgssglue-0.4.tar.gz
+Type: ipkg
+Description: Library libgssglue
+http://www.citi.umich.edu/projects/nfsv4/linux/libgssglue/
+
+@@
+
+
+Source-Makefile: feeds/realtek/libmediainfo/Makefile
+Package: libmediainfo
+Version: 0.7.97-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +zenlib +zlib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utilities
+Category: Multimedia
+Title: LibMediainfo for MediaInfo
+Maintainer: 
+Source: libmediainfo-0.7.97.tar.bz2
+Type: ipkg
+Description:   Libmediainfo is a library for MediaInfo
+https://mediaarea.net/en/MediaInfo
+
+@@
+
+
+Source-Makefile: feeds/realtek/libmgplus/Makefile
+Package: libmgplus
+Version: 1.2.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libminigui-gpl +libstdcpp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libminigui-gpl
+Section: multimedia
+Category: Extra packages
+Title: Minigui Plus
+Maintainer: 
+Source: libmgplus-1.2.4.tar.gz
+License: GPLv3
+Type: ipkg
+Description: Minigui Plus
+http://www.minigui.org
+
+@@
+
+
+Source-Makefile: feeds/realtek/libminigui-gpl/Makefile
+Package: libminigui-gpl
+Version: 3.0.12-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpng
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: multimedia
+Category: Extra packages
+Title: MiniGUI
+Maintainer: 
+Source: libminigui-gpl-3.0.12.tar.gz
+License: GPLv3
+Type: ipkg
+Description: MiniGUI
+http://www.minigui.org
+
+@@
+
+
+Source-Makefile: feeds/realtek/libtirpc/Makefile
+Package: libtirpc
+Version: 0.2.3-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpthread +libgssglue
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libtool libintl libiconv
+Section: libs
+Category: Libraries
+Title: Library TI RPC for RPC bindings
+Maintainer: 
+Source: libtirpc-0.2.3.tar.bz2
+Type: ipkg
+Description: Library TI RPC for RPC bindings
+http://libtirpc.sourceforge.net/
+
+@@
+
+
+Source-Makefile: feeds/realtek/supportlibs/Makefile
+Package: supportlibs
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +libgstreamer1-rtk +gst1-plugins-base-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Extra packages
+Title: Realtek NVR support library
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package provides support libraries for network video recorder (NVR) feature
+
+@@
+
+
+Source-Makefile: feeds/realtek/zenlib/Makefile
+Package: zenlib
+Version: 0.7.97-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libstdcpp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utilities
+Category: Multimedia
+Title: Zenlib for MediaInfo
+Maintainer: 
+Source: zenlib-0.7.97.tar.bz2
+Type: ipkg
+Description:   Zenlib is a library for MediaInfo
+https://mediaarea.net/en/MediaInfo
+
+@@
+
+
+Source-Makefile: feeds/realtek/armcl/Makefile
+Package: armcl
+Submenu: Mali
+Version: 17.12-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libstdcpp +kmod-lib-mali +mali-opencl
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: ARM Compute Library for computer vision and machine learning
+Maintainer: 
+Source: v17.12.tar.gz
+License: MIT
+Type: ipkg
+Description:        The Compute Library is a collection of low-level functions optimized
+       for Arm CPU and GPU architectures targeted at image processing,
+       computer vision, and machine learning. It is available free of charge
+       under a permissive MIT open source license.
+
+       The Compute Library contains a comprehensive collection of software
+       functions implemented for the Arm Cortex-A family of CPU processors
+       and the Arm Mali family of GPUs. It is a convenient repository of
+       low-level optimized functions that developers can source individually
+       or use as part of complex pipelines in order to accelerate their
+       algorithms and applications.
+https://developer.arm.com/technologies/compute-library
+
+@@
+
+
+Source-Makefile: feeds/realtek/bwmon/Makefile
+Package: bwmon
+Submenu: CPU tools
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +jansson +libstdcpp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Bandwidth monitor for Realtek SoC
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_UIO=y CONFIG_UIO_ASSIGN_MINOR=y CONFIG_UIO_RTK_RBUS=y CONFIG_UIO_RTK_REFCLK=y CONFIG_UIO_RTK_SE=y CONFIG_UIO_RTK_MD=y
+Description:  Realtek SoC bandwidth monitor
+
+@@
+
+
+Source-Makefile: feeds/realtek/dhrystone/Makefile
+Package: dhrystone
+Submenu: CPU tools
+Version: 2.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Easy-to-use integer benchmark
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Easy-to-use integer benchmark
+http://www.netlib.org/benchmark/dhry-c
+
+@@
+
+
+Source-Makefile: feeds/realtek/docker/Makefile
+Package: docker
+Version: 17.06.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +libdevmapper +ca-certificates +iptables-mod-extra +namespace-utils +kmod-ipt-extra +kmod-veth +@KERNEL_PERF_EVENTS +@KERNEL_CGROUPS +@KERNEL_FREEZER +@KERNEL_CGROUP_FREEZER +@KERNEL_CGROUP_DEVICE +@KERNEL_CGROUP_DEVICE +@KERNEL_CGROUP_PIDS +@KERNEL_CPUSETS +@KERNEL_CGROUP_CPUACCT +@KERNEL_MM_OWNER +@KERNEL_MEMCG +@KERNEL_MEMCG_SWAP +@KERNEL_MEMCG_SWAP_ENABLED +@KERNEL_MEMCG_KMEM +@KERNEL_CGROUP_PERF +@KERNEL_CGROUP_SCHED +@KERNEL_BLK_CGROUP +@KERNEL_NET_CLS_CGROUP +@KERNEL_CGROUP_NET_PRIO +@KERNEL_NAMESPACES +@KERNEL_UTS_NS +@KERNEL_IPC_NS +@KERNEL_USER_NS +@KERNEL_PID_NS +@KERNEL_NET_NS +@KERNEL_SECCOMP_FILTER +@KERNEL_SECCOMP
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Docker
+Maintainer: 
+Require-User: docker=999:docker=999
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_ADVISE_SYSCALLS=y CONFIG_BLK_DEV_THROTTLING=y CONFIG_BRIDGE_NETFILTER=y CONFIG_CFQ_GROUP_IOSCHED=y CONFIG_DEVPTS_MULTIPLE_INSTANCES=y CONFIG_IP_VS=y CONFIG_IP_VS_DEBUG=n CONFIG_IP_VS_DH=n CONFIG_IP_VS_FO=n CONFIG_IP_VS_IPV6=n CONFIG_IP_VS_LBLC=n CONFIG_IP_VS_LBLCR=n CONFIG_IP_VS_LC=n CONFIG_IP_VS_NFCT=y CONFIG_IP_VS_NQ=n CONFIG_IP_VS_OVF=n CONFIG_IP_VS_PROTO_AH=n CONFIG_IP_VS_PROTO_ESP=n CONFIG_IP_VS_PROTO_SCTP=n CONFIG_IP_VS_PROTO_TCP=n CONFIG_IP_VS_PROTO_UDP=n CONFIG_IP_VS_RR=y CONFIG_IP_VS_SED=n CONFIG_IP_VS_SH=n CONFIG_IP_VS_SH_TAB_BITS=8 CONFIG_IP_VS_TAB_BITS=12 CONFIG_IP_VS_WLC=n CONFIG_IP_VS_WRR=n CONFIG_POSIX_MQUEUE=y
+Description:   Docker prebuilt binaries based on version 17.06.0.
+https://www.docker.com/
+
+@@
+
+
+Source-Makefile: feeds/realtek/findutils/Makefile
+Package: findutils
+Default: y
+Version: 4.4.2-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: GNU find utils
+Maintainer: 
+Source: findutils-4.4.2.tar.gz
+Type: ipkg
+Description: 	The GNU Find Utilities are the basic directory searching utilities of the GNU operating system
+http://www.gnu.org/software/findutils/
+
+@@
+
+
+Source-Makefile: feeds/realtek/freetds/Makefile
+Package: freetds
+Version: 1.00.48-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +unixodbc +libpthread +libncurses +libreadline +libopenssl
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: freetds
+Maintainer: 
+Source: freetds-1.00.48.tar.bz2
+Type: ipkg
+Description: 	FreeTDS is a set of libraries for Unix and Linux that allows your programs to natively talk to Microsoft SQL Server and Sybase databases. 
+http://freetds.org
+
+@@
+
+
+Source-Makefile: feeds/realtek/gawk/Makefile
+Package: gawk
+Version: 3.1.8-2
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: GAWK
+Maintainer: 
+Source: gawk-3.1.8.tar.gz
+Type: ipkg
+Description: 	GNU version of AWK.
+http://www.gnu.org/software/gawk/
+
+@@
+
+
+Source-Makefile: feeds/realtek/gphotofs/Makefile
+Package: gphotofs
+Version: 0.5-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgphoto2 +libgphoto2-drivers +libpthread +glib2 +kmod-fuse +libfuse +BUILD_NLS:libintl-full +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GPhotoFS is a filesystem client based on libgphoto2 
+Maintainer: 
+Source: gphotofs-0.5.tar.bz2
+Type: ipkg
+Description:  	GPhotoFS is a filesystem client based on libgphoto2 that exposes
+       supported cameras as filesystems; while some cameras implement the USB
+       Mass Storage class and already appear as filesystems (making this
+       program redundant), many use the Picture Transfer Protocol (PTP) or
+       some other custom protocol. But as long as the camera is supported by
+       libgphoto2, it can be mounted as a filesystem using this program.
+
+       As libgphoto2 is a userspace library for interacting with cameras, it
+       is natural that if one to build a filesystem ontop of it, one should
+       use FUSE, and that is what I have done.
+http://www.gphoto.org/
+
+@@
+
+
+Source-Makefile: feeds/realtek/gst1-omx-1-2/Makefile
+Package: gst1-omx-1-2
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +gstreamer1-plugins-base-rtk +openmax +libgst1audio-rtk +libgst1pbutils-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: openmax libgstreamer1-rtk gstreamer1-plugins-base-rtk
+Section: multimedia
+Category: Multimedia
+Title: GStreamer OpenMAX plugin v
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  GStreamer OpenMAX IL wrapper plugin
+ This plugin wraps available OpenMAX IL components and makes
+ them available as standard GStreamer elements.
+
+@@
+
+
+Source-Makefile: feeds/realtek/gst1-plugins-good-rtk/Makefile
+Package: gst1-mod-alaw-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer alaw codec plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer alaw codec plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-alpha-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer alpha support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer alpha support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-alphacolor-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer alphacolor support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer alphacolor support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-apetag-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +libgst1tag-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer apetag support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer apetag support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-audiofx-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1fft-rtk +libgst1controller-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio effects plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio effects plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-audioparsers-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +libgst1pbutils-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audioparsers plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audioparsers plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-auparse-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +libgst1pbutils-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer auparse plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer auparse plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-autodetect-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer format auto-detection plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer format auto-detection plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-avi-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1riff-rtk +libgst1tag-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer avi support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer avi support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-cutter-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio cutter plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio cutter plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-debug-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer debugging plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer debugging plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-deinterlace-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer deinterlace support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer deinterlace support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-dtmf-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1rtp-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer dtmf support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer dtmf support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-effectv-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer effectvsupport plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer effectvsupport plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-equalizer-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1controller-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio equalizer plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio equalizer plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-flac-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +libgst1tag-rtk +libflac
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer FLAC codec plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer FLAC codec plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-flv-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +libgst1tag-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer flv codec plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer flv codec plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-flxdec-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer flx codec plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer flx codec plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-goom2k1-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer goom support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer goom support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-goom-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer goom support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer goom support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-icydemux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer icy demuxer plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer icy demuxer plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-id3demux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1pbutils-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer ID3v1/v2 demuxer plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer ID3v1/v2 demuxer plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-imagefreeze-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer imagefreeze support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer imagefreeze support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-interleave-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio interleave plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio interleave plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-isomp4-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +libgst1riff-rtk +libgst1rtp-rtk +libgst1tag-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer isomp4 support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer isomp4 support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-jpeg-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk +libjpeg
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer jpeg support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer jpeg support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-level-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer audio level plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer audio level plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-matroska-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1pbutils-rtk +libgst1riff-rtk +libgst1tag-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer matroska support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer matroska support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-mulaw-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer mulaw support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer mulaw support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-multifile-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer multiple files access plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer multiple files access plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-multipart-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer multipart stream handling plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer multipart stream handling plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-navigationtest-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer navigationtest support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer navigationtest support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-oss4audio-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer OSS 4 audio support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer OSS 4 audio support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-ossaudio-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer OSS audio support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer OSS audio support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-png-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk +libpng
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer png support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer png support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-replaygain-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1pbutils-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer volume normalization plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer volume normalization plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-rtpmanager-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1net-rtk +libgst1rtp-rtk +libgst1tag-rtk +libgst1pbutils-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RTP manager plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RTP manager plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-rtp-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1rtp-rtk +libgst1tag-rtk +libgst1pbutils-rtk +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RTP plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RTP plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-rtsp-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1net-rtk +libgst1rtp-rtk +libgst1rtsp-rtk +libgst1sdp-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RTSP plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RTSP plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-shapewipe-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer shapewipe support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer shapewipe support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-smpte-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer smpte support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer smpte support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-souphttpsrc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1tag-rtk +libsoup
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer soup input plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer soup input plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-spectrum-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1fft-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer spectrum data output plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer spectrum data output plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-udp-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1net-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer UDP plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer UDP plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-video4linux2-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk +libgst1allocators-rtk +libv4l
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer video4linux2 support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer video4linux2 support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-videobox-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer videobox support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer videobox support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-videocrop-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer videocrop support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer videocrop support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-videofilter-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer videofilter support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer videofilter support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-videomixer-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1video-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer videomixer support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer videomixer support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-vpx-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1tag-rtk +libgst1video-rtk +libvpx
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer vpx support plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer vpx support plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-wavenc-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1riff-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer Wav encoder plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer Wav encoder plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-wavparse-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgst1audio-rtk +libgst1riff-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer Wav parser plugin (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer Wav parser plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gstreamer1-plugins-good-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +ALL:gst1-plugins-good-rtk +gstreamer1-plugins-base-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Description: GStreamer plugins collection (good)
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+Config:
+    menu "Select GStreamer good modules"
+      depends on PACKAGE_gstreamer1-plugins-good-rtk
+
+
+    config gst1-plugins-good-rtk-all
+      bool "Include all GStreamer good plugins"
+      select PACKAGE_gst1-plugins-good-rtk
+
+    comment "Modules"
+
+    config PACKAGE_gst1-mod-alaw-rtk
+      prompt "GStreamer alaw module"
+
+     config PACKAGE_gst1-mod-alpha-rtk
+      prompt "GStreamer alpha module"
+
+     config PACKAGE_gst1-mod-alphacolor-rtk
+      prompt "GStreamer alphacolor module"
+
+     config PACKAGE_gst1-mod-apetag-rtk
+      prompt "GStreamer apetag module"
+
+     config PACKAGE_gst1-mod-audiofx-rtk
+      prompt "GStreamer audiofx module"
+
+     config PACKAGE_gst1-mod-audioparsers-rtk
+      prompt "GStreamer audioparsers module"
+
+     config PACKAGE_gst1-mod-auparse-rtk
+      prompt "GStreamer auparse module"
+
+     config PACKAGE_gst1-mod-autodetect-rtk
+      prompt "GStreamer autodetect module"
+
+     config PACKAGE_gst1-mod-avi-rtk
+      prompt "GStreamer avi module"
+
+     config PACKAGE_gst1-mod-cutter-rtk
+      prompt "GStreamer cutter module"
+
+     config PACKAGE_gst1-mod-debug-rtk
+      prompt "GStreamer debug module"
+
+     config PACKAGE_gst1-mod-deinterlace-rtk
+      prompt "GStreamer deinterlace module"
+
+     config PACKAGE_gst1-mod-dtmf-rtk
+      prompt "GStreamer dtmf module"
+
+     config PACKAGE_gst1-mod-effectv-rtk
+      prompt "GStreamer effectv module"
+
+     config PACKAGE_gst1-mod-equalizer-rtk
+      prompt "GStreamer equalizer module"
+
+     config PACKAGE_gst1-mod-flac-rtk
+      prompt "GStreamer flac module"
+
+     config PACKAGE_gst1-mod-flv-rtk
+      prompt "GStreamer flv module"
+
+     config PACKAGE_gst1-mod-flxdec-rtk
+      prompt "GStreamer flxdec module"
+
+     config PACKAGE_gst1-mod-goom2k1-rtk
+      prompt "GStreamer goom2k1 module"
+
+     config PACKAGE_gst1-mod-goom-rtk
+      prompt "GStreamer goom module"
+
+     config PACKAGE_gst1-mod-icydemux-rtk
+      prompt "GStreamer icydemux module"
+
+     config PACKAGE_gst1-mod-id3demux-rtk
+      prompt "GStreamer id3demux module"
+
+     config PACKAGE_gst1-mod-imagefreeze-rtk
+      prompt "GStreamer imagefreeze module"
+
+     config PACKAGE_gst1-mod-interleave-rtk
+      prompt "GStreamer interleave module"
+
+     config PACKAGE_gst1-mod-isomp4-rtk
+      prompt "GStreamer isomp4 module"
+
+     config PACKAGE_gst1-mod-jpeg-rtk
+      prompt "GStreamer jpeg module"
+
+     config PACKAGE_gst1-mod-level-rtk
+      prompt "GStreamer level module"
+
+     config PACKAGE_gst1-mod-matroska-rtk
+      prompt "GStreamer matroska module"
+
+     config PACKAGE_gst1-mod-mulaw-rtk
+      prompt "GStreamer mulaw module"
+
+     config PACKAGE_gst1-mod-multifile-rtk
+      prompt "GStreamer multifile module"
+
+     config PACKAGE_gst1-mod-multipart-rtk
+      prompt "GStreamer multipart module"
+
+     config PACKAGE_gst1-mod-navigationtest-rtk
+      prompt "GStreamer navigationtest module"
+
+     config PACKAGE_gst1-mod-oss4audio-rtk
+      prompt "GStreamer oss4audio module"
+
+     config PACKAGE_gst1-mod-ossaudio-rtk
+      prompt "GStreamer ossaudio module"
+
+     config PACKAGE_gst1-mod-png-rtk
+      prompt "GStreamer png module"
+
+     config PACKAGE_gst1-mod-replaygain-rtk
+      prompt "GStreamer replaygain module"
+
+     config PACKAGE_gst1-mod-rtpmanager-rtk
+      prompt "GStreamer rtpmanager module"
+
+     config PACKAGE_gst1-mod-rtp-rtk
+      prompt "GStreamer rtp module"
+
+     config PACKAGE_gst1-mod-rtsp-rtk
+      prompt "GStreamer rtsp module"
+
+     config PACKAGE_gst1-mod-shapewipe-rtk
+      prompt "GStreamer shapewipe module"
+
+     config PACKAGE_gst1-mod-smpte-rtk
+      prompt "GStreamer smpte module"
+
+     config PACKAGE_gst1-mod-souphttpsrc-rtk
+      prompt "GStreamer souphttpsrc module"
+
+     config PACKAGE_gst1-mod-spectrum-rtk
+      prompt "GStreamer spectrum module"
+
+     config PACKAGE_gst1-mod-udp-rtk
+      prompt "GStreamer udp module"
+
+     config PACKAGE_gst1-mod-video4linux2-rtk
+      prompt "GStreamer video4linux2 module"
+
+     config PACKAGE_gst1-mod-videobox-rtk
+      prompt "GStreamer videobox module"
+
+     config PACKAGE_gst1-mod-videocrop-rtk
+      prompt "GStreamer videocrop module"
+
+     config PACKAGE_gst1-mod-videofilter-rtk
+      prompt "GStreamer videofilter module"
+
+     config PACKAGE_gst1-mod-videomixer-rtk
+      prompt "GStreamer videomixer module"
+
+     config PACKAGE_gst1-mod-vpx-rtk
+      prompt "GStreamer vpx module"
+
+     config PACKAGE_gst1-mod-wavenc-rtk
+      prompt "GStreamer wavenc module"
+
+     config PACKAGE_gst1-mod-wavparse-rtk
+      prompt "GStreamer wavparse module"
+
+   
+
+  endmenu
+
+@@
+
+Package: gst1-plugins-good-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +gst1-mod-alaw-rtk +gst1-mod-alpha-rtk +gst1-mod-alphacolor-rtk +gst1-mod-apetag-rtk +gst1-mod-audiofx-rtk +gst1-mod-audioparsers-rtk +gst1-mod-auparse-rtk +gst1-mod-autodetect-rtk +gst1-mod-avi-rtk +gst1-mod-cutter-rtk +gst1-mod-debug-rtk +gst1-mod-deinterlace-rtk +gst1-mod-dtmf-rtk +gst1-mod-effectv-rtk +gst1-mod-equalizer-rtk +gst1-mod-flac-rtk +gst1-mod-flv-rtk +gst1-mod-flxdec-rtk +gst1-mod-goom2k1-rtk +gst1-mod-goom-rtk +gst1-mod-icydemux-rtk +gst1-mod-id3demux-rtk +gst1-mod-imagefreeze-rtk +gst1-mod-interleave-rtk +gst1-mod-isomp4-rtk +gst1-mod-jpeg-rtk +gst1-mod-level-rtk +gst1-mod-matroska-rtk +gst1-mod-mulaw-rtk +gst1-mod-multifile-rtk +gst1-mod-multipart-rtk +gst1-mod-navigationtest-rtk +gst1-mod-oss4audio-rtk +gst1-mod-ossaudio-rtk +gst1-mod-png-rtk +gst1-mod-replaygain-rtk +gst1-mod-rtpmanager-rtk +gst1-mod-rtp-rtk +gst1-mod-rtsp-rtk +gst1-mod-shapewipe-rtk +gst1-mod-smpte-rtk +gst1-mod-souphttpsrc-rtk +gst1-mod-spectrum-rtk +gst1-mod-udp-rtk +gst1-mod-video4linux2-rtk +gst1-mod-videobox-rtk +gst1-mod-videocrop-rtk +gst1-mod-videofilter-rtk +gst1-mod-videomixer-rtk +gst1-mod-vpx-rtk +gst1-mod-wavenc-rtk +gst1-mod-wavparse-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (good)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-good-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:  GStreamer open source multimedia framework
+ .
+ This meta package contains only dependencies to the other plugins from
+ the good plugins collection.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+
+Source-Makefile: feeds/realtek/gst1-plugins-ugly-rtk/Makefile
+Package: gst1-mod-asf-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgstreamer1-rtk +libgst1audio-rtk +libgst1video-rtk +libgst1riff-rtk +libgst1rtp-rtk +libgst1rtsp-rtk +libgst1sdp-rtk +libgst1tag-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer ASF demuxer plugin (ugly)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-ugly-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer ASF demuxer plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-lame-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgstreamer1-rtk +libgst1audio-rtk +lame-lib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer MP3 encoder (using LAME) plugin (ugly)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-ugly-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer MP3 encoder (using LAME) plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-mad-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgstreamer1-rtk +libgst1audio-rtk +libgst1tag-rtk +libid3tag +libmad
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer MP3 decoder (using MAD) plugin (ugly)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-ugly-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer MP3 decoder (using MAD) plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-mpeg2dec-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgstreamer1-rtk +libgst1video-rtk +libmpeg2
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer MPEG decoder plugin (ugly)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-ugly-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer MPEG decoder plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gst1-mod-rmdemux-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +libgstreamer1-rtk +libgst1pbutils-rtk +libgst1rtsp-rtk +libgst1sdp-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RealMedia demuxer plugin (ugly)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-ugly-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description:     GStreamer open source multimedia framework
+   .
+   This package contains the GStreamer RealMedia demuxer plugin.
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+Package: gstreamer1-plugins-ugly-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +ALL:gst1-plugins-ugly-rtk +gstreamer1-plugins-base-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (ugly)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-ugly-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Description: GStreamer plugins collection (ugly)
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+Config:
+    menu "Select GStreamer ugly modules"
+      depends on PACKAGE_gstreamer1-plugins-ugly-rtk
+
+
+    config gst1-plugins-ugly-rtk-all
+      bool "Include all GStreamer ugly plugins"
+      select PACKAGE_gst1-plugins-ugly-rtk
+
+    comment "Modules"
+
+    config PACKAGE_gst1-mod-asf-rtk
+      prompt "GStreamer asf module"
+
+     config PACKAGE_gst1-mod-lame-rtk
+      prompt "GStreamer lame module"
+
+     config PACKAGE_gst1-mod-mad-rtk
+      prompt "GStreamer mad module"
+
+     config PACKAGE_gst1-mod-mpeg2dec-rtk
+      prompt "GStreamer mpeg2dec module"
+
+     config PACKAGE_gst1-mod-rmdemux-rtk
+      prompt "GStreamer rmdemux module"
+
+   
+
+  endmenu
+
+@@
+
+Package: gst1-plugins-ugly-rtk
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +BUILD_NLS:libiconv-full +gst1-mod-asf-rtk +gst1-mod-lame-rtk +gst1-mod-mad-rtk +gst1-mod-mpeg2dec-rtk +gst1-mod-rmdemux-rtk
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: multimedia
+Category: Multimedia
+Title: GStreamer plugins collection (ugly)
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Source: gst-plugins-ugly-1.6.4.tar.xz
+License: LGPLv2
+LicenseFiles: COPYING
+Type: ipkg
+Hidden: 1
+Description: GStreamer plugins collection (ugly)
+http://gstreamer.freedesktop.org/
+W. Michael Petullo <mike@flyn.org>
+@@
+
+
+Source-Makefile: feeds/realtek/gst1-rtk/Makefile
+Package: gst1-rtk
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +openmax +gstreamer1-rtk +libgst1video-rtk +supportlibs +rtkMediaLib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk supportlibs rtkMediaLib
+Section: opt
+Category: Extra packages
+Title:  plugins collection (rtk)
+Maintainer: 
+Source: 
+Type: ipkg
+Hidden: 1
+Description:  plugins collection (rtk)
+
+@@
+
+
+Source-Makefile: feeds/realtek/gzip/Makefile
+Package: gzip
+Version: 1.4-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: gzip (GNU zip) is a compression utility.
+Maintainer: 
+Source: gzip-1.4.tar.gz
+Type: ipkg
+Description: 	gzip (GNU zip) is a compression utility designed to be a replacement for compress.
+http://www.gzip.org/
+
+@@
+
+
+Source-Makefile: feeds/realtek/inotify-tools/Makefile
+Package: inotify-tools
+Submenu: Filesystem
+Version: 3.14-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Inotify Tools
+Maintainer: 
+Source: inotify-tools-3.14.tar.gz
+Type: ipkg
+Description:  Inotify-Tools
+
+@@
+
+
+Source-Makefile: feeds/realtek/iozone/Makefile
+Package: iozone
+Submenu: disc
+Version: 3.434-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: File System Benchmark
+Maintainer: 
+Source: iozone3_434.tar
+License: IOzone license (NO DERIVED WORKS ALLOWED)
+Type: ipkg
+Description:  File System Benchmark
+http://www.iozone.org/
+
+@@
+
+
+Source-Makefile: feeds/realtek/linuxmedia/Makefile
+Package: linuxmedia
+Version: 2016-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libstdcpp +librpc
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: multimedia
+Category: Multimedia
+Title: Realtek media libraries
+Maintainer: 
+Source: linuxmedia-HEAD.tar.gz
+Type: ipkg
+Description:  Realtek media libraries
+
+@@
+
+
+Source-Makefile: feeds/realtek/logrotate/Makefile
+Package: logrotate
+Version: 3.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpopt
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: rotates, compresses, and mails system logs
+Maintainer: 
+Source: logrotate_3.8.1.orig.tar.gz
+Type: ipkg
+Description:  logrotate is designed to ease administration of systems that generate large
+ numbers of log files. It allows auto-matic rotation, compression, removal and
+ mailing of log files. Each log file may be handled daily, weekly, monthly or
+ when it grows too large.
+http://packages.debian.org/unstable/admin/logrotate
+
+@@
+
+
+Source-Makefile: feeds/realtek/mediainfo/Makefile
+Package: mediainfo
+Version: 0.7.97-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +zenlib +libmediainfo
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utilities
+Category: Multimedia
+Title: MediaInfo from MediaArea
+Maintainer: 
+Source: mediainfo-0.7.97.tar.bz2
+Type: ipkg
+Description:   MediaInfo provides information on a variety of video and audio files
+https://mediaarea.net/en/MediaInfo
+
+@@
+
+
+Source-Makefile: feeds/realtek/minigui-res-be/Makefile
+Package: minigui-res-be
+Version: 3.0.12-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: multimedia
+Category: Extra packages
+Title: MiniGUI RES
+Maintainer: 
+Source: minigui-res-be-3.0.12.tar.gz
+License: GPLv3
+Type: ipkg
+Description: MiniGUI RES
+http://www.minigui.org
+
+@@
+
+
+Source-Makefile: feeds/realtek/mtcnn-light/Makefile
+Package: mtcnn-light
+Version: 0.7.97-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +opencv +openblas
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utilities
+Category: Multimedia
+Title: MTCNN-Light
+Maintainer: 
+Source: mtcnn-light-0.7.97.tar.bz2
+Type: ipkg
+Description:   MTCNN Demo Code
+
+@@
+
+
+Source-Makefile: feeds/realtek/net-tools/Makefile
+Package: net-tools-arp
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - arp
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program arp from net-tools. Manipulate kernel's ARP cache.
+  Add, delete an entry, or to dump the entire cache.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-hostname
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - hostname
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program hostname from net-tools.
+  Reports or sets the name of the current host system.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-dnsdomainname
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread net-tools-hostname
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - dnsdomainname
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program dnsdomainname from net-tools.
+  Reports the system's DNS domain name.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-domainname
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread net-tools-hostname
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - domainname
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program domainname from net-tools.
+  Reports the system's NIS/YP domain name.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-ifconfig
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - ifconfig
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program ifconfig from net-tools.
+  Configure network interfaces.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-ipmaddr
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - ipmaddr
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program ipmaddr from net-tools.  Adds,
+  deletes and shows an interface's multicast addresses.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-iptunnel
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - iptunnel
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program iptunnel from net-tools.
+  Adds, changes, deletes and shows an interface's tunnels.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-mii-tool
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - mii-tool
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program mii-tool from net-tools.  Checks or sets
+  the status of a network interface's Media Independent
+  Interface (MII) unit.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-nameif
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - nameif
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program nameif from net-tools
+  Trivial File Transfer Protocol server.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-netstat
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - netstat
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program netstat from net-tools. Report network
+  connections, routing tables, and interface statistics.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-nisdomainname
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread net-tools-hostname
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - nisdomainname
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program nisdomainname from net-tools.
+  Same as domainname.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-plipconfig
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - plipconfig
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program plipconfig from net-tools.  Fine tune the
+  PLIP device parameters, to improve its performance.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-rarp
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - rarp
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program rarp from net-tools.
+  Manipulate the kernel's RARP table.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-route
+Submenu: Routing and Redirection
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - route
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program route from net-tools.
+  Manipulate the IP routing table.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-slattach
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - slattach
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program slattach from net-tools.  Attaches a
+  network interface to a serial line. This allows
+  to use normal terminal lines for point-to-point
+  links to other computers.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+Package: net-tools-ypdomainname
+Version: 1.60-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread net-tools-hostname
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: net-tools - ypdomainname
+Maintainer: 
+Source: net-tools-1.60.tar.bz2
+Type: ipkg
+Description:   Program route from net-tools.
+  Same as domainname.
+http://www.tazenda.demon.co.uk/phil/net-tools
+
+@@
+
+
+Source-Makefile: feeds/realtek/openblas/Makefile
+Package: openblas
+Version: 0.2.20-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: libopenblas
+Maintainer: 
+Source: openblas-0.2.20.tar.gz
+Type: ipkg
+Description: 	OpenBLAS is an optimized BLAS library based on GotoBLAS2 1.13 BSD version
+https://www.openblas.net/
+
+@@
+
+
+Source-Makefile: feeds/realtek/openhab/Makefile
+Package: openhab
+Submenu: Java
+Version: 2.1.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 @RTK_OVERRIDE_OVERLAY_FS +zlib +libstdcpp +alsa-lib +libfreetype +zulu
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: lang
+Category: Languages
+Title: Java SE standard Based on OpenJDK
+Maintainer: 
+Require-User: openhab=200:openhab=200
+Source: openhab-2.1.0.tar.gz
+Type: ipkg
+Description:   A vendor and technology agnostic open source automation software for your home
+https://www.openhab.org/
+
+@@
+
+
+Source-Makefile: feeds/realtek/openmax/Makefile
+Package: openmax
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libstdcpp +glib2 +librpc +jansson +kmod-openmax
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: multimedia
+Category: Multimedia
+Title: Realtek OpenMAX libraries
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Realtek OpenMAX libraries and various daemons
+
+@@
+
+
+Source-Makefile: feeds/realtek/orbweb/Makefile
+Package: orbweb
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpthread +librt
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: OrbWeb M2M Module
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  OrbWeb M2M Module
+
+@@
+
+
+Source-Makefile: feeds/realtek/osspuuid/Makefile
+Package: osspuuid
+Version: 1.6.2-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: OSSP uuid
+Maintainer: 
+Source: uuid-1.6.2.tar.gz
+Type: ipkg
+Description:     OSSP uuid
+    http://www.ossp.org/pkg/lib/uuid/
+http://www.ossp.org/pkg/lib/uuid/
+
+@@
+
+
+Source-Makefile: feeds/realtek/parted/Makefile
+Package: parted
+Submenu: disc
+Version: 3.2-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libreadline +libncurses +libblkid +libuuid
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: parted Partition editor
+Maintainer: 
+Source: parted-3.2.tar.xz
+Type: ipkg
+Description:     parted Partition editor
+    http://www.gnu.org/software/parted/index.shtml
+http://www.gnu.org/software/parted/index.shtml
+
+@@
+
+
+Source-Makefile: feeds/realtek/proftpd/Makefile
+Package: proftpd
+Submenu: File Transfer
+Version: 1.3.5a-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpam
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: ProFTPD FTP server
+Maintainer: Cezary Jackiewicz <cezary@eko.one.pl>
+Source: proftpd-1.3.5a.tar.gz
+Type: ipkg
+Description: ProFTPD FTP server
+http://www.proftpd.org/
+Cezary Jackiewicz <cezary@eko.one.pl>
+@@
+
+
+Source-Makefile: feeds/realtek/python-dom-xpath/Makefile
+Package: python-dom-xpath
+Submenu: Python
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: language-python
+Category: Languages
+Title: Python XPath for DOM trees
+Maintainer: 
+Source: 
+Type: ipkg
+Description:    py-dom-xpath is a pure Python implementation of XPath 1.0. It supports almost all XPath 1.0, with the main exception being the namespace axis. It operates on DOM 2.0 nodes, and works well with xml.dom.minidom.
+
+@@
+
+
+Source-Makefile: feeds/realtek/python-exifread/Makefile
+Package: python-exifread
+Submenu: Python
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: language-python
+Category: Languages
+Title: Python ExifRead
+Maintainer: 
+Source: 
+Type: ipkg
+Description:    Extract Exif metadata from tiff and jpeg files 
+
+@@
+
+
+Source-Makefile: feeds/realtek/python-flup/Makefile
+Package: python-flup
+Submenu: Python
+Version: 1.0.2-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: lang
+Category: Languages
+Title: python-flup
+Maintainer: Hamish Guthrie <hcg@openwrt.org>
+Source: flup-1.0.2.tar.gz
+License: BSD
+Type: ipkg
+Description:   Random assortment of WSGI servers
+http://pypi.python.org/pypi/flup/
+Hamish Guthrie <hcg@openwrt.org>
+@@
+
+
+Source-Makefile: feeds/realtek/python-mutagen/Makefile
+Package: python-mutagen
+Submenu: Python
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: language-python
+Category: Languages
+Title: Python mutagen
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   Mutagen is a Python module to handle audio metadata. It supports ASF, FLAC, M4A, Monkey’s Audio, MP3, Musepack, Ogg FLAC, Ogg Speex, Ogg Theora, Ogg Vorbis, True Audio, WavPack and OptimFROG audio files.
+
+@@
+
+
+Source-Makefile: feeds/realtek/python-parted/Makefile
+Package: python-parted
+Submenu: Python
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python +parted
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: language-python
+Category: Languages
+Title: Python Parted
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Python-parted is a set of native Python bindings for libparted
+https://github.com/rhinstaller/pyparted
+
+@@
+
+
+Source-Makefile: feeds/realtek/python-setuptools/Makefile
+Package: python-setuptools
+Submenu: Python
+Version: 18.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: language-python
+Category: Languages
+Title: Python Setuptools
+Maintainer: 
+Source: setuptools-18.4.tar.gz
+Type: ipkg
+Description:  Easily download, build, install, upgrade, and uninstall Python packages.
+https://pypi.python.org/pypi/setuptools/
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-apiapp/Makefile
+Package: rtk-apiapp
+Submenu: Developing
+Version: 0.9.2-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtl8117 +luci +luci-base +luci-lib-nixio +luafilesystem
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek NAS API for APP (RTL8117)
+Maintainer: E-Cheng Cheng <eccheng@realtek.com>
+Source: 
+License: Copyright by Realtek
+Type: ipkg
+Description:  This package activates API for App feature on RTL8117
+E-Cheng Cheng <eccheng@realtek.com>
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-bluecore/Makefile
+Package: rtk-bluecore
+Default: y
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @(TARGET_rtd1295&&!TARGET_rtd1295_mnas_emmc)
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: multimedia
+Category: Multimedia
+Title: Bluecore Libraries
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Realtek Bluecore libraries
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-gpio-button/Makefile
+Package: rtk-gpio-button
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +kmod-hid +kmod-hid-generic +kmod-input-gpio-keys +triggerhappy
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek GPIO button function
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Realtek GPIO button function
+
+@@
+Config:
+	source "realtek/realtek/rtk-gpio-button/Config.in"
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-init/Makefile
+Package: rtk-init
+Default: y
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: Base system
+Title: init process for Realtek SoC
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Realtek SoC init process for OpenWRT platform
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-minigui/Makefile
+Package: rtk-minigui
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +libminigui-gpl +libmgplus +minigui-res-be rtk-nvr
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: MiniGUI
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_CONSOLE_TRANSLATIONS=y CONFIG_DUMMY_CONSOLE=y CONFIG_FONT_8x16=y CONFIG_FONT_8x8=y CONFIG_FONT_SUPPORT=y CONFIG_FRAMEBUFFER_CONSOLE=y CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=y CONFIG_HW_CONSOLE=y CONFIG_SERIAL_8250_FSL=y CONFIG_SERIAL_8250_PNP=y CONFIG_VT=y CONFIG_VT_CONSOLE=y CONFIG_VT_CONSOLE_SLEEP=y CONFIG_VT_HW_CONSOLE_BINDING=y CONFIG_INPUT_KEYBOARD=y CONFIG_INPUT_MOUSE=y CONFIG_INPUT_MOUSEDEV=y CONFIG_INPUT_MOUSEDEV_PSAUX=y CONFIG_INPUT_MOUSEDEV_SCREEN_X=1024 CONFIG_INPUT_MOUSEDEV_SCREEN_Y=768 CONFIG_KEYBOARD_ATKBD=y CONFIG_MOUSE_PS2=y CONFIG_MOUSE_PS2_ALPS=y CONFIG_MOUSE_PS2_CYPRESS=y CONFIG_MOUSE_PS2_FOCALTECH=y CONFIG_MOUSE_PS2_LOGIPS2PP=y CONFIG_MOUSE_PS2_SYNAPTICS=y CONFIG_MOUSE_PS2_TRACKPOINT=y CONFIG_SERIO=y CONFIG_SERIO_SERPORT=y CONFIG_HID=y CONFIG_HID_GENERIC=y CONFIG_USB_HID=y
+Description:  This package activates minigui feature
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-mp/Makefile
+Package: rtk-mp
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 @PACKAGE_u-boot64 @RTK_BOARD_MTD_LAYOUT
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: base
+Category: Base system
+Title: flash burning for Realtek SoC
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Realtek SoC MP process for OpenWRT platform
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-nvr/Makefile
+Package: rtk-qt5-wayland
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 rtk-nvr +qt5-wayland +weston
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Support QT Weston
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates qt5 wayland feature
+
+@@
+
+Package: rtk-nvr
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +libgst1app-rtk +libgst1audio-rtk +libgst1pbutils-rtk +libgst1riff-rtk +libgst1rtp-rtk +libgst1rtsp-rtk +libgst1sdp-rtk +libgst1tag-rtk +libgst1video-rtk +gst1-mod-alsa-rtk +gst1-mod-app-rtk +gst1-mod-audioconvert-rtk +gst1-mod-audioresample-rtk +gst1-mod-playback-rtk +gst1-mod-ogg-rtk +gst1-mod-tcp-rtk +gst1-mod-typefindfunctions-rtk +gst1-mod-videoconvert-rtk +gst1-mod-videoscale-rtk +gst1-mod-volume-rtk +gstreamer1-plugins-good-rtk +gst1-mod-audioparsers-rtk +gst1-mod-debug-rtk +gst1-mod-isomp4-rtk +gst1-mod-jpeg-rtk +gst1-mod-rtpmanager-rtk +gst1-mod-rtp-rtk +gst1-mod-rtsp-rtk +gst1-mod-udp-rtk +gstreamer1-plugins-bad-rtk +gst1-mod-adaptivedemux-rtk +gst1-mod-uridownloader-rtk +gst1-mod-codecparsers-rtk +gst1-mod-mpegts-rtk +gst1-mod-faad-rtk +gst1-mod-fragmented-rtk +gst1-mod-jpegformat-rtk +gst1-mod-mpegtsdemux-rtk +gst1-mod-mpegtsmux-rtk +gst1-mod-rtpbad-rtk +gst1-mod-videoparsersbad-rtk +gst1-mod-vfbdevsink-rtk +gstreamer1-plugins-rtk +gst1-rtk +gst1-omx-1-2 +rtk-supplicant +supportlibs +rtkMediaLib +kmod-rtk-nvr
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek NVR
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates network video recorder (NVR) feature with the least packages
+
+@@
+
+Package: rtk-nvr-full
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +gst1-plugins-base-rtk +gstreamer1-plugins-good-rtk +gst1-plugins-good-rtk +gstreamer1-plugins-bad-rtk +gst1-plugins-bad-rtk +gstreamer1-plugins-ugly-rtk +gst1-plugins-ugly-rtk +gstreamer1-plugins-rtk +gst1-rtk +gst1-omx-1-2 +gst1-libav +rtk-supplicant +supportlibs +kmod-rtk-nvr +mali-egl +mali-wayland rtk-nvr
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek NVR FULL
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates network video recorder (NVR) feature with full-featured NVR shared libraries (gstreamer, mali)
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-onvif/Makefile
+Package: rtk-onvif
+Submenu: Developing
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +openrtsp +python-netifaces
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek NAS ONVIF
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates ONVIF feature with simple NVR prototype system
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-reg/Makefile
+Package: rtk-reg
+Submenu: CPU tools
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +libstdcpp +kmod-rtk_uio
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Register R/W tool for Realtek SoC
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_UIO=y CONFIG_UIO_ASSIGN_MINOR=y CONFIG_UIO_RTK_RBUS=y CONFIG_UIO_RTK_REFCLK=n CONFIG_UIO_RTK_SE=n CONFIG_UIO_RTK_MD=n
+Description:  Realtek SoC Register R/W tool
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-supplicant/Makefile
+Package: rtk-supplicant
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +libgst1app-rtk +gst1-mod-app-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-base-rtk +gstreamer1-plugins-good-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-good-rtk +gstreamer1-plugins-bad-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-bad-rtk +gstreamer1-plugins-ugly-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-ugly-rtk +gstreamer1-plugins-rtk +gst1-omx-1-2 +PACKAGE_rtk-nvr-full:gst1-libav +supportlibs +rtkMediaLib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: gstreamer-hw-transcode rtk-transcode supportlibs rtkMediaLib
+Section: nas
+Category: Extra packages
+Title: Supplicant
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-tpapi/Makefile
+Package: rtk-tpapi
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +rtkMediaLib rtk-nvr +supportlibs
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek tp API
+Maintainer: 
+Source: rtkdl-rtk-tpapi.tar.gz
+Type: ipkg
+Description:  This package provides tp API for network video recorder (NVR) feature
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtk-transcode/Makefile
+Package: rtk-transcode
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +openmax +mediainfo +rtk-supplicant
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek Transcode
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates hardware acceleration transcode feature
+
+@@
+
+Package: rtk-audio-out
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 rtk-transcode +alsa-lib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Enable Audio Output
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_SOUND=y CONFIG_SND=y CONFIG_SND_TIMER=y CONFIG_SND_PCM=y CONFIG_SND_HWDEP=y CONFIG_SND_RAWMIDI=y CONFIG_SND_COMPRESS_OFFLOAD=y CONFIG_SND_JACK=y CONFIG_SND_PCM_TIMER=y CONFIG_SND_HRTIMER=y CONFIG_SND_SUPPORT_OLD_API=y CONFIG_SND_PROC_FS=y CONFIG_SND_VERBOSE_PROCFS=y CONFIG_SND_DRIVERS=y CONFIG_SND_HDA_PREALLOC_SIZE=64 CONFIG_SND_ARM=y CONFIG_SND_ARMAACI=n CONFIG_SND_REALTEK=y CONFIG_SND_USB=y CONFIG_SND_USB_AUDIO=y CONFIG_SND_SOC=y CONFIG_SND_SOC_COMPRESS=y 
+Description: Enable Audio Output
+
+@@
+
+Package: gstreamer-hw-transcode
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +gst1-plugins-base-rtk +gstreamer1-plugins-good-rtk +gst1-plugins-good-rtk +gstreamer1-plugins-bad-rtk +gst1-plugins-bad-rtk +gstreamer1-plugins-ugly-rtk +gst1-plugins-ugly-rtk +gstreamer1-plugins-rtk +gst1-omx-1-2 +gst1-libav rtk-transcode
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek GStreamer Transcode
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates transcode feature by gstreamer
+
+@@
+
+Package: ffmpeg-hw-transcode
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +ffmpeg rtk-transcode
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek FFMPEG Transcode
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates transcode feature by ffmpeg
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtkMediaLib/Makefile
+Package: rtkMediaLib
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +openmax +alsa-lib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Extra packages
+Title: Realtek NVR kernel library
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_KALLSYMS_ALL=y CONFIG_MEDIA_CAMERA_SUPPORT=y CONFIG_V4L_TEST_DRIVERS=y CONFIG_VIDEO_DEV=y CONFIG_VIDEO_V4L2=y CONFIG_VIDEO_V4L2LOOPBACK=y
+Description:  This package provides support libraries for network video recorder (NVR) feature
+
+@@
+
+Package: rtkSoundLib
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +rtkMediaLib +fdk-aac
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Extra packages
+Title: Realtek Sound library
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package provides audio library
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtkbist/Makefile
+Package: rtkbist
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +memtester +tinymembench +testusb +iozone
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Realtek BIST tool
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Realtek BIST tool
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtnicpg/Makefile
+Package: rtnicpg
+Submenu: Network Devices
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +electric-fence
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: PG tool for Realtek Ethernet Controller
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   PG tool for Realtek Ethernet Controller
+
+@@
+
+
+Source-Makefile: feeds/realtek/rtwpriv/Makefile
+Package: rtwpriv
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Realtek WiFi Config utility
+Maintainer: 
+Source: 
+Type: ipkg
+Description: 	Realtek wifi configuration tool
+
+@@
+
+
+Source-Makefile: feeds/realtek/sed/Makefile
+Package: sed
+Version: 4.2.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: GNU streams editor
+Maintainer: 
+Source: sed-4.2.1.tar.bz2
+Type: ipkg
+Description: 	Sed (streams editor) takes text input and performs some operation
+	(or set of operations) on it and outputs the modified text.
+http://ftp.gnu.org/gnu/sed/
+
+@@
+
+
+Source-Makefile: feeds/realtek/sysvinit/Makefile
+Package: sysvinit
+Default: y
+Version: 2.88-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: System V style Init
+Maintainer: 
+Source: sysvinit-2.88dsf.tar.bz2
+Type: ipkg
+Description: 	System V style init programs
+http://savannah.nongnu.org/projects/sysvinit
+
+@@
+
+
+Source-Makefile: feeds/realtek/tinymembench/Makefile
+Package: tinymembench
+Version: 0.4.9-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Simple memory benchmark program
+Maintainer: 
+Source: tinymembench-0.4.9-HEAD.tar.gz
+Type: ipkg
+Description:  Simple memory benchmark program
+
+@@
+
+
+Source-Makefile: feeds/realtek/traceroute/Makefile
+Package: traceroute
+Version: 2.0.21-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: net
+Category: Network
+Title: Traceroute for Linux
+Maintainer: 
+Source: traceroute-2.0.21.tar.gz
+Type: ipkg
+Description:     Traceroute for Linux
+    http://sourceforge.net/projects/traceroute/
+http://sourceforge.net/projects/traceroute/
+
+@@
+
+
+Source-Makefile: feeds/realtek/u-boot/Makefile
+Package: u-boot
+Version: 2017.09-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtl8117
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: boot
+Category: Boot Loaders
+Title: Das U-Boot
+Maintainer: 
+Source: u-boot-2017.09-7117641d.tar.gz
+Type: ipkg
+Description:  Das U-Boot -- the Universal Boot Loader
+
+@@
+
+
+Source-Makefile: feeds/realtek/u-boot32/Makefile
+Package: u-boot32
+Version: baebd9b-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1195
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: boot
+Category: Boot Loaders
+Title: Das U-Boot
+Maintainer: 
+Source: u-boot32-baebd9b.tar.bz2
+Type: ipkg
+Description:  Das U-Boot -- the Universal Boot Loader
+
+@@
+
+
+Source-Makefile: feeds/realtek/u-boot64/Makefile
+Package: u-boot64
+Version: 3655658-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: boot
+Category: Boot Loaders
+Title: Das U-Boot
+Maintainer: 
+Source: u-boot64-3655658.tar.bz2
+Type: ipkg
+Description:  Das U-Boot -- the Universal Boot Loader
+
+@@
+Config:
+        source "realtek/realtek/u-boot64/Config.in"
+@@
+
+
+Source-Makefile: feeds/realtek/xmlstarlet/Makefile
+Package: xmlstarlet
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libxslt +libxml2 +libexslt
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: An xml editor
+Maintainer: Mikhail Grushinskiy
+Source: 
+Type: ipkg
+Description:   XMLStarlet is open source free software under MIT license which allows free use and distribution for both commercial and non-commercial projects.
+http://xmlstar.sourceforge.net/
+Mikhail Grushinskiy
+@@
+
+
+Source-Makefile: feeds/realtek/zulu/Makefile
+Package: zulu
+Submenu: Java
+Version: 1.8.0_152-8.25.0.79-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +zlib +libstdcpp +alsa-lib +libfreetype +libX11 +libXfixes +libXext +libthread_db +libXext +libXi +libXrender +libXtst
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: lang
+Category: Languages
+Title: Java SE standard Based on OpenJDK
+Maintainer: 
+Source: ezdk-1.8.0_152-8.25.0.79-eval-linux_aarch64.tar.gz
+Type: ipkg
+Kernel-Config: CONFIG_ARMV8_DEPRECATED=y CONFIG_COMPAT_NETLINK_MESSAGES=y CONFIG_CP15_BARRIER_EMULATION=y CONFIG_SETEND_EMULATION=y CONFIG_SWP_EMULATION=y
+Description:   Zulu® Embedded is a certified build of OpenJDK that is fully compliant with the Java SE standard
+https://www.azul.com/
+
+@@
+Config:
+	source "realtek/realtek/zulu/Config.in"
+@@
+
+

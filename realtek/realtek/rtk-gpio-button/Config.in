@@ -1,0 +1,5 @@
+config RTK_PWR_BUTTON_GPIO_NUMBER
+	int
+	prompt "Power button gpio number"
+	default 9
+	depends on PACKAGE_rtk-gpio-button

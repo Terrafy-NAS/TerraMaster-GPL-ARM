@@ -1,0 +1,30 @@
+Index: procd-2016-07-29/plug/coldplug.c
+===================================================================
+--- procd-2016-07-29.orig/plug/coldplug.c	2017-10-20 10:52:05.508425647 +0800
++++ procd-2016-07-29/plug/coldplug.c	2017-10-20 10:52:05.504425647 +0800
+@@ -12,6 +12,10 @@
+  * GNU General Public License for more details.
+  */
+ 
++#ifndef _GNU_SOURCE
++#define _GNU_SOURCE
++#endif
++
+ #include <sys/stat.h>
+ #include <sys/types.h>
+ #include <sys/mount.h>
+Index: procd-2016-07-29/initd/init.c
+===================================================================
+--- procd-2016-07-29.orig/initd/init.c	2017-10-20 10:52:05.508425647 +0800
++++ procd-2016-07-29/initd/init.c	2017-10-20 10:52:36.632426389 +0800
+@@ -12,6 +12,10 @@
+  * GNU General Public License for more details.
+  */
+ 
++#ifndef _GNU_SOURCE
++#define _GNU_SOURCE
++#endif
++
+ #include <sys/wait.h>
+ #include <sys/types.h>
+ #include <sys/stat.h>

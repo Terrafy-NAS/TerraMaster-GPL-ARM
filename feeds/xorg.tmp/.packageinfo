@@ -1,0 +1,1035 @@
+Source-Makefile: feeds/xorg/lib/libX11/Makefile
+Feature: drawing-backend_libX11
+Target-Name: drawing-backend
+Target-Title: Drawing Backend
+Feature-Name: libX11
+Feature-Description:
+
+@@
+
+Package: libX11
+Submenu: libraries
+Version: 1.3.2-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libXdmcp +libXau
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: xproto xextproto xf86bigfontproto kbproto inputproto xtrans xcmiscproto bigreqsproto libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: libX11
+Maintainer: 
+Source: libX11-1.3.2.tar.bz2
+Type: ipkg
+Description: libX11
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/lib/libXext/Makefile
+Package: libXext
+Submenu: libraries
+Version: 1.1.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libX11 +libXau
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: xproto xextproto libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: libXext
+Maintainer: 
+Source: libXext-1.1.1.tar.bz2
+Type: ipkg
+Description: libXext
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/lib/libXi/Makefile
+Package: libXi
+Submenu: libraries
+Version: 1.3-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libX11 +libXext
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: xproto xextproto inputproto libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: libXi
+Maintainer: 
+Source: libXi-1.3.tar.bz2
+Type: ipkg
+Description: libXi
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/lib/libXrender/Makefile
+Package: libXrender
+Submenu: libraries
+Version: 0.9.5-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libX11
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: renderproto libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: libXrender
+Maintainer: 
+Source: libXrender-0.9.5.tar.bz2
+Type: ipkg
+Description: libXrender
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/lib/libXtst/Makefile
+Package: libXtst
+Submenu: libraries
+Version: 1.1.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libX11 +libXext +libXi
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: recordproto xextproto inputproto libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: libXtst
+Maintainer: 
+Source: libXtst-1.1.0.tar.bz2
+Type: ipkg
+Description: libXtst
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/liberation-fonts-ttf/Makefile
+Package: liberation-fonts-ttf
+Submenu: font
+Version: 1.04-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-font
+Category: Xorg
+Title: liberation-fonts-ttf
+Maintainer: 
+Source: liberation-fonts-1.04.tar.gz
+Type: ipkg
+Description: liberation-fonts-ttf
+https://fedorahosted.org/liberation-fonts/
+
+@@
+
+
+Source-Makefile: feeds/xorg/qt4/Makefile
+Package: qt4
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +zlib +librt +libstdcpp @!LINUX_2_4
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+Config:
+	source "realtek/xorg/qt4/Config.in"
+@@
+
+Package: qt4-gui
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +PACKAGE_qt4-gui:libpng +PACKAGE_qt4-gui:libtiff +PACKAGE_qt4-gui:libjpeg +PACKAGE_qt4-gui:libfreetype +qt4-network +FEATURE_drawing-backend_libX11:libX11 +FEATURE_drawing-backend_libX11:libXext @DISPLAY_SUPPORT
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (gui)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (gui)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-demos
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +qt4-gui
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (demos)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (demos)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-examples
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +qt4-gui +qt4-svg
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (examples)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (examples)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-network
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (network)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (network)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-sqlite
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +PACKAGE_qt4-sqlite:libsqlite3
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (sqlite)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (sqlite)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-mysql
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +PACKAGE_qt4-mysql:libmysqlclient
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (mysql)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (mysql)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-pgsql
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +PACKAGE_qt4-pgsql:libpq
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (pgsql)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (pgsql)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-openssl
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +PACKAGE_qt4-openssl:libopenssl
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (openssl)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (openssl)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-phonon
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +qt4-gui +qt4-xml +qt4-dbus +qt4-network
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (phonon)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (phonon)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-svg
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +qt4-gui +qt4-network
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (svg)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (svg)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-webkit
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +PACKAGE_qt4-webkit:libsqlite3 +qt4-phonon +qt4-dbus +qt4-xml +qt4-gui +qt4-network
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (webkit)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (webkit)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-script
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (script)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (script)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-scripttools
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +qt4-script +qt4-gui +qt4-network
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (scripttools)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (scripttools)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-dbus
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +PACKAGE_qt4-dbus:libdbus +qt4-xml
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (dbus)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (dbus)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-qt3support
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +qt4-gui +qt4-xml
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (qt3support)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (qt3support)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-declarative
+Submenu: framework
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 +qt4-script +qt4-xml +qt4-gui +qt4-network
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (declarative)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (declarative)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-xml
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (xml)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (xml)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-xmlpatterns
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 (xmlpatterns)
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 (xmlpatterns)
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-drivers-mouse-tpmousedriver
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 @QT4_WS_QWS
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 mousedrivers tpmousedriver
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 mousedrivers tpmousedriver
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-drivers-mouse-pcmousedriver
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 @QT4_WS_QWS
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 mousedrivers pcmousedriver
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 mousedrivers pcmousedriver
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-drivers-mouse-tslibmousedriver
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 @QT4_WS_QWS +PACKAGE_qt4-tslibmousedriver:tslib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 mousedrivers tslibmousedriver
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 mousedrivers tslibmousedriver
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-drivers-gfx-directfb
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 @QT4_WS_QWS @FEATURE_drawing-backend_DirectFB +qt4-drivers-gfx-directfb:directfb
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 gfxdrivers directfb
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 gfxdrivers directfb
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-drivers-gfx-linuxfb
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 @QT4_WS_QWS
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 gfxdrivers linuxfb
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 gfxdrivers linuxfb
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+Package: qt4-drivers-gfx-vnc
+Submenu: framework
+Default: m if PACKAGE_qt4-gui && ALL
+Version: 4.8.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread qt4 @QT4_WS_QWS
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-framework
+Category: Xorg
+Title: qt4 gfxdrivers VNC
+Maintainer: Mirko Vogt <mirko@openwrt.org>
+Source: qt-everywhere-opensource-src-4.8.1.tar.gz
+Type: ipkg
+Description: qt4 gfxdrivers VNC
+http://qt.nokia.com/
+Mirko Vogt <mirko@openwrt.org>
+@@
+
+
+Source-Makefile: feeds/xorg/cairo/Makefile
+Feature: drawing-backend_None
+Target-Name: drawing-backend
+Target-Title: Drawing Backend
+Feature-Name: None
+Feature-Description:
+
+@@
+
+Package: cairo
+Submenu: libraries
+Version: 1.14.0-3
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +fontconfig +libpng +libexpat +pixman +libpthread +librt +libxcb-render +libxcb-shm +libxcb +libjpeg +glib2 +liblzo
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: Multi-platform 2D graphics library
+Maintainer: 
+Source: cairo-1.14.0.tar.xz
+Type: ipkg
+Description: Cairo is a 2D graphics library. The cairo API provides operations similar
+to the drawing operators of PostScript and PDF. Operations in cairo
+include stroking and filling cubic Bézier splines, transforming and
+compositing translucent images, and antialiased text rendering. All
+drawing operations can be transformed by any affine transformation
+(scale, rotation, shear, etc.).
+http://cairographics.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/dejavu-fonts-ttf/Makefile
+Package: dejavu-fonts-ttf
+Submenu: font
+Version: 2.23-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-font
+Category: Xorg
+Title: dejavu-fonts-ttf
+Maintainer: 
+Source: dejavu-fonts-ttf-2.23.tar.bz2
+Type: ipkg
+Description: dejavu-fonts-ttf
+http://dejavu.sourceforge.net/
+
+@@
+
+
+Source-Makefile: feeds/xorg/fontconfig/Makefile
+Package: fontconfig
+Submenu: font-utils
+Version: 2.6.0-2
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libexpat +libfreetype
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libtool libintl libiconv
+Section: xorg-util
+Category: Xorg
+Title: fontconfig
+Maintainer: 
+Source: fontconfig-2.6.0.tar.gz
+Type: ipkg
+Description: fontconfig
+http://fontconfig.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/lib/xtrans/Makefile
+Package: xtrans
+Submenu: libraries
+Version: 1.2.5-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-libraries
+Category: Xorg
+Title: xtrans
+Maintainer: 
+Source: xtrans-1.2.5.tar.bz2
+Type: ipkg
+Description: xtrans
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/pango/Makefile
+Package: pango
+Submenu: libraries
+Version: 1.28.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +cairo +glib2 +fontconfig +libfreetype
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: !BUILD_NLS:libiconv !BUILD_NLS:libintl
+Section: xorg-libraries
+Category: Xorg
+Title: Text layout and rendering library
+Maintainer: 
+Source: pango-1.28.4.tar.bz2
+Type: ipkg
+Description: Pango is a library for layout and rendering of text, with an emphasis
+on internationalization. Pango can be used anywhere that text layout
+is needed; however, most of the work on Pango so far has been done using
+the GTK+ widget toolkit as a test platform. Pango forms the core of text
+and font handling for GTK+-2.x.
+http://www.pango.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/pixman/Makefile
+Package: pixman
+Submenu: libraries
+Version: 0.32.4-2
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: pixman
+Maintainer: 
+Source: pixman-0.32.4.tar.gz
+Type: ipkg
+Description: pixman
+http://cairographics.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/proto/bigreqsproto/Makefile
+Package: bigreqsproto
+Submenu: proto
+Version: 1.1.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: bigreqsproto
+Maintainer: 
+Source: bigreqsproto-1.1.0.tar.bz2
+Type: ipkg
+Description: bigreqsproto
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/proto/inputproto/Makefile
+Package: inputproto
+Submenu: proto
+Version: 2.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: inputproto
+Maintainer: 
+Source: inputproto-2.0.tar.bz2
+Type: ipkg
+Description: inputproto
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/proto/kbproto/Makefile
+Package: kbproto
+Submenu: proto
+Version: 1.0.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: kbproto
+Maintainer: 
+Source: kbproto-1.0.4.tar.bz2
+Type: ipkg
+Description: kbproto
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/proto/recordproto/Makefile
+Package: recordproto
+Submenu: proto
+Version: 1.14-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: recordproto
+Maintainer: 
+Source: recordproto-1.14.tar.bz2
+Type: ipkg
+Description: recordproto
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/proto/renderproto/Makefile
+Package: renderproto
+Submenu: proto
+Version: 0.11-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: renderproto
+Maintainer: 
+Source: renderproto-0.11.tar.bz2
+Type: ipkg
+Description: renderproto
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/proto/xcmiscproto/Makefile
+Package: xcmiscproto
+Submenu: proto
+Version: 1.2.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: xcmiscproto
+Maintainer: 
+Source: xcmiscproto-1.2.0.tar.bz2
+Type: ipkg
+Description: xcmiscproto
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/proto/xextproto/Makefile
+Package: xextproto
+Submenu: proto
+Version: 7.1.1-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: xextproto
+Maintainer: 
+Source: xextproto-7.1.1.tar.bz2
+Type: ipkg
+Description: xextproto
+http://xorg.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/qt5-wayland/Makefile
+Package: qt5-wayland
+Submenu: framework
+Version: 5.8.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +glib2 +libstdcpp +libdbus +libdrm +fontconfig +libfreetype +eudev +dejavu-fonts-ttf +mali-wayland +libpng +libxkbcommon +libudev +libmtdev +libinput +libiconv-full +supportlibs +libjpeg +libwayland
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: +libstdcpp
+Section: xorg-framework
+Category: Xorg
+Title: qt5
+Maintainer: 
+Source: qt-everywhere-opensource-src-5.8.0.tar.gz
+Type: ipkg
+Description: qt5
+http://qt-project.org
+
+@@
+
+
+Source-Makefile: feeds/xorg/rtk-qt-examples/Makefile
+Package: rtk-qt-examples
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +rtk-nvr +rtkMediaLib +qt5-wayland
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: +libstdcpp
+Section: nas
+Category: Realtek
+Title: QT examples for Realtek
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   This package activates qt examples for Realtek
+
+@@
+
+
+Source-Makefile: feeds/xorg/wayland-protocols/Makefile
+Package: wayland-protocols
+Submenu: proto
+Version: 1.8-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-framework
+Category: Xorg
+Title: Wayland-protocols
+Maintainer: 
+Source: wayland-protocols-1.8.tar.xz
+Type: ipkg
+Description: 	The Wayland-Protocols package contains additional Wayland
+	protocols that add functionality outside of protocols 
+	already in the Wayland core. 
+http://wayland.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/weston/Makefile
+Package: weston
+Submenu: Weston
+Version: 3.0.0-71c4f70e08faad6002ec8fe8cd1c7930bee8373b
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +kmod-weston +mali-wayland +libpthread-stubs +libdrm +pixman +libinput +libmtdev +libevdev +libxkbcommon +libxau +xcbproto +xproto +xorg-macros +libudev +wayland-protocols +libjpeg +libpng +libpam +WESTON_ENABLE_DBUS:dbus +WESTON_ENABLE_WESTON_LAUNCH:libpam +cairo
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libtool libintl libiconv
+Section: xorg-framework
+Category: Xorg
+Title: Weston
+Maintainer: 
+Source: weston-3.0.0-71c4f70e08faad6002ec8fe8cd1c7930bee8373b.tar.gz
+Type: ipkg
+Description:   The Weston compositor is a minimal and fast compositor and is suitable for many embedded and mobile use cases.
+http://cgit.freedesktop.org/wayland/weston
+
+@@
+
+
+Source-Makefile: feeds/xorg/xcbproto/Makefile
+Package: xcbproto
+Submenu: proto
+Version: 1.12-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libxml2 +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: xorg-framework
+Category: Xorg
+Title: xcbproto
+Maintainer: 
+Source: xcb-proto-1.12.tar.bz2
+Type: ipkg
+Description: 	The xcb-proto package provides the XML-XCB protocol
+	descriptions that libxcb uses to generate the majority
+	of its code and API.
+http://xcb.freedesktop.org/
+
+@@
+
+
+Source-Makefile: feeds/xorg/xproto/Makefile
+Package: xproto
+Submenu: proto
+Version: 7.0.31-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-framework
+Category: Xorg
+Title: xproto
+Maintainer: 
+Source: xproto-7.0.31.tar.bz2
+Type: ipkg
+Description: xproto
+http://xorg.freedesktop.org/
+
+@@
+
+

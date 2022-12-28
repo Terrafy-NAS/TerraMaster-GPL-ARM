@@ -1,0 +1,43 @@
+From a59363bf15524e97bf4c906c3dda8f92be28868e Mon Sep 17 00:00:00 2001
+Date: Mon, 26 Feb 2018 18:03:31 +0800
+Subject: [PATCH] NAS: eMMC: Skip BL31 and TEE OS
+
+---
+ examples/flash_writer/1295_force_emmc_nS_nE.inc | 8 --------
+ include/configs/rtd1295_qa_emmc_64.h            | 1 +
+ 2 files changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/examples/flash_writer/1295_force_emmc_nS_nE.inc b/examples/flash_writer/1295_force_emmc_nS_nE.inc
+index 95780c7..24b2f5d 100644
+--- a/examples/flash_writer/1295_force_emmc_nS_nE.inc
++++ b/examples/flash_writer/1295_force_emmc_nS_nE.inc
+@@ -88,14 +88,6 @@ Config_Uboot_Sim_Mode =  FALSE
+ ##Config_FSBL = [TRUE | FALSE]
+ Config_FSBL = TRUE
+ Config_FSBL_File_Name = fsbl-loader-00.00.bin
+-Config_FSBL_OS = TRUE
+-ifeq ($(CONFIG_TEE_OS_DRM), TRUE)
+-Config_FSBL_OS_File_Name = fsbl-os-00.00.bin.enlarge
+-else
+-Config_FSBL_OS_File_Name = fsbl-os-00.00.bin
+-endif
+-Config_BL31 = TRUE
+-Config_BL31_File_Name = bl31.bin
+ 
+ # ********************************************************************
+ # Boot parameters
+diff --git a/include/configs/rtd1295_qa_emmc_64.h b/include/configs/rtd1295_qa_emmc_64.h
+index e33a848..5a84cc7 100644
+--- a/include/configs/rtd1295_qa_emmc_64.h
++++ b/include/configs/rtd1295_qa_emmc_64.h
+@@ -21,6 +21,7 @@
+ //#define CONFIG_SYS_RTK_SPI_FLASH
+ //#define CONFIG_SYS_RTK_NAND_FLASH
+ #define CONFIG_SYS_RTK_EMMC_FLASH
++#define CONFIG_SYS_NO_BL31
+ 
+ #if defined(CONFIG_SYS_RTK_EMMC_FLASH)
+ 	/* Flash writer setting:
+-- 
+2.7.4
+

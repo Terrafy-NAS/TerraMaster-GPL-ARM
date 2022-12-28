@@ -1,0 +1,51 @@
+<!--
+jQuery v1.11.1 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license
+(MIT License)
+
+jquery.rest.js is Copyright © 2014 Jaime Pillora dev@jpillora.com under MIT License
+https://github.com/jpillora/jquery.rest
+
+jQuery BlockUI Plugin is Copyright © 2007-2013 M. Alsup. under MiT and GPL License
+https://github.com/malsup/blockui/
+
+NVR UI is developed by Realtek @ 2016
+Realtek All rights reserved.
+-->
+<html>
+<head>
+  <title>NVR UI</title>
+</head>
+<link href="css/the_styles.css" rel="stylesheet">
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.rest.js"></script>
+<script src="js/jquery.blockUI.js"></script>
+<script src="js/nvrui.js"></script>
+
+<body>
+  <div id="showInfo"></div>
+  <div id="space"></div>
+  <hr>
+  <b>IP Camera List</b>
+  <input type="button" id="btn_list_refresh" value="refresh" onclick="ipcamlist_show()"/>
+  <div id="showIPCamList"></div>
+  <hr>
+	<hr>
+  <b>IP Camera Streaming</b><div id="statusStreaming"></div></td><br>
+  <input type="button" id="btn_streamingstart" value="streaming_start" onclick="ipcam_streaming('start')" /><br>
+  <input type="button" id="btn_streamingstop" value="streaming_stop" onclick="ipcam_streaming('stop')"  /><br><br>
+  <b>IP Camera Recording</b><div id="statusRecording"></div><br>
+  <input type="button" id="btn_recordingstart" value="recording_start"  onclick="ipcam_recording('start')" /><br>
+  <input type="button" id="btn_recordingstop" value="recording_stop"  onclick="ipcam_recording('stop')" /><br><br>
+<!--  <b>IP Camera Playback</b><br>
+  <input type="button" id="btn_playbackstart" value="playback_start"   onclick="ipcam_playback('start')"/><br>
+  <input type="button" id="btn_playbackstop" value="playback_stop"   onclick="ipcam_playback('stop')"/><br><br>
+-->
+  <hr>
+  <b>IP Camera Discovery</b><br>
+  <input type="button" id="btn_discovery" value="discovery"  onclick="ipcam_discovery();" />
+  <div id="showIPCamFound"></div>
+  <div id="showIPCamStreamUri"></div>
+  <hr>
+
+</body>
+</html>

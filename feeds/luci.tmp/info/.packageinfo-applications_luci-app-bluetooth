@@ -1,0 +1,20 @@
+Source-Makefile: feeds/luci/applications/luci-app-bluetooth/Makefile
+Package: luci-app-bluetooth
+Submenu: 3. Applications
+Version: x-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +bluez-daemon +bluez-utils
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: lua/host luci-base/host 
+Section: luci
+Category: LuCI
+Title: LuCI Support for Bluetooth
+Maintainer: 
+Source: 
+Type: ipkg
+Description: LuCI Support for Bluetooth
+
+@@
+
+

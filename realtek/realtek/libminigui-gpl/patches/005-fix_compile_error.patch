@@ -1,0 +1,73 @@
+--- a/configure
++++ b/configure
+@@ -15523,13 +15523,3 @@ fi
+ 
+ 
+ 
+-# generate license pictures
+-echo
+-echo "Going to generate license pictures ..."
+-cd src/sysres/license/
+-./runme.sh $LICENSE_PICTURE > /dev/null
+-if [ $? -ne 0 ]; then
+-    echo "WARNING: failed to generate license pictures."
+-else
+-    echo "Done."
+-fi
+--- a/configure.in
++++ b/configure.in
+@@ -2530,13 +2530,3 @@ dnl scripts/Makefile
+ dnl scripts/lxdialog/Makefile
+ dnl build/Makefile
+ 
+-# generate license pictures
+-echo
+-echo "Going to generate license pictures ..."
+-cd src/sysres/license/
+-./runme.sh $LICENSE_PICTURE > /dev/null
+-if [[ $? -ne 0 ]]; then
+-    echo "WARNING: failed to generate license pictures."
+-else
+-    echo "Done."
+-fi
+--- a/etc/MiniGUI.cfg
++++ b/etc/MiniGUI.cfg
+@@ -22,16 +22,16 @@
+ 
+ [system]
+ # GAL engine and default options
+-gal_engine=pc_xvfb
+-defaultmode=800x600-16bpp
++gal_engine=fbcon
++defaultmode=1920x1080-32bpp
+ 
+ # IAL engine
+-ial_engine=pc_xvfb
++ial_engine=console
+ mdev=/dev/input/mice
+ mtype=IMPS2
+ 
+ [fbcon]
+-defaultmode=1024x768-16bpp
++defaultmode=1920x1080-32bpp
+ 
+ [qvfb]
+ defaultmode=640x480-16bpp
+@@ -102,7 +102,7 @@ repeatusec=50000
+ 
+ [cursorinfo]
+ # Edit following line to specify cursor files path
+-cursorpath=/usr/local/share/minigui/res/cursor/
++cursorpath=/usr/share/minigui/res/cursor/
+ cursornumber=23
+ cursor0=d_arrow.cur
+ cursor1=d_beam.cur
+@@ -129,7 +129,7 @@ cursor21=ho_split.cur
+ cursor22=ve_split.cur
+ 
+ [resinfo]
+-respath=/usr/local/share/minigui/res/
++respath=/usr/share/minigui/res/
+  
+ [classic]
+ # Note that max number defined in source code is 5.

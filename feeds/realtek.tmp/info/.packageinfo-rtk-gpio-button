@@ -1,0 +1,21 @@
+Source-Makefile: feeds/realtek/rtk-gpio-button/Makefile
+Package: rtk-gpio-button
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +kmod-hid +kmod-hid-generic +kmod-input-gpio-keys +triggerhappy
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek GPIO button function
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Realtek GPIO button function
+
+@@
+Config:
+	source "realtek/realtek/rtk-gpio-button/Config.in"
+@@
+
+

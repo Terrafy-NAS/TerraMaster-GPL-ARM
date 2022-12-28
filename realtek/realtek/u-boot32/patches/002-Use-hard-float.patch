@@ -1,0 +1,33 @@
+--- a/arch/arm/cpu/armv7/config.mk
++++ b/arch/arm/cpu/armv7/config.mk
+@@ -20,7 +20,7 @@
+ # Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ # MA 02111-1307 USA
+ #
+-PLATFORM_RELFLAGS += -fno-common -ffixed-r8 -msoft-float
++PLATFORM_RELFLAGS += -fno-common -ffixed-r8 -march=armv7-a -mtune=cortex-a7 -mfpu=neon
+ 
+ # If armv7-a is not supported by GCC fall-back to armv5, which is
+ # supported by more tool-chains
+--- a/examples/efuse_programmer/Makefile
++++ b/examples/efuse_programmer/Makefile
+@@ -135,7 +135,7 @@ endif
+ # We don't want gcc reordering functions if possible.  This ensures that an
+ # application's entry point will be the first function in the application's
+ # source file.
+-CFLAGS = -g -O2 -fno-common -fzero-initialized-in-bss -msoft-float -mthumb-interwork -D__KERNEL__ -fno-builtin -ffreestanding -nostdinc -isystem $(gcclibdir)/../include -pipe -DCONFIG_ARM -D__ARM__ -marm -mabi=aapcs-linux -march=armv7-a -D__EL__
++CFLAGS = -g -O2 -fno-common -fzero-initialized-in-bss -mthumb-interwork -D__KERNEL__ -fno-builtin -ffreestanding -nostdinc -isystem $(gcclibdir)/../include -pipe -DCONFIG_ARM -D__ARM__ -marm -mabi=aapcs-linux -march=armv7-a -mtune=cortex-a7 -mfpu=neon -D__EL__
+ CFLAGS += $(INCDIRS)
+ #all:	clean b2a $(obj).depend $(OBJS) $(SSOBJS) $(LIB) $(ELF) $(SREC) $(BIN)
+ all:	clean gen_key b2a $(OBJS) $(SSOBJS) $(LIB) $(ELF) $(SREC) $(BIN)
+--- a/examples/flash_writer_u/Makefile
++++ b/examples/flash_writer_u/Makefile
+@@ -707,7 +707,7 @@ endif
+ #CFLAGS_NTR := $(call cc-option,-fno-toplevel-reorder)
+ #CFLAGS += $(CFLAGS_NTR) -I$(INCLUDE_DIR)
+ #CFLAGS = -g -Os -fno-common -ffixed-r8 -msoft-float  -D__KERNEL__ -fno-builtin -ffreestanding -nostdinc -isystem $(gcclibdir)/../include -pipe  -DCONFIG_ARM -D__ARM__ -marm  -mabi=aapcs-linux -mno-thumb-interwork -march=armv7-a  -Wall -Wstrict-prototypes -fno-stack-protector -Wno-format-nonliteral -Wno-format-security  -fno-toplevel-reorder 
+-CFLAGS = -g -Os -fno-common -ffixed-r8 -msoft-float  -D__KERNEL__ -fno-builtin -ffreestanding -nostdinc -isystem $(gcclibdir)/../include -pipe  -DCONFIG_ARM -D__ARM__ -marm  -mabi=aapcs-linux -mno-thumb-interwork -march=armv7-a -D__EL__
++CFLAGS = -g -Os -fno-common -ffixed-r8 -D__KERNEL__ -fno-builtin -ffreestanding -nostdinc -isystem $(gcclibdir)/../include -pipe  -DCONFIG_ARM -D__ARM__ -marm  -mabi=aapcs-linux -mno-thumb-interwork -march=armv7-a -mtune=cortex-a7 -mfpu=neon -D__EL__
+ CFLAGS += $(INCDIRS)
+ all:	clean configconv hw_setting b2a get_config $(OBJS) $(SSOBJS) $(LIB) $(ELF) $(SREC) $(BIN)
+ 

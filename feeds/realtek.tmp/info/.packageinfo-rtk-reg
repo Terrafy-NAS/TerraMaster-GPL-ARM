@@ -1,0 +1,20 @@
+Source-Makefile: feeds/realtek/rtk-reg/Makefile
+Package: rtk-reg
+Submenu: CPU tools
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +libstdcpp +kmod-rtk_uio
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: Register R/W tool for Realtek SoC
+Maintainer: 
+Source: 
+Type: ipkg
+Kernel-Config: CONFIG_UIO=y CONFIG_UIO_ASSIGN_MINOR=y CONFIG_UIO_RTK_RBUS=y CONFIG_UIO_RTK_REFCLK=n CONFIG_UIO_RTK_SE=n CONFIG_UIO_RTK_MD=n
+Description:  Realtek SoC Register R/W tool
+
+@@
+
+

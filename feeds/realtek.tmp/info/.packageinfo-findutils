@@ -1,0 +1,20 @@
+Source-Makefile: feeds/realtek/findutils/Makefile
+Package: findutils
+Default: y
+Version: 4.4.2-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: GNU find utils
+Maintainer: 
+Source: findutils-4.4.2.tar.gz
+Type: ipkg
+Description: 	The GNU Find Utilities are the basic directory searching utilities of the GNU operating system
+http://www.gnu.org/software/findutils/
+
+@@
+
+

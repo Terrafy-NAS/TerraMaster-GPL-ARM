@@ -1,0 +1,20 @@
+Source-Makefile: feeds/realtek/gst1-rtk/Makefile
+Package: gst1-rtk
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +openmax +gstreamer1-rtk +libgst1video-rtk +supportlibs +rtkMediaLib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libgstreamer1-rtk gstreamer1-plugins-base-rtk supportlibs rtkMediaLib
+Section: opt
+Category: Extra packages
+Title:  plugins collection (rtk)
+Maintainer: 
+Source: 
+Type: ipkg
+Hidden: 1
+Description:  plugins collection (rtk)
+
+@@
+
+

@@ -1,0 +1,805 @@
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/os_intfs.c
+@@ -2385,7 +2385,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2706,6 +2706,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2895,7 +2898,7 @@ int _netdev_open(struct net_device *pnet
+ 		rtw_intf_start(padapter);
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/os_intfs.c
+@@ -2217,7 +2217,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2540,6 +2540,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2728,7 +2731,7 @@ int _netdev_open(struct net_device *pnet
+ 		rtw_intf_start(padapter);
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/os_intfs.c
+@@ -1839,7 +1839,7 @@ int _netdev_vir_if_open(struct net_devic
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2167,7 +2167,7 @@ int _netdev_if2_open(struct net_device *
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2481,6 +2481,10 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2722,7 +2726,7 @@ int _netdev_open(struct net_device *pnet
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		rtw_led_control(padapter, LED_CTL_NO_LINK);
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821cs/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821cs/os_dep/linux/os_intfs.c
+@@ -2544,7 +2544,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2996,6 +2996,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3188,7 +3191,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821cu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821cu/os_dep/linux/os_intfs.c
+@@ -2543,7 +2543,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2995,6 +2995,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3186,7 +3189,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8822be/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8822be/os_dep/linux/os_intfs.c
+@@ -2611,7 +2611,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -3063,6 +3063,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3254,7 +3257,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8723ds/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8723ds/os_dep/linux/os_intfs.c
+@@ -2548,7 +2548,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -3000,6 +3000,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3193,7 +3196,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8723du/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8723du/os_dep/linux/os_intfs.c
+@@ -2309,7 +2309,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2771,6 +2771,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2962,7 +2965,7 @@ int _netdev_open(struct net_device *pnet
+ 		rtw_intf_start(padapter);
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812au/os_dep/linux/os_intfs.c
+@@ -2544,7 +2544,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2996,6 +2996,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3187,7 +3190,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8822bu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8822bu/os_dep/linux/os_intfs.c
+@@ -2596,7 +2596,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -3052,6 +3052,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3243,7 +3246,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8822bs/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8822bs/os_dep/linux/os_intfs.c
+@@ -2609,7 +2609,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -3061,6 +3061,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3252,7 +3255,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8188eu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8188eu/os_dep/linux/os_intfs.c
+@@ -2350,7 +2350,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2671,6 +2671,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2859,7 +2862,7 @@ int _netdev_open(struct net_device *pnet
+ 		rtw_intf_start(padapter);
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8188fu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8188fu/os_dep/linux/os_intfs.c
+@@ -2591,7 +2591,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -3047,6 +3047,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3238,7 +3241,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8189es/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8189es/os_dep/linux/os_intfs.c
+@@ -1761,7 +1761,7 @@ int _netdev_vir_if_open(struct net_devic
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2087,7 +2087,7 @@ int _netdev_if2_open(struct net_device *
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2400,6 +2400,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2595,7 +2598,7 @@ int _netdev_open(struct net_device *pnet
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		rtw_led_control(padapter, LED_CTL_NO_LINK);
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8189fs/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8189fs/os_dep/linux/os_intfs.c
+@@ -2594,7 +2594,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -3050,6 +3050,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3241,7 +3244,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8192cu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8192cu/os_dep/linux/os_intfs.c
+@@ -1286,7 +1286,7 @@ int _netdev_vir_if_open(struct net_devic
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -1661,7 +1661,7 @@ int _netdev_if2_open(struct net_device *
+ 		padapter->hw_init_completed = _TRUE;
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2047,6 +2047,9 @@ int rtw_drv_register_netdev(_adapter *if
+ 				if((status = _rtw_drv_register_netdev(padapter, name)) != _SUCCESS) {
+ 					break;
+ 				}
++#ifdef CONFIG_IOCTL_CFG80211
++				rtw_cfg80211_init_wiphy(padapter);
++#endif
+ 			}
+ 		}
+ 	}
+@@ -2101,7 +2104,7 @@ int _netdev_open(struct net_device *pnet
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		rtw_led_control(padapter, LED_CTL_NO_LINK);
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8192ee/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8192ee/os_dep/linux/os_intfs.c
+@@ -2545,7 +2545,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2997,6 +2997,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3189,7 +3192,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8723bs/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8723bs/os_dep/linux/os_intfs.c
+@@ -2544,7 +2544,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2996,6 +2996,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3188,7 +3191,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8723bu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8723bu/os_dep/linux/os_intfs.c
+@@ -1556,7 +1556,7 @@ int _netdev_vir_if_open(struct net_devic
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -1914,7 +1914,7 @@ int _netdev_if2_open(struct net_device *
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2298,6 +2298,9 @@ int rtw_drv_register_netdev(_adapter *if
+ 				if((status = _rtw_drv_register_netdev(padapter, name)) != _SUCCESS) {
+ 					break;
+ 				}
++#ifdef CONFIG_IOCTL_CFG80211
++				rtw_cfg80211_init_wiphy(padapter);
++#endif
+ 			}
+ 		}
+ 	}
+@@ -2375,7 +2378,7 @@ int _netdev_open(struct net_device *pnet
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		rtw_led_control(padapter, LED_CTL_NO_LINK);
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/os_intfs.c
+@@ -2254,7 +2254,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2577,6 +2577,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2765,7 +2768,7 @@ int _netdev_open(struct net_device *pnet
+ 		rtw_intf_start(padapter);
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8814ae/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8814ae/os_dep/linux/os_intfs.c
+@@ -2165,7 +2165,7 @@ int _netdev_vir_if_open(struct net_devic
+ 			goto _netdev_virtual_iface_open_error;
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2481,6 +2481,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2662,7 +2665,7 @@ int _netdev_open(struct net_device *pnet
+ 		rtw_intf_start(padapter);
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/os_intfs.c
+@@ -1814,7 +1814,7 @@ int _netdev_vir_if_open(struct net_devic
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2134,7 +2134,7 @@ int _netdev_if2_open(struct net_device *
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2419,6 +2419,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2602,7 +2605,7 @@ int _netdev_open(struct net_device *pnet
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		rtw_led_control(padapter, LED_CTL_NO_LINK);
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/os_intfs.c
+@@ -1820,7 +1820,7 @@ int _netdev_vir_if_open(struct net_devic
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2141,7 +2141,7 @@ int _netdev_if2_open(struct net_device *
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		padapter->bup = _TRUE;
+@@ -2427,6 +2427,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2610,7 +2613,7 @@ int _netdev_open(struct net_device *pnet
+ 		}
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ #endif
+ 
+ 		rtw_led_control(padapter, LED_CTL_NO_LINK);
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821ce/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821ce/os_dep/linux/os_intfs.c
+@@ -2428,7 +2428,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2749,6 +2749,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -2937,7 +2940,7 @@ int _netdev_open(struct net_device *pnet
+ 		rtw_intf_start(padapter);
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8192eu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8192eu/os_dep/linux/os_intfs.c
+@@ -2545,7 +2545,7 @@ int _netdev_vir_if_open(struct net_devic
+ #endif
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-	rtw_cfg80211_init_wiphy(padapter);
++	//rtw_cfg80211_init_wiphy(padapter);
+ 	rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 
+@@ -2997,6 +2997,9 @@ int rtw_os_ndevs_register(struct dvobj_p
+ 				rtw_warn_on(1);
+ 				break;
+ 			}
++#ifdef CONFIG_IOCTL_CFG80211
++			rtw_cfg80211_init_wiphy(adapter);
++#endif
+ 		}
+ 	}
+ 
+@@ -3189,7 +3192,7 @@ int _netdev_open(struct net_device *pnet
+ #endif /* !RTW_HALMAC */
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+-		rtw_cfg80211_init_wiphy(padapter);
++		//rtw_cfg80211_init_wiphy(padapter);
+ 		rtw_cfg80211_init_wdev_data(padapter);
+ #endif
+ 

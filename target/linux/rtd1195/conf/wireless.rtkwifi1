@@ -1,0 +1,16 @@
+config wifi-device 'radio0'
+        option type 'mac80211'
+        option phy 'phy0'
+        option path 'platform/18013000.ehci/usb1/1-1/1-1:1.2'
+        option hwmode '11a'
+        option channel 'auto'
+        option htmode 'VHT80'
+        option txpower '20'
+        option country '00'
+
+config wifi-iface
+        option device 'radio0'
+        option mode 'ap'
+        option ssid 'OpenWrt'
+        option encryption 'none'
+        option disabled '1'

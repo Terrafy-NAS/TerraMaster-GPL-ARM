@@ -1,0 +1,61 @@
+--- a/configure
++++ b/configure
+@@ -14060,8 +14060,8 @@ $as_echo "$am_cv_python_pyexecdir" >&6;
+ $as_echo_n "checking for headers required to compile python extensions... " >&6; }
+ py_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.prefix)"`
+ py_exec_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.exec_prefix)"`
+-if test -x "$PYTHON-config"; then
+-PYTHON_INCLUDES=`$PYTHON-config --includes 2>/dev/null`
++if test -x "$PYTHON_CONFIG"; then
++PYTHON_INCLUDES=`$PYTHON_CONFIG --includes 2>/dev/null`
+ else
+ PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+ if test "$py_prefix" != "$py_exec_prefix"; then
+@@ -14091,8 +14091,8 @@ CPPFLAGS="$save_CPPFLAGS"
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for PySignal_SetWakeupFd in Python.h" >&5
+ $as_echo_n "checking for PySignal_SetWakeupFd in Python.h... " >&6; }
+ py_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.prefix)"`
+-if test -x "$PYTHON-config"; then
+-PYTHON_INCLUDES=`$PYTHON-config --includes 2>/dev/null`
++if test -x "$PYTHON_CONFIG"; then
++PYTHON_INCLUDES=`$PYTHON_CONFIG --includes 2>/dev/null`
+ else
+ PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+ fi
+--- a/configure.ac
++++ b/configure.ac
+@@ -83,8 +83,8 @@ JD_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(c
+ 
+ AC_MSG_CHECKING([for PySignal_SetWakeupFd in Python.h])
+ py_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.prefix)"`
+-if test -x "$PYTHON-config"; then
+-PYTHON_INCLUDES=`$PYTHON-config --includes 2>/dev/null`
++if test -x "$PYTHON_CONFIG"; then
++PYTHON_INCLUDES=`$PYTHON_CONFIG --includes 2>/dev/null`
+ else
+ PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+ fi
+--- a/m4/python.m4
++++ b/m4/python.m4
+@@ -45,8 +45,8 @@ AC_MSG_CHECKING(for headers required to
+ dnl deduce PYTHON_INCLUDES
+ py_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.prefix)"`
+ py_exec_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.exec_prefix)"`
+-if test -x "$PYTHON-config"; then
+-PYTHON_INCLUDES=`$PYTHON-config --includes 2>/dev/null`
++if test -x "$PYTHON_CONFIG"; then
++PYTHON_INCLUDES=`$PYTHON_CONFIG --includes 2>/dev/null`
+ else
+ PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+ if test "$py_prefix" != "$py_exec_prefix"; then
+@@ -236,8 +236,8 @@ AC_MSG_CHECKING(for headers required to
+ dnl deduce PYTHON_INCLUDES
+ py_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.prefix)"`
+ py_exec_prefix=`$PYTHON -c "import sys; sys.stdout.write(sys.exec_prefix)"`
+-if test -x "$PYTHON-config"; then
+-PYTHON_INCLUDES=`$PYTHON-config --includes 2>/dev/null`
++if test -x "$PYTHON_CONFIG"; then
++PYTHON_INCLUDES=`$PYTHON_CONFIG --includes 2>/dev/null`
+ else
+ PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+ if test "$py_prefix" != "$py_exec_prefix"; then

@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/freetds/Makefile
+Package: freetds
+Version: 1.00.48-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +unixodbc +libpthread +libncurses +libreadline +libopenssl
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: libs
+Category: Libraries
+Title: freetds
+Maintainer: 
+Source: freetds-1.00.48.tar.bz2
+Type: ipkg
+Description: 	FreeTDS is a set of libraries for Unix and Linux that allows your programs to natively talk to Microsoft SQL Server and Sybase databases. 
+http://freetds.org
+
+@@
+
+

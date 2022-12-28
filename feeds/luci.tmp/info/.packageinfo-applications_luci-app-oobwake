@@ -1,0 +1,20 @@
+Source-Makefile: feeds/luci/applications/luci-app-oobwake/Makefile
+Package: luci-app-oobwake
+Submenu: 3. Applications
+Version: x-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtl8117
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: lua/host luci-base/host 
+Section: luci
+Category: LuCI
+Title: Wake Up Host through Proc for RTL8117
+Maintainer: 
+Source: 
+Type: ipkg
+Description: Wake Up Host through Proc for RTL8117
+
+@@
+
+

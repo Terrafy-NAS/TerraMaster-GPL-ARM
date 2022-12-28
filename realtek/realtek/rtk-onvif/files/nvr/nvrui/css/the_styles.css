@@ -1,0 +1,19 @@
+body{font-family: Verdana, Arial, Sans-serif;background: #f8f8f8;width: 920px;text-align: left;margin: 0 auto;padding: 20px 0px 0px;}
+input[type="button"] {cursor: pointer; -moz-box-shadow:inset 0px 34px 0px -24px #a1a1a1;-webkit-box-shadow:inset 0px 34px 0px -24px #a1a1a1; box-shadow:inset 0px 34px 0px -24px #a1a1a1; background-color:#999999;-moz-border-radius:10px;-webkit-border-radius:10px; border-radius:10px;	border:1px solid #ffffff; display:inline-block; color:#ffffff;font-family:Verdana, Arial;font-size:11px; padding: 4px 15px;	margin: 2px 0px;}
+input[type="button"]:hover {-moz-box-shadow:inset 0px 34px 0px -24px #72a6c7; -webkit-box-shadow:inset 0px 34px 0px -24px #72a6c7; box-shadow:inset 0px 34px 0px -24px #72a6c7; background-color:#649dc2;}
+input[type="button"]:active {top:1px;}
+input[id*="ipcam_streamuri"]{border:0px; background: none;}
+hr{border:0; height:1px; background-color:#d4d4d4; color:#d4d4d4}
+table{border:#ccc 1px solid; border-radius: 3px; border-spacing:0px; text-align: left; padding: 1px; background: #f1f1f1;}
+table th, table td {border: 0px; padding: 1px 6px;}
+table th {font-size: 11px; color: #666; background: #d7d9db; padding: 4px;}
+table tr:hover td {background: #e8e8e8;}
+b {margin-top: 20px; display: inline-block;}
+table b {margin-top: 0px;}
+/* #showInfo table{text-align: left; width: auto; margin: 0 auto;border: 0px; background: none;}*/
+#showInfo table tr:hover td {background: none;}
+#showIPCamList table tr td:first-child, #showIPCamOutput table tr td:first-child{font-size: 0.8em;color: #888;}
+#showIPCamOutput table{width: 380px;}
+#showIPCamFound div table {border: 0px; font-size: 0.8em;}
+#showIPCamFound div table tr {display: block; margin: 3px 0px;}
+.footer{margin: 30px 0px;color: #aaa; font: normal 0.5em Sans-serif; text-align: center;}

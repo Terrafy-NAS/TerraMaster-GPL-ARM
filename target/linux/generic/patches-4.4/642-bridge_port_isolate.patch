@@ -1,0 +1,135 @@
+commit bebaae5935d5195f59a9b49626ae80f9747db787
+Author: edwardwu <edwardwu@realtek.com>
+Date:   Tue Jan 15 11:18:54 2019 +0800
+
+    tmp
+
+diff --git a/include/linux/if_bridge.h b/include/linux/if_bridge.h
+index 23e282f..a5fe901 100644
+--- a/include/linux/if_bridge.h
++++ b/include/linux/if_bridge.h
+@@ -45,6 +45,7 @@ struct br_ip_list {
+ #define BR_PROXYARP		BIT(8)
+ #define BR_LEARNING_SYNC	BIT(9)
+ #define BR_PROXYARP_WIFI	BIT(10)
++#define BR_ISOLATE_MODE	BIT(11)
+ 
+ #define BR_DEFAULT_AGEING_TIME	(300 * HZ)
+ #if defined (CONFIG_RTL_IGMP_SNOOPING)
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index c721a38e..100a8a5 100755
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -243,7 +243,7 @@ EXPORT_SYMBOL_GPL(br_deliver);
+ #if defined(CONFIG_RTL_IGMP_SNOOPING)
+ void br_forward(const struct net_bridge_port *to, struct sk_buff *skb)
+ {
+-	if (to && should_deliver(to, skb)) {
++	if (to && should_deliver(to, skb) && !(to->flags & BR_ISOLATE_MODE)) {
+ 		__br_forward(to, skb);
+ 		return;
+ 	}
+@@ -253,7 +253,7 @@ void br_forward(const struct net_bridge_port *to, struct sk_buff *skb)
+ #else /* CONFIG_RTL_IGMP_SNOOPING */
+ void br_forward(const struct net_bridge_port *to, struct sk_buff *skb, struct sk_buff *skb0)
+ {
+-	if (to && should_deliver(to, skb)) {
++	if (to && should_deliver(to, skb) && !(to->flags & BR_ISOLATE_MODE)) {
+ 		if (skb0)
+ 			deliver_clone(to, skb, __br_forward);
+ 		else
+@@ -321,6 +321,8 @@ static void br_flood(struct net_bridge *br, struct sk_buff *skb,
+ 	prev = NULL;
+ 
+ 	list_for_each_entry_rcu(p, &br->port_list, list) {
++		if (forward && (p->flags & BR_ISOLATE_MODE))
++			continue;
+ 
+ 		if (should_deliver(p, skb)) {
+ 			/*patch for wan/lan receive duplicate unknown unicast/broadcast packet when pppoe/ipv6 passthrough enable*/
+@@ -371,7 +373,7 @@ static void br_flood(struct net_bridge *br, struct sk_buff *skb,
+ 		     struct sk_buff *skb0,
+ 		     void (*__packet_hook)(const struct net_bridge_port *p,
+ 					   struct sk_buff *skb),
+-		     bool unicast)
++		     bool unicast, bool forward)
+ {
+ 	struct net_bridge_port *p;
+ 	struct net_bridge_port *prev;
+@@ -379,6 +381,8 @@ static void br_flood(struct net_bridge *br, struct sk_buff *skb,
+ 	prev = NULL;
+ 
+ 	list_for_each_entry_rcu(p, &br->port_list, list) {
++		if (forward && (p->flags & BR_ISOLATE_MODE))
++			continue;
+ 		/* Do not flood unicast traffic to ports that turn it off */
+ 		if (unicast && !(p->flags & BR_FLOOD))
+ 			continue;
+@@ -427,7 +431,7 @@ void br_flood_deliver(struct net_bridge *br, struct sk_buff *skb, bool unicast)
+ #if defined(CONFIG_RTL_IGMP_SNOOPING)
+ 	br_flood(br, skb, __br_deliver, unicast, false);
+ #else
+-	br_flood(br, skb, NULL, __br_deliver, unicast);
++	br_flood(br, skb, NULL, __br_deliver, unicast, false);
+ #endif
+ }
+ 
+@@ -442,7 +446,7 @@ void br_flood_forward(struct net_bridge *br, struct sk_buff *skb,
+ void br_flood_forward(struct net_bridge *br, struct sk_buff *skb,
+ 		      struct sk_buff *skb2, bool unicast)
+ {
+-	br_flood(br, skb, skb2, __br_forward, unicast);
++	br_flood(br, skb, skb2, __br_forward, unicast, true);
+ }
+ #endif /* CONFIG_RTL_IGMP_SNOOPING */
+ 
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index 7b70d85..b16c66b 100755
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -512,8 +512,8 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ 
+ 		unicast = false;
+ 		br->dev->stats.multicast++;
+-	} else if ((dst = __br_fdb_get(br, dest, vid)) &&
+-			dst->is_local) {
++	} else if ((p->flags & BR_ISOLATE_MODE) ||
++		   ((dst = __br_fdb_get(br, dest, vid)) && dst->is_local)) {
+ 		skb2 = skb;
+ 		/* Do not forward the packet since it's local. */
+ 		skb = NULL;
+diff --git a/net/bridge/br_sysfs_if.c b/net/bridge/br_sysfs_if.c
+index efe415a..05f9dd2 100644
+--- a/net/bridge/br_sysfs_if.c
++++ b/net/bridge/br_sysfs_if.c
+@@ -173,6 +173,22 @@ BRPORT_ATTR_FLAG(unicast_flood, BR_FLOOD);
+ BRPORT_ATTR_FLAG(proxyarp, BR_PROXYARP);
+ BRPORT_ATTR_FLAG(proxyarp_wifi, BR_PROXYARP_WIFI);
+ 
++static ssize_t show_isolate_mode(struct net_bridge_port *p, char *buf)
++{
++	int isolate_mode = (p->flags & BR_ISOLATE_MODE) ? 1 : 0;
++	return sprintf(buf, "%d\n", isolate_mode);
++}
++static ssize_t store_isolate_mode(struct net_bridge_port *p, unsigned long v)
++{
++	if (v)
++		p->flags |= BR_ISOLATE_MODE;
++	else
++		p->flags &= ~BR_ISOLATE_MODE;
++	return 0;
++}
++static BRPORT_ATTR(isolate_mode, S_IRUGO | S_IWUSR,
++		   show_isolate_mode, store_isolate_mode);
++
+ #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
+ static ssize_t show_multicast_router(struct net_bridge_port *p, char *buf)
+ {
+@@ -217,6 +233,7 @@ static const struct brport_attribute *brport_attrs[] = {
+ #endif
+ 	&brport_attr_proxyarp,
+ 	&brport_attr_proxyarp_wifi,
++	&brport_attr_isolate_mode,
+ 	NULL
+ };
+ 

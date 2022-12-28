@@ -1,0 +1,14 @@
+--- a/common/cmd_boot.c
++++ b/common/cmd_boot.c
+@@ -764,6 +764,11 @@ int rtk_plat_set_boot_flag_from_part_des
+                 {
+                     case FS_TYPE_SQUASH:
+                         rootfstype = "squashfs";
++#ifdef CONFIG_SYS_RTK_NAND_FLASH
++                        opts = " ubi.mtd=/ ubi.block=0,rootfs";
++                        device_path = "/dev/ubiblock0_";
++                        minor_num = 0;
++#endif
+                         break;
+                     case FS_TYPE_EXT4:
+                         rootfstype = "ext4";

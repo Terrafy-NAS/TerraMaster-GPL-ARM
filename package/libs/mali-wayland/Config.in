@@ -1,0 +1,10 @@
+choice
+	prompt "OpenGL ES window system"
+	depends on PACKAGE_mali-wayland
+
+	config MALI_OPENGLES_FBDEV
+	bool "FBDEV" if !PACKAGE_weston
+
+	config MALI_OPENGLES_WAYLAND
+	bool "WAYLAND" if PACKAGE_weston
+endchoice 

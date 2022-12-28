@@ -1,0 +1,614 @@
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/ioctl_cfg80211.c
+@@ -746,12 +746,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		RTW_INFO(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -762,6 +778,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp + sizeof(struct rtw_ieee80211_hdr_3addr) + 6
+ 			, pmlmepriv->assoc_rsp_len - sizeof(struct rtw_ieee80211_hdr_3addr) - 6
+ 			, GFP_ATOMIC);
++		#endif
+ #ifdef CONFIG_RTW_80211R
+ 		if ((rtw_to_roam(padapter) > 0) && rtw_chk_ft_flags(padapter, RTW_FT_SUPPORTED))
+ 			rtw_set_ft_status(padapter, RTW_FT_ASSOCIATED_STA);
+@@ -6993,7 +7010,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/ioctl_cfg80211.c
+@@ -750,12 +750,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		RTW_INFO(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -766,6 +782,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp + sizeof(struct rtw_ieee80211_hdr_3addr) + 6
+ 			, pmlmepriv->assoc_rsp_len - sizeof(struct rtw_ieee80211_hdr_3addr) - 6
+ 			, GFP_ATOMIC);
++		#endif
+ 	} else {
+ 		#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 11, 0) || defined(COMPAT_KERNEL_RELEASE)
+ 		RTW_INFO("pwdev->sme_state(b)=%d\n", pwdev->sme_state);
+@@ -6397,7 +6414,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/ioctl_cfg80211.c
+@@ -755,12 +755,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		RTW_INFO(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -771,6 +787,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp + sizeof(struct rtw_ieee80211_hdr_3addr) + 6
+ 			, pmlmepriv->assoc_rsp_len - sizeof(struct rtw_ieee80211_hdr_3addr) - 6
+ 			, GFP_ATOMIC);
++		#endif
+ #ifdef CONFIG_RTW_80211R
+ 		if ((rtw_to_roam(padapter) > 0) && rtw_chk_ft_flags(padapter, RTW_FT_SUPPORTED))
+ 			rtw_set_ft_status(padapter, RTW_FT_ASSOCIATED_STA);
+@@ -6320,7 +6337,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/ioctl_cfg80211.c
+@@ -806,12 +806,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		DBG_871X(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -822,6 +838,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp+sizeof(struct rtw_ieee80211_hdr_3addr)+6
+ 			, pmlmepriv->assoc_rsp_len-sizeof(struct rtw_ieee80211_hdr_3addr)-6
+ 			, GFP_ATOMIC);
++		#endif
+ 	}
+ 	else
+ 	{
+@@ -6664,7 +6681,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/ioctl_cfg80211.c
+@@ -807,12 +807,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		DBG_871X(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -823,6 +839,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp+sizeof(struct rtw_ieee80211_hdr_3addr)+6
+ 			, pmlmepriv->assoc_rsp_len-sizeof(struct rtw_ieee80211_hdr_3addr)-6
+ 			, GFP_ATOMIC);
++		#endif
+ 	}
+ 	else
+ 	{
+@@ -6481,7 +6498,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/ioctl_cfg80211.c
+@@ -807,12 +807,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		DBG_871X(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -823,6 +839,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp+sizeof(struct rtw_ieee80211_hdr_3addr)+6
+ 			, pmlmepriv->assoc_rsp_len-sizeof(struct rtw_ieee80211_hdr_3addr)-6
+ 			, GFP_ATOMIC);
++		#endif
+ 	}
+ 	else
+ 	{
+@@ -6468,7 +6485,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821ce/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821ce/os_dep/linux/ioctl_cfg80211.c
+@@ -731,12 +731,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		RTW_INFO(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -747,6 +763,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp + sizeof(struct rtw_ieee80211_hdr_3addr) + 6
+ 			, pmlmepriv->assoc_rsp_len - sizeof(struct rtw_ieee80211_hdr_3addr) - 6
+ 			, GFP_ATOMIC);
++		#endif
+ #ifdef CONFIG_RTW_80211R
+ 		if ((rtw_to_roam(padapter) > 0) && rtw_chk_ft_flags(padapter, RTW_FT_SUPPORTED))
+ 			rtw_set_ft_status(padapter, RTW_FT_ASSOCIATED_STA);
+@@ -6801,7 +6818,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8188fu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8188fu/os_dep/linux/ioctl_cfg80211.c
+@@ -9001,9 +9001,12 @@ static void rtw_cfg80211_preinit_wiphy(_
+ 	/* wiphy->flags |= WIPHY_FLAG_OFFCHAN_TX | WIPHY_FLAG_HAVE_AP_SME; */
+ #endif
+ 
+-#if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0) && \
+-			   LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0))
++#if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0)
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8189es/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8189es/os_dep/linux/ioctl_cfg80211.c
+@@ -808,12 +808,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		DBG_871X(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -824,6 +840,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp+sizeof(struct rtw_ieee80211_hdr_3addr)+6
+ 			, pmlmepriv->assoc_rsp_len-sizeof(struct rtw_ieee80211_hdr_3addr)-6
+ 			, GFP_ATOMIC);
++		#endif
+ 	}
+ 	else
+ 	{
+@@ -6535,7 +6552,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8192cu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8192cu/os_dep/linux/ioctl_cfg80211.c
+@@ -724,6 +724,9 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		if (channel <= RTW_CH_MAX_2G_CHANNEL)
+ 			freq = rtw_ieee80211_channel_to_frequency(channel, IEEE80211_BAND_2GHZ);
+@@ -734,6 +737,19 @@ check_bss:
+ 		#endif
+ 
+ 		DBG_871X(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -744,6 +760,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp+sizeof(struct rtw_ieee80211_hdr_3addr)+6
+ 			, pmlmepriv->assoc_rsp_len-sizeof(struct rtw_ieee80211_hdr_3addr)-6
+ 			, GFP_ATOMIC);
++		#endif
+ 	}
+ 	else
+ 	{
+@@ -5717,7 +5734,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8723bu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8723bu/os_dep/linux/ioctl_cfg80211.c
+@@ -842,6 +842,9 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		if (channel <= RTW_CH_MAX_2G_CHANNEL)
+ 			freq = rtw_ieee80211_channel_to_frequency(channel, IEEE80211_BAND_2GHZ);
+@@ -852,6 +855,19 @@ check_bss:
+ 		#endif
+ 
+ 		DBG_871X(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -862,6 +878,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp+sizeof(struct rtw_ieee80211_hdr_3addr)+6
+ 			, pmlmepriv->assoc_rsp_len-sizeof(struct rtw_ieee80211_hdr_3addr)-6
+ 			, GFP_ATOMIC);
++		#endif
+ 	}
+ 	else
+ 	{
+@@ -6349,7 +6366,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8188eu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8188eu/os_dep/linux/ioctl_cfg80211.c
+@@ -751,12 +751,28 @@ check_bss:
+ 		struct ieee80211_channel *notify_channel;
+ 		u32 freq;
+ 		u16 channel = cur_network->network.Configuration.DSConfig;
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		struct cfg80211_roam_info roam_info = {};
++		#endif
+ 
+ 		freq = rtw_ch2freq(channel);
+ 		notify_channel = ieee80211_get_channel(wiphy, freq);
+ 		#endif
+ 
+ 		RTW_INFO(FUNC_ADPT_FMT" call cfg80211_roamed\n", FUNC_ADPT_ARG(padapter));
++		#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0)
++		roam_info.channel = notify_channel;
++		roam_info.bssid = cur_network->network.MacAddress;
++		roam_info.req_ie =
++			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
++		roam_info.req_ie_len =
++			pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2;
++		roam_info.resp_ie =
++			pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6;
++		roam_info.resp_ie_len =
++			pmlmepriv->assoc_rsp_len-sizeof(struct ieee80211_hdr_3addr)-6;
++		cfg80211_roamed(padapter->pnetdev, &roam_info, GFP_ATOMIC);
++		#else
+ 		cfg80211_roamed(padapter->pnetdev
+ 			#if LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 39) || defined(COMPAT_KERNEL_RELEASE)
+ 			, notify_channel
+@@ -767,6 +783,7 @@ check_bss:
+ 			, pmlmepriv->assoc_rsp + sizeof(struct rtw_ieee80211_hdr_3addr) + 6
+ 			, pmlmepriv->assoc_rsp_len - sizeof(struct rtw_ieee80211_hdr_3addr) - 6
+ 			, GFP_ATOMIC);
++		#endif
+ #ifdef CONFIG_RTW_80211R
+ 		if ((rtw_to_roam(padapter) > 0) && rtw_chk_ft_flags(padapter, RTW_FT_SUPPORTED))
+ 			rtw_set_ft_status(padapter, RTW_FT_ASSOCIATED_STA);
+@@ -6965,7 +6982,11 @@ static void rtw_cfg80211_preinit_wiphy(_
+ #endif
+ 
+ #if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #endif
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8189fs/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8189fs/os_dep/linux/ioctl_cfg80211.c
+@@ -9068,9 +9068,12 @@ static void rtw_cfg80211_preinit_wiphy(_
+ 	/* wiphy->flags |= WIPHY_FLAG_OFFCHAN_TX | WIPHY_FLAG_HAVE_AP_SME; */
+ #endif
+ 
+-#if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0) && \
+-			   LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0))
++#if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0)
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8192ee/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8192ee/os_dep/linux/ioctl_cfg80211.c
+@@ -7243,9 +7243,12 @@ static void rtw_cfg80211_preinit_wiphy(_
+ 	/* wiphy->flags |= WIPHY_FLAG_OFFCHAN_TX | WIPHY_FLAG_HAVE_AP_SME; */
+ #endif
+ 
+-#if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0) && \
+-			   LINUX_VERSION_CODE < KERNEL_VERSION(4, 12, 0))
++#if defined(CONFIG_PM) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 0, 0))
++#if (LINUX_VERSION_CODE >= KERNEL_VERSION(4, 12, 0))
++	wiphy->max_sched_scan_reqs = 1;
++#else
+ 	wiphy->flags |= WIPHY_FLAG_SUPPORTS_SCHED_SCAN;
++#endif
+ #ifdef CONFIG_PNO_SUPPORT
+ 	wiphy->max_sched_scan_ssids = MAX_PNO_LIST_COUNT;
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 2, 0)

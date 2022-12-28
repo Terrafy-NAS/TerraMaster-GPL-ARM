@@ -1,0 +1,20 @@
+Source-Makefile: feeds/xorg/proto/renderproto/Makefile
+Package: renderproto
+Submenu: proto
+Version: 0.11-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-proto
+Category: Xorg
+Title: renderproto
+Maintainer: 
+Source: renderproto-0.11.tar.bz2
+Type: ipkg
+Description: renderproto
+http://xorg.freedesktop.org/
+
+@@
+
+

@@ -1,0 +1,94 @@
+#
+# Copyright (C) 2013 OpenWrt.org
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=mali-wayland
+PKG_VERSION:=rp20
+PKG_RELEASE=$(PKG_SOURCE_VERSION)
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=xxx
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=ad5f40cc2baa
+PKG_BRANCH:=r20p0-01rel0
+PKG_SOURCE:=rtkdl-$(PKG_NAME).tar.gz
+PKG_MD5SUM:=5be331aa35c2a7cf4c20292178d18c9d
+PKG_BUILD_DEPENDS:=libwayland
+
+PKG_INSTALL:=1
+HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/$(PKG_NAME)-$(PKG_VERSION):
+
+include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/scons.mk
+
+define Package/mali-egl
+  SECTION:=xorg-framework
+  CATEGORY:=Xorg
+  SUBMENU:=Mali
+  TITLE:=Mali Libraries
+  DEPENDS:=+libdrm +kmod-lib-mali
+
+endef 
+
+define Package/mali-egl/description
+endef
+
+COMMON_ARGS=profile=tx011-release-64 gpu=t82x arch=arm_v8 hwver=r1p0 toolchain_prefix_target=aarch64-openwrt-linux-gnu- kernel_modules=0 ump=0
+#COMMON_ARGS=profile=tx011-release-64 arch=arm_v8 toolchain_prefix_target=aarch64-openwrt-linux-gnu- \
+	kernel_modules=0 ump=0 hwver=r1p0  gpu=t82x simd=1 mmap64_defined=1 \
+	platform_config=kylin x11_async_pageflip=1 egl=1 gles=1 debug=1 v=1
+
+	SCONS_OPTIONS+= -j $(shell grep -c ^processor /proc/cpuinfo) -f bldsys/sconstruct \
+				$(COMMON_ARGS) \
+				progs_install=build/egl/bin \
+				libs_install=build/egl/lib \
+				winsys=gbm \
+				drm_allocator=1 \
+				allocator=drm_dumb
+
+define Build/Prepare
+	$(call Build/Prepare/Default)
+endef
+
+define Build/Configure/Default
+	$(INSTALL_DIR) $(STAGING_DIR)/usr/include
+	cd $(PKG_BUILD_DIR)/GLES/driver/product; $(SCONS_VARS) scons $(SCONS_OPTIONS)
+endef
+
+define Build/Compile
+endef
+
+define Build/Install
+endef
+
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/usr
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP) $(PKG_BUILD_DIR)/GLES/pkgconfig/* $(1)/usr/lib/pkgconfig
+	$(CP) $(PKG_BUILD_DIR)/GLES/driver/product/khronos/original/* $(1)/usr/include
+	$(CP) $(PKG_BUILD_DIR)/GLES/driver/product/build/egl/lib/* $(1)/usr/lib
+#	$(CP) $(PKG_BUILD_DIR)/GLES/driver/product/build/egl/bin/* $(1)/usr/bin
+ndef
+
+define Package/mali-egl/install
+	$(INSTALL_DIR) $(1)/usr
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DIR) $(1)/usr/include
+	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
+	$(CP) $(PKG_BUILD_DIR)/GLES/pkgconfig/* $(1)/usr/lib/pkgconfig
+	$(CP) $(PKG_BUILD_DIR)/GLES/driver/product/build/egl/lib/* $(1)/usr/lib
+#	$(CP) $(PKG_BUILD_DIR)/GLES/driver/product/build/egl/bin/* $(1)/usr/bin
+	$(CP) $(PKG_BUILD_DIR)/GLES/driver/product/khronos/original/* $(1)/usr/include
+ndef
+
+$(eval $(call BuildPackage,mali-egl))
+

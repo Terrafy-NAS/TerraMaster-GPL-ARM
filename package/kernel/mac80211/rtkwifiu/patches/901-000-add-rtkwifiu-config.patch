@@ -1,0 +1,73 @@
+--- a/drivers/net/wireless/realtek/Kconfig
++++ b/drivers/net/wireless/realtek/Kconfig
+@@ -14,5 +14,6 @@ if WLAN_VENDOR_REALTEK
+ source "drivers/net/wireless/realtek/rtl818x/Kconfig"
+ source "drivers/net/wireless/realtek/rtlwifi/Kconfig"
+ source "drivers/net/wireless/realtek/rtl8xxxu/Kconfig"
++source "drivers/net/wireless/realtek/rtkwifiu/Kconfig"
+ 
+ endif # WLAN_VENDOR_REALTEK
+--- a/drivers/net/wireless/realtek/Makefile
++++ b/drivers/net/wireless/realtek/Makefile
+@@ -6,4 +6,5 @@ obj-$(CPTCFG_RTL8180)		+= rtl818x/
+ obj-$(CPTCFG_RTL8187)		+= rtl818x/
+ obj-$(CPTCFG_RTLWIFI)		+= rtlwifi/
+ obj-$(CPTCFG_RTL8XXXU)		+= rtl8xxxu/
++obj-$(CPTCFG_RTKWIFIU)		+= rtkwifiu/
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/Kconfig
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/Kconfig
+@@ -1,6 +1,6 @@
+-config RTL8821AU
+-	tristate "Realtek 8821A USB WiFi"
++config RTL8811AU
++	tristate "Realtek 8811A USB WiFi"
+ 	depends on USB
+ 	---help---
+-	  Help message of RTL8821AU
++	  Help message of RTL8811AU
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/Makefile
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/Makefile
+@@ -1948,11 +1948,11 @@ ifeq ($(CONFIG_RTL8723B), y)
+ $(MODULE_NAME)-$(CONFIG_MP_INCLUDED)+= core/rtw_bt_mp.o
+ endif
+ 
+-obj-$(CONFIG_RTL8821AU) := $(MODULE_NAME).o
++obj-$(CONFIG_RTL8811AU) := $(MODULE_NAME).o
+ 
+ else
+ 
+-export CONFIG_RTL8821AU = m
++export CONFIG_RTL8811AU = m
+ 
+ all: modules
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/Kconfig
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/Kconfig
+@@ -1,6 +1,6 @@
+-config RTL8822BU
+-	tristate "Realtek 8822B USB WiFi"
++config RTL8812BU
++	tristate "Realtek 8812B USB WiFi"
+ 	depends on USB
+ 	---help---
+-	  Help message of RTL8822BU
++	  Help message of RTL8812BU
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/Makefile
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/Makefile
+@@ -1930,11 +1930,11 @@ ifeq ($(CONFIG_RTL8723B), y)
+ $(MODULE_NAME)-$(CONFIG_MP_INCLUDED)+= core/rtw_bt_mp.o
+ endif
+ 
+-obj-$(CONFIG_RTL8822BU) := $(MODULE_NAME).o
++obj-$(CONFIG_RTL8812BU) := $(MODULE_NAME).o
+ 
+ else
+ 
+-export CONFIG_RTL8822BU = m
++export CONFIG_RTL8812BU = m
+ 
+ all: modules
+ 

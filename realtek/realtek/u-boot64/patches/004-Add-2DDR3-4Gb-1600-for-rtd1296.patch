@@ -1,0 +1,11 @@
+diff --git a/examples/flash_writer/image/hw_setting/rtd1295/demo/0002/RTD1296_hwsetting_BOOT_2DDR3_4Gb_s1600.config b/examples/flash_writer/image/hw_setting/rtd1295/demo/0002/RTD1296_hwsetting_BOOT_2DDR3_4Gb_s1600.config
+new file mode 120000
+index 0000000..fd9009d
+--- /dev/null
++++ b/examples/flash_writer/image/hw_setting/rtd1295/demo/0002/RTD1296_hwsetting_BOOT_2DDR3_4Gb_s1600.config
+@@ -0,0 +1 @@
++RTD1295_hwsetting_BOOT_2DDR3_4Gb_s1600.config
+\ No newline at end of file
+-- 
+2.7.4
+

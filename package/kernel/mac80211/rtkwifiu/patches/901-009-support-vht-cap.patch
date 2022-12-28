@@ -1,0 +1,783 @@
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/os_intfs.c
+@@ -202,7 +202,7 @@ int rtw_bfee_rf_number = 0; /*Beamformee
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; //0:disable, 1:enable, 2:force auto enable
++int rtw_vht_enable = 1; //0:disable, 1:enable, 2:force auto enable
+ module_param(rtw_vht_enable, int, 0644);
+ int rtw_ampdu_factor = 7;
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/os_intfs.c
+@@ -157,7 +157,7 @@ int rtw_bfee_rf_number = 0; /*Beamformee
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; /* 0:disable, 1:enable, 2:force auto enable */
++int rtw_vht_enable = 1; /* 0:disable, 1:enable, 2:force auto enable */
+ int rtw_ampdu_factor = 7;
+ int rtw_vht_rate_sel = 0;
+ #endif /* CONFIG_80211AC_VHT */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/os_intfs.c
+@@ -134,7 +134,7 @@ int rtw_bfee_rf_number = 0; /*Beamformee
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; //0:disable, 1:enable, 2:force auto enable
++int rtw_vht_enable = 1; //0:disable, 1:enable, 2:force auto enable
+ int rtw_ampdu_factor = 7;
+ int rtw_vht_rate_sel = 0;
+ #endif //CONFIG_80211AC_VHT
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8822be/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8822be/os_dep/linux/os_intfs.c
+@@ -238,7 +238,7 @@ int rtw_bfee_rf_number = 0; /*Beamformee
+ #endif /* CONFIG_80211N_HT */
+ 
+ #ifdef CONFIG_80211AC_VHT
+-int rtw_vht_enable = 2; /* 0:disable, 1:enable, 2:force auto enable */
++int rtw_vht_enable = 1; /* 0:disable, 1:enable, 2:force auto enable */
+ module_param(rtw_vht_enable, int, 0644);
+ 
+ int rtw_ampdu_factor = 7;
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812au/os_dep/linux/os_intfs.c
+@@ -235,7 +235,7 @@ int rtw_bfee_rf_number = 0; /*Beamformee
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; //0:disable, 1:enable, 2:force auto enable
++int rtw_vht_enable = 1; //0:disable, 1:enable, 2:force auto enable
+ module_param(rtw_vht_enable, int, 0644);
+ 
+ int rtw_ampdu_factor = 7;
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8822bu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8822bu/os_dep/linux/os_intfs.c
+@@ -235,7 +235,7 @@ int rtw_bfee_rf_number = 0; /*Beamformee
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; //0:disable, 1:enable, 2:force auto enable
++int rtw_vht_enable = 1; //0:disable, 1:enable, 2:force auto enable
+ module_param(rtw_vht_enable, int, 0644);
+ 
+ int rtw_ampdu_factor = 7;
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/os_intfs.c
+@@ -161,7 +161,7 @@ int rtw_bfee_rf_number = 0; /*Beamformee
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; //0:disable, 1:enable, 2:force auto enable
++int rtw_vht_enable = 1; //0:disable, 1:enable, 2:force auto enable
+ int rtw_ampdu_factor = 7;
+ int rtw_vht_rate_sel = 0;
+ #endif /* CONFIG_80211AC_VHT */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/os_intfs.c
+@@ -130,7 +130,7 @@ int rtw_beamform_cap = 0x2;
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; //0:disable, 1:enable, 2:force auto enable
++int rtw_vht_enable = 1; //0:disable, 1:enable, 2:force auto enable
+ int rtw_ampdu_factor = 7;
+ int rtw_vht_rate_sel = 0;
+ #endif //CONFIG_80211AC_VHT
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/os_intfs.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/os_intfs.c
+@@ -130,7 +130,7 @@ int rtw_beamform_cap = 0x2;
+ /*
+  * DHCWIFI-73: Enable 11AC products GO/Soft-AP default VHT80. rtw_vht_enable = 2
+  */
+-int rtw_vht_enable = 2; //0:disable, 1:enable, 2:force auto enable
++int rtw_vht_enable = 1; //0:disable, 1:enable, 2:force auto enable
+ int rtw_ampdu_factor = 7;
+ int rtw_vht_rate_sel = 0;
+ #endif //CONFIG_80211AC_VHT
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8811au/os_dep/linux/ioctl_cfg80211.c
+@@ -6646,6 +6646,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6665,8 +6692,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[IEEE80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, IEEE80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812ae/os_dep/linux/ioctl_cfg80211.c
+@@ -6064,6 +6064,32 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6083,8 +6109,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (IsSupported5G(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[IEEE80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, IEEE80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812au/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812au/os_dep/linux/ioctl_cfg80211.c
+@@ -6939,6 +6939,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6958,8 +6985,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[NL80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, NL80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8812bu/os_dep/linux/ioctl_cfg80211.c
+@@ -20,6 +20,7 @@
+ #define  _IOCTL_CFG80211_C_
+ 
+ #include <drv_types.h>
++#include <hal_data.h>
+ 
+ #ifdef CONFIG_IOCTL_CFG80211
+ 
+@@ -6154,6 +6155,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6173,8 +6201,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[IEEE80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, IEEE80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8814ae/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8814ae/os_dep/linux/ioctl_cfg80211.c
+@@ -6058,6 +6058,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6077,8 +6104,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (IsSupported5G(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[IEEE80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, IEEE80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8814au/os_dep/linux/ioctl_cfg80211.c
+@@ -6346,6 +6346,25 @@ static void rtw_cfg80211_init_ht_capab(_
+ 	
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6365,8 +6384,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (IsSupported5G(padapter->registrypriv.wireless_mode)) {	
+ 		bands = wiphy->bands[IEEE80211_BAND_5GHZ];
+-		if(bands)
++		if(bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, IEEE80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821as/os_dep/linux/ioctl_cfg80211.c
+@@ -6331,6 +6331,25 @@ static void rtw_cfg80211_init_ht_capab(_
+ 	
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6350,8 +6369,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (IsSupported5G(padapter->registrypriv.wireless_mode)) {	
+ 		bands = wiphy->bands[IEEE80211_BAND_5GHZ];
+-		if(bands)
++		if(bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, IEEE80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821au/os_dep/linux/ioctl_cfg80211.c
+@@ -6310,6 +6310,25 @@ static void rtw_cfg80211_init_ht_capab(_
+ 	
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6329,8 +6348,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (IsSupported5G(padapter->registrypriv.wireless_mode)) {	
+ 		bands = wiphy->bands[IEEE80211_BAND_5GHZ];
+-		if(bands)
++		if(bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, IEEE80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821ce/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821ce/os_dep/linux/ioctl_cfg80211.c
+@@ -6623,6 +6623,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6642,8 +6669,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[NL80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, NL80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821cs/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821cs/os_dep/linux/ioctl_cfg80211.c
+@@ -6945,6 +6945,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6964,8 +6991,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[NL80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, NL80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8821cu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8821cu/os_dep/linux/ioctl_cfg80211.c
+@@ -6961,6 +6961,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -6980,8 +7007,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[NL80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, NL80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8822be/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8822be/os_dep/linux/ioctl_cfg80211.c
+@@ -7165,6 +7165,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -7184,8 +7211,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		band = wiphy->bands[NL80211_BAND_5GHZ];
+-		if (band)
++		if (band) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &band->ht_cap, BAND_ON_5G, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &band->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8822bs/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8822bs/os_dep/linux/ioctl_cfg80211.c
+@@ -7329,6 +7329,33 @@ void rtw_cfg80211_init_wdev_data(_adapte
+ #endif
+ }
+ 
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wiphy(_adapter *padapter)
+ {
+ 	u8 rf_type;
+@@ -7348,8 +7375,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		band = wiphy->bands[NL80211_BAND_5GHZ];
+-		if (band)
++		if (band) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &band->ht_cap, BAND_ON_5G, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &band->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 
+--- a/drivers/net/wireless/realtek/rtkwifiu/rtl8192eu/os_dep/linux/ioctl_cfg80211.c
++++ b/drivers/net/wireless/realtek/rtkwifiu/rtl8192eu/os_dep/linux/ioctl_cfg80211.c
+@@ -6920,6 +6920,34 @@ static void rtw_cfg80211_init_ht_capab(_
+ 		, ht_cap->mcs.rx_mask
+ 	);
+ }
++
++#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++static void rtw_cfg80211_init_vht_capab(_adapter *padapter
++	, struct ieee80211_sta_vht_cap *sta_vht_cap, BAND_TYPE band, u8 rf_type)
++{
++	struct hal_spec_t *hal_spec = GET_HAL_SPEC(padapter);
++	struct registry_priv *regsty = &padapter->registrypriv;
++	struct vht_priv *vhtpriv = &padapter->mlmepriv.vhtpriv;
++	u8 vht_cap_ie[2 + 12] = {0};
++	u8 bw;
++
++	if (!REGSTY_IS_11AC_ENABLE(regsty)
++		|| !hal_chk_proto_cap(padapter, PROTO_CAP_11AC)
++	) {
++		sta_vht_cap->vht_supported = 0;
++		return;
++	}
++
++	rtw_vht_use_default_setting(padapter);
++	rtw_build_vht_cap_ie(padapter, vht_cap_ie);
++
++	sta_vht_cap->vht_supported = 1;
++
++	_rtw_memcpy(&sta_vht_cap->cap, vht_cap_ie + 2, 4);
++	_rtw_memcpy(&sta_vht_cap->vht_mcs, vht_cap_ie + 2 + 4, 8);
++}
++#endif /* defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0)) */
++
+ void rtw_cfg80211_init_wdev_data(_adapter *padapter)
+ {
+ #ifdef CONFIG_CONCURRENT_MODE
+@@ -6948,8 +6976,12 @@ void rtw_cfg80211_init_wiphy(_adapter *p
+ #ifdef CONFIG_IEEE80211_BAND_5GHZ
+ 	if (is_supported_5g(padapter->registrypriv.wireless_mode)) {
+ 		bands = wiphy->bands[NL80211_BAND_5GHZ];
+-		if (bands)
++		if (bands) {
+ 			rtw_cfg80211_init_ht_capab(padapter, &bands->ht_cap, NL80211_BAND_5GHZ, rf_type);
++			#if defined(CONFIG_80211AC_VHT) && (LINUX_VERSION_CODE >= KERNEL_VERSION(3, 6, 0))
++			rtw_cfg80211_init_vht_capab(padapter, &bands->vht_cap, BAND_ON_5G, rf_type);
++			#endif
++		}
+ 	}
+ #endif
+ 	/* init regulary domain */

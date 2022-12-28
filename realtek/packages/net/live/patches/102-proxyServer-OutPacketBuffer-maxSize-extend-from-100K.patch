@@ -1,0 +1,23 @@
+From 87f7e926331893a60137a6f1c6783defb3c9e89d Mon Sep 17 00:00:00 2001
+From: eccheng <eccheng@realtek.com>
+Date: Wed, 15 Mar 2017 20:58:36 +0800
+Subject: [PATCH] proxyServer OutPacketBuffer::maxSize extend from 100K bytes
+ to 10M bytes
+
+
+diff --git a/proxyServer/live555ProxyServer.cpp b/proxyServer/live555ProxyServer.cpp
+index e6c17ab..22e854d 100644
+--- a/proxyServer/live555ProxyServer.cpp
++++ b/proxyServer/live555ProxyServer.cpp
+@@ -58,7 +58,7 @@ void usage() {
+ int main(int argc, char** argv) {
+   // Increase the maximum size of video frames that we can 'proxy' without truncation.
+   // (Such frames are unreasonably large; the back-end servers should really not be sending frames this large!)
+-  OutPacketBuffer::maxSize = 100000; // bytes
++  OutPacketBuffer::maxSize = 100*100000; // 100*100000(100k) = 10M bytes
+ 
+   // Begin by setting up our usage environment:
+   TaskScheduler* scheduler = BasicTaskScheduler::createNew();
+-- 
+1.9.1
+

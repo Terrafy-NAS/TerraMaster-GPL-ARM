@@ -1,0 +1,23 @@
+Source-Makefile: feeds/xorg/xcbproto/Makefile
+Package: xcbproto
+Submenu: proto
+Version: 1.12-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libxml2 +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: xorg-framework
+Category: Xorg
+Title: xcbproto
+Maintainer: 
+Source: xcb-proto-1.12.tar.bz2
+Type: ipkg
+Description: 	The xcb-proto package provides the XML-XCB protocol
+	descriptions that libxcb uses to generate the majority
+	of its code and API.
+http://xcb.freedesktop.org/
+
+@@
+
+

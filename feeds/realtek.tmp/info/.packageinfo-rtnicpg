@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/rtnicpg/Makefile
+Package: rtnicpg
+Submenu: Network Devices
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +electric-fence
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: utils
+Category: Utilities
+Title: PG tool for Realtek Ethernet Controller
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   PG tool for Realtek Ethernet Controller
+
+@@
+
+

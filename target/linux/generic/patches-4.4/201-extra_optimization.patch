@@ -1,0 +1,19 @@
+Index: linux-4.4.18/Makefile
+===================================================================
+--- linux-4.4.18.orig/Makefile	2017-02-23 16:34:19.597912106 +0800
++++ linux-4.4.18/Makefile	2017-02-23 16:36:02.801914566 +0800
+@@ -613,12 +613,12 @@
+ KBUILD_CFLAGS	+= $(call cc-option,-fno-delete-null-pointer-checks,)
+ 
+ ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+-KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
++KBUILD_CFLAGS	+= -Os $(EXTRA_OPTIMIZATION) $(call cc-disable-warning,maybe-uninitialized,)
+ else
+ ifdef CONFIG_CC_OPTIMIZE_FOR_DEBUG
+ KBUILD_CFLAGS	+= -Og
+ else
+-KBUILD_CFLAGS	+= -O2
++KBUILD_CFLAGS	+= -O2 -fno-reorder-blocks -fno-tree-ch $(EXTRA_OPTIMIZATION)
+ endif
+ endif
+ 

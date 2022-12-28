@@ -1,0 +1,27 @@
+config RTK_BOARD_CHIP_1295
+	bool
+	depends on TARGET_rtd1295
+
+config RTK_BOARD_CHIP_1296
+	bool
+	depends on TARGET_rtd1295
+
+config RTK_BOARD_DDR_1GB
+	bool
+	depends on TARGET_rtd1295
+
+config RTK_BOARD_DDR_2GB
+	bool
+	depends on TARGET_rtd1295
+
+config RTK_BOARD_DDR_3GB
+	bool
+	depends on TARGET_rtd1295
+
+config RTK_BOARD_DDR_4GB
+	bool
+	depends on TARGET_rtd1295
+
+config RTK_BOARD_MTD_LAYOUT
+	bool
+	depends on TARGET_rtd1295

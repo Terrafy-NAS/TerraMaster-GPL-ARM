@@ -1,0 +1,20 @@
+Source-Makefile: feeds/realtek/libminigui-gpl/Makefile
+Package: libminigui-gpl
+Version: 3.0.12-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libpng
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: multimedia
+Category: Extra packages
+Title: MiniGUI
+Maintainer: 
+Source: libminigui-gpl-3.0.12.tar.gz
+License: GPLv3
+Type: ipkg
+Description: MiniGUI
+http://www.minigui.org
+
+@@
+
+

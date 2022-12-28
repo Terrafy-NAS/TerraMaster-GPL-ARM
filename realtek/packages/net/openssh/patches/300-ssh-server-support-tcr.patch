@@ -1,0 +1,238 @@
+Index: openssh-7.1p2/channels.c
+===================================================================
+--- openssh-7.1p2.orig/channels.c	2017-06-23 19:39:28.788545277 +0800
++++ openssh-7.1p2/channels.c	2017-06-23 19:41:26.680544408 +0800
+@@ -47,6 +47,7 @@
+ #include <sys/ioctl.h>
+ #include <sys/un.h>
+ #include <sys/socket.h>
++#include <linux/netlink.h>
+ #ifdef HAVE_SYS_TIME_H
+ # include <sys/time.h>
+ #endif
+@@ -82,7 +83,15 @@
+ #include "key.h"
+ #include "authfd.h"
+ #include "pathnames.h"
+-
++#ifdef SUPPORT_TCR
++extern struct nlmsghdr *nlh;
++extern struct sockaddr_nl src_addr, dest_addr;
++extern struct iovec iov;
++extern int sock_fd;
++extern struct msghdr msg;
++#define NETLINK_USER 31
++#define NETLINK_SIZE_MAX 4096
++#endif
+ /* -- channel core */
+ 
+ /*
+@@ -2262,7 +2271,30 @@
+ 			debug3("channel %d: will not send data after close", c->self);
+ 			continue;
+ 		}
+-
++#ifdef SUPPORT_TCR
++		if (nlh != NULL)
++		{
++			int ret=0;
++			memset(nlh, 0, NLMSG_SPACE(NETLINK_SIZE_MAX));
++			memset(&iov, 0, sizeof(iov));
++
++			iov.iov_base = (void *)nlh;
++			iov.iov_len = NETLINK_SIZE_MAX;
++			msg.msg_name = (void *)&dest_addr;
++			msg.msg_namelen = sizeof(dest_addr);
++			msg.msg_iov = &iov;
++			msg.msg_iovlen = 1;
++			ret = recvmsg(sock_fd, &msg, MSG_DONTWAIT);
++			if (ret > 0)
++			{
++				packet_start(SSH2_MSG_CHANNEL_DATA);
++				packet_put_int(c->remote_id);
++				packet_put_string(NLMSG_DATA(nlh), nlh->nlmsg_len);
++				packet_send();
++				break;
++			}
++		}
++#endif
+ 		/* Get the amount of buffered data for this channel. */
+ 		if ((c->istate == CHAN_INPUT_OPEN ||
+ 		    c->istate == CHAN_INPUT_WAIT_DRAIN) &&
+Index: openssh-7.1p2/packet.c
+===================================================================
+--- openssh-7.1p2.orig/packet.c	2017-06-23 19:39:28.788545277 +0800
++++ openssh-7.1p2/packet.c	2017-06-23 19:43:52.396543333 +0800
+@@ -60,7 +60,8 @@
+ #include <limits.h>
+ #include <signal.h>
+ #include <time.h>
+-
++#include <sys/socket.h>
++#include <linux/netlink.h>
+ #include <zlib.h>
+ 
+ #include "buffer.h"	/* typedefs XXX */
+@@ -92,7 +93,15 @@
+ #else
+ #define DBG(x)
+ #endif
+-
++#ifdef SUPPORT_TCR
++struct nlmsghdr *nlh = NULL;
++struct sockaddr_nl src_addr, dest_addr;
++struct iovec iov;
++int sock_fd;
++struct msghdr msg;
++#define NETLINK_USER 31
++#define NETLINK_SIZE_MAX 4096
++#endif
+ #define PACKET_MAX_SIZE (256 * 1024)
+ 
+ struct packet_state {
+@@ -1207,7 +1216,9 @@
+ 	struct packet *p;
+ 	u_char type;
+ 	int r;
+-
++#ifdef SUPPORT_TCR
++	static int send_count = 0;
++#endif
+ 	type = sshbuf_ptr(state->outgoing_packet)[5];
+ 
+ 	/* during rekeying we can only send key exchange messages */
+@@ -1234,6 +1245,12 @@
+ 	if (type == SSH2_MSG_KEXINIT)
+ 		state->rekeying = 1;
+ 
++#ifdef SUPPORT_TCR
++	if ((nlh!=NULL) && (type == SSH2_MSG_CHANNEL_DATA) && (send_count > 0) && (!memcmp((unsigned char *)sshbuf_ptr(state->outgoing_packet)+16, "root@OpenWrt", 10)))
++		return 0;
++	else
++		send_count++;
++#endif
+ 	if ((r = ssh_packet_send2_wrapped(ssh)) != 0)
+ 		return r;
+ 
+@@ -1751,6 +1768,22 @@
+ 	fprintf(stderr, "read/plain[%d]:\r\n", *typep);
+ 	sshbuf_dump(state->incoming_packet, stderr);
+ #endif
++#ifdef SUPPORT_TCR
++	if (nlh != NULL)
++	{
++		memset(nlh, 0, NLMSG_SPACE(NETLINK_SIZE_MAX));
++		nlh->nlmsg_len = NLMSG_HDRLEN + sshbuf_len(state->incoming_packet);
++		nlh->nlmsg_pid = getpid();  /* self pid */
++		memcpy(NLMSG_DATA(nlh), sshbuf_ptr(state->incoming_packet), sshbuf_len(state->incoming_packet));
++		iov.iov_base = (void *)nlh;
++		iov.iov_len = nlh->nlmsg_len;
++ 		msg.msg_name = (void *)&dest_addr;
++ 		msg.msg_namelen = sizeof(dest_addr);
++ 		msg.msg_iov = &iov;
++ 		msg.msg_iovlen = 1;
++		sendmsg(sock_fd, &msg, 0);
++	}
++#endif
+ 	/* reset for next packet */
+ 	state->packlen = 0;
+  out:
+Index: openssh-7.1p2/sshd.c
+===================================================================
+--- openssh-7.1p2.orig/sshd.c	2017-06-23 19:39:28.788545277 +0800
++++ openssh-7.1p2/sshd.c	2017-06-23 19:39:28.788545277 +0800
+@@ -84,7 +84,10 @@
+ #include <sys/security.h>
+ #include <prot.h>
+ #endif
+-
++#ifdef SUPPORT_TCR
++#include <sys/socket.h>
++#include <linux/netlink.h>
++#endif
+ #include "xmalloc.h"
+ #include "ssh.h"
+ #include "ssh1.h"
+@@ -137,6 +140,15 @@
+ #define REEXEC_MIN_FREE_FD		(STDERR_FILENO + 4)
+ 
+ extern char *__progname;
++#ifdef SUPPORT_TCR
++extern struct nlmsghdr *nlh;
++extern struct sockaddr_nl src_addr, dest_addr;
++extern struct iovec iov;
++extern int sock_fd;
++extern struct msghdr msg;
++#define NETLINK_USER 31
++#define NETLINK_SIZE_MAX 4096
++#endif
+ 
+ /* Server configuration options. */
+ ServerOptions options;
+@@ -2263,7 +2275,22 @@
+ 	/* Try to send all our hostkeys to the client */
+ 	if (compat20)
+ 		notify_hostkeys(active_state);
++#ifdef SUPPORT_TCR
++	sock_fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_USER);
++	
++	memset(&src_addr, 0, sizeof(src_addr));
++	src_addr.nl_family = AF_NETLINK;
++	src_addr.nl_pid = getpid();
++	src_addr.nl_groups = 0;
++	bind(sock_fd, (struct sockaddr*)&src_addr, sizeof(src_addr));
++
++	memset(&dest_addr, 0, sizeof(dest_addr));
++	dest_addr.nl_family = AF_NETLINK;
++	dest_addr.nl_pid = 0;   /* For Linux Kernel */
++	dest_addr.nl_groups = 0; /* unicast */
+ 
++	nlh=(struct nlmsghdr *)malloc(NLMSG_SPACE(NETLINK_SIZE_MAX));
++#endif
+ 	/* Start session. */
+ 	do_authenticated(authctxt);
+ 
+Index: openssh-7.1p2/serverloop.c
+===================================================================
+--- openssh-7.1p2.orig/serverloop.c	2016-01-14 09:10:45.000000000 +0800
++++ openssh-7.1p2/serverloop.c	2017-06-23 19:46:21.060542236 +0800
+@@ -81,6 +81,18 @@
+ #include "roaming.h"
+ #include "ssherr.h"
+ 
++#ifdef SUPPORT_TCR
++#include <sys/socket.h>
++#include <linux/netlink.h>
++extern struct nlmsghdr *nlh;
++extern struct sockaddr_nl src_addr, dest_addr;
++extern struct iovec iov;
++extern int sock_fd;
++extern struct msghdr msg;
++#define NETLINK_USER 31
++#define NETLINK_SIZE_MAX 4096
++#endif
++
+ extern ServerOptions options;
+ 
+ /* XXX */
+@@ -348,6 +360,10 @@
+ 	 */
+ 	if (packet_have_data_to_write())
+ 		FD_SET(connection_out, *writesetp);
++#ifdef SUPPORT_TCR 
++	if (nlh!=NULL)
++		FD_SET(connection_out, *writesetp);
++#endif
+ 
+ 	/*
+ 	 * If child has terminated and there is enough buffer space to read
+@@ -356,6 +372,9 @@
+ 	if (child_terminated && packet_not_very_much_data_to_write())
+ 		if (max_time_milliseconds == 0 || client_alive_scheduled)
+ 			max_time_milliseconds = 100;
++#ifdef SUPPORT_TCR 
++	max_time_milliseconds = 0;
++#endif
+ 
+ 	if (max_time_milliseconds == 0)
+ 		tvp = NULL;

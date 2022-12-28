@@ -1,0 +1,22 @@
+Index: faac-1.28/common/mp4v2/mpeg4ip.h
+===================================================================
+--- faac-1.28.orig/common/mp4v2/mpeg4ip.h	2016-12-09 10:17:08.519716912 +0800
++++ faac-1.28/common/mp4v2/mpeg4ip.h	2016-12-09 10:24:28.495727401 +0800
+@@ -120,13 +120,15 @@
+ #endif
+ #include <sys/param.h>
+ 
++#if !defined(__UCLIBC__)
+ #ifdef __cplusplus
+-extern "C" {
++extern "C++" {
+ #endif
+-char *strcasestr(const char *haystack, const char *needle);
++const char *strcasestr(const char *haystack, const char *needle);
+ #ifdef __cplusplus
+ }
+ #endif
++#endif
+ 
+ #define OPEN_RDWR O_RDWR
+ #define OPEN_CREAT O_CREAT 

@@ -1,0 +1,13 @@
+--- a/scripts/setlocalversion
++++ b/scripts/setlocalversion
+@@ -79,6 +79,10 @@ scm_version()
+ 
+ 		# All done with git
+ 		return
++	elif test -e .rtkver; then
++		head=`cat .rtkver | head -n 1`
++		printf '%s%s%s' -g $head -dirty
++		return
+ 	fi
+ 
+ 	# Check for mercurial and a mercurial repo.

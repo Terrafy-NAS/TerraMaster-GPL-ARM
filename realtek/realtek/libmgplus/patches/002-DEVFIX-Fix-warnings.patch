@@ -1,0 +1,40 @@
+From 55f390d3a9941e5b4d7fa425d50123dbc72d48e0 Mon Sep 17 00:00:00 2001
+From: lucy_zhang <lucy_zhang@realsil.com.cn>
+Date: Thu, 16 Mar 2017 14:58:26 +0800
+Subject: [PATCH] [DEVFIX]Fix warnings
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix warnings such as:
+format ‘%d’ expects argument of type ‘int’, but argument 2 has type
+cast from pointer to integer of different size
+format '%x' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int'
+function declaration isn't a prototype
+array subscript is above array bounds
+operation on 'info->node_cnt' may be undefined
+may be used uninitialized in this function
+converting to non-pointer type 'HPATH {aka long unsigned int}' from NULL
+implicit declaration of function ‘times’
+Change-Id: I3de7be71702e3c133247c0192d8ca13fe6e5440a
+---
+ src/api/lf_fashion.cpp             |  4 +-
+
+diff --git a/src/api/lf_fashion.cpp b/src/api/lf_fashion.cpp
+index 7f531a0..5143c05 100644
+--- a/src/api/lf_fashion.cpp
++++ b/src/api/lf_fashion.cpp
+@@ -2740,8 +2740,8 @@ static void draw_caption (HWND hWnd, HDC hdc, BOOL is_active)
+     RECT    rect_line;
+     gal_pixel pixels[2];
+ 
+-    HPATH   path = NULL;
+-    HBRUSH  brush = NULL;
++    HPATH   path = 0;//lucy:fix warning:"converting to non-pointer type 'HPATH {aka long unsigned int}' from NULL [-Wconversion-null]"
++    HBRUSH  brush = 0;//lucy:fix warning:"converting to non-pointer type 'HPATH {aka long unsigned int}' from NULL [-Wconversion-null]"
+ 
+     SetRectEmpty (&icon_rect);
+     win_info = GetWindowInfo(hWnd);
+-- 
+2.11.0
+

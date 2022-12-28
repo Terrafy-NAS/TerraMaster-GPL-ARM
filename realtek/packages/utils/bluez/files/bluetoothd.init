@@ -1,0 +1,51 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2007 OpenWrt.org
+
+#start after dbus (60)
+START=62
+USE_PROCD=1
+PROG=/usr/bin/bluetoothd
+PKG_NAME=bluetooth
+SECTION_NAME=bluetoothd
+PROG_PID=`ps aux | grep [/]usr/bin/bluetoothd | awk '{print $2}'`
+
+validate_section_bluetoothd() {
+	uci_validate_section $PKG_NAME $SECTION_NAME "${1}" \
+	'enabled:bool' \
+	'name:string'
+}
+
+bluetoothd_instance() {
+	local name enabled
+
+	validate_section_bluetoothd "${1}" || {
+		echo "validation failed"
+		return 1
+	}
+
+	[ "$enabled" != "1" ] && return
+
+	hciconfig hci0 reset && hciconfig hci0 up
+
+	[ -n "$PROG_PID" ] || {
+		$PROG -n -C -d --noplugin=sap &
+	}
+
+	[ "$name" != "" ] && {
+		/usr/bin/bluez/test-adapter alias "$name"
+	}
+}
+
+start_service() {
+	[ ! -n "`hciconfig | grep hci0`" ] && return
+
+	. /lib/functions.sh
+	. /lib/functions/network.sh
+
+	config_load $PKG_NAME
+	config_foreach bluetoothd_instance $SECTION_NAME
+}
+
+stop_service() {
+	[ -n "$PROG_PID" ] && kill $PROG_PID
+}

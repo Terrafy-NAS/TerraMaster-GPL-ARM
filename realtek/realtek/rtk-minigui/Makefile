@@ -1,0 +1,66 @@
+#
+# Copyright (C) 2016 OpenWrt.org
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=rtk-minigui
+PKG_RELEASE:=1
+
+include $(INCLUDE_DIR)/package.mk
+
+define Package/rtk-minigui
+  SECTION:=nas
+  CATEGORY:=Realtek
+  TITLE:=MiniGUI
+#  SUBMENU:=NVR
+  KCONFIG:= \
+	CONFIG_CONSOLE_TRANSLATIONS=y \
+	CONFIG_DUMMY_CONSOLE=y \
+	CONFIG_FONT_8x16=y \
+	CONFIG_FONT_8x8=y \
+	CONFIG_FONT_SUPPORT=y \
+	CONFIG_FRAMEBUFFER_CONSOLE=y \
+	CONFIG_FRAMEBUFFER_CONSOLE_DETECT_PRIMARY=y \
+	CONFIG_FRAMEBUFFER_CONSOLE_ROTATION=y \
+	CONFIG_HW_CONSOLE=y \
+	CONFIG_SERIAL_8250_FSL=y \
+	CONFIG_SERIAL_8250_PNP=y \
+	CONFIG_VT=y \
+	CONFIG_VT_CONSOLE=y \
+	CONFIG_VT_CONSOLE_SLEEP=y \
+	CONFIG_VT_HW_CONSOLE_BINDING=y \
+	CONFIG_INPUT_KEYBOARD=y \
+	CONFIG_INPUT_MOUSE=y \
+	CONFIG_INPUT_MOUSEDEV=y \
+	CONFIG_INPUT_MOUSEDEV_PSAUX=y \
+	CONFIG_INPUT_MOUSEDEV_SCREEN_X=1024 \
+	CONFIG_INPUT_MOUSEDEV_SCREEN_Y=768 \
+	CONFIG_KEYBOARD_ATKBD=y \
+	CONFIG_MOUSE_PS2=y \
+	CONFIG_MOUSE_PS2_ALPS=y \
+	CONFIG_MOUSE_PS2_CYPRESS=y \
+	CONFIG_MOUSE_PS2_FOCALTECH=y \
+	CONFIG_MOUSE_PS2_LOGIPS2PP=y \
+	CONFIG_MOUSE_PS2_SYNAPTICS=y \
+	CONFIG_MOUSE_PS2_TRACKPOINT=y \
+	CONFIG_SERIO=y \
+	CONFIG_SERIO_SERPORT=y \
+	CONFIG_HID=y \
+	CONFIG_HID_GENERIC=y \
+	CONFIG_USB_HID=y
+  DEPENDS:=@TARGET_rtd1295 \
+	+libminigui-gpl \
+	+libmgplus \
+	+minigui-res-be \
+	rtk-nvr
+endef
+
+define Package/rtk-minigui/description
+ This package activates minigui feature
+endef
+
+$(eval $(call BuildPackage,rtk-minigui))

@@ -1,0 +1,5 @@
+#!/bin/sh
+/sbin/block hotplug
+if [ "$ACTION" = "add" ]; then
+	/usr/local/sbin/watchhome.sh &
+fi

@@ -1,0 +1,553 @@
+From 55f390d3a9941e5b4d7fa425d50123dbc72d48e0 Mon Sep 17 00:00:00 2001
+From: lucy_zhang <lucy_zhang@realsil.com.cn>
+Date: Thu, 16 Mar 2017 14:58:26 +0800
+Subject: [PATCH] [DEVFIX]Fix warnings
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Fix warnings such as:
+format ‘%d’ expects argument of type ‘int’, but argument 2 has type
+cast from pointer to integer of different size
+format '%x' expects argument of type 'unsigned int', but argument 3 has type 'long unsigned int'
+function declaration isn't a prototype
+array subscript is above array bounds
+operation on 'info->node_cnt' may be undefined
+may be used uninitialized in this function
+converting to non-pointer type 'HPATH {aka long unsigned int}' from NULL
+implicit declaration of function ‘times’
+Change-Id: I3de7be71702e3c133247c0192d8ca13fe6e5440a
+---
+
+ include/common.h             | 11 +++--
+ include/window.h             |  2 +-
+ src/control/listmodel.c      |  8 ++--
+ src/ex_ctrl/animation.c      |  4 +-
+ src/ex_ctrl/listview.c       | 14 +++---
+ src/ex_ctrl/treeview.c       | 20 ++++-----
+ src/font/bitmapfont.c        |  5 ++-
+ src/ial/pcxvfbial.c          |  6 +--
+ src/kernel/desktop-comm.c    | 12 +++---
+ src/kernel/desktop.c         |  6 +--
+ src/kernel/message.c         |  2 +-
+ src/misc/rwops.c             |  4 +-
+ src/newgal/fbcon/fb3dfx.c    |  6 +--
+ src/newgal/fbcon/fbneomagic.c|  2 +-
+ src/newgal/pcxvfb/pcxvfb.c   |  2 +-
+ src/newgdi/drawtext.c        |  2 +-
+ src/newgdi/gdi.c             |  2 +-
+ src/textedit/mtextedit.c     |  2 +-
+ src/textedit/object.h        |  4 +-
+
+
+
+diff --git a/include/common.h b/include/common.h
+index f6d6843..0e1a377 100644
+--- a/include/common.h
++++ b/include/common.h
+@@ -129,6 +129,11 @@ typedef signed short    Sint16;
+  */
+ typedef unsigned int    Uint32;
+ /**
++ * \var typedef unsigned int Ulong
++ * \brief A type definition for a 64-bit unsigned integer.
++ */
++typedef unsigned long    Ulong;
++/**
+  * \var typedef signed int Sint32
+  * \brief A type definition for a 32-bit signed integer.
+  */
+@@ -327,12 +332,12 @@ typedef unsigned long HDC;
+  * \var typedef unsigned int HPALETTE
+  * \brief Handle to a logical palette.
+  */
+-typedef unsigned int HPALETTE;
++typedef unsigned long HPALETTE;
+ /**
+  * \var typedef unsigned int HCURSOR
+  * \brief Handle to cursor.
+  */
+-typedef unsigned int HCURSOR;
++typedef unsigned long HCURSOR;
+ /**
+  * \var typedef unsigned int HICON
+  * \brief Handle to icon.
+@@ -347,7 +352,7 @@ typedef unsigned long HMENU;
+  * \var typedef unsigned int HACCEL
+  * \brief Handle to accelarator.
+  */
+-typedef unsigned int HACCEL;
++typedef unsigned long HACCEL;
+ /**
+  * \var typedef unsigned int HDLG
+  * \brief Handle to dialog box, same as HWND.
+diff --git a/include/window.h b/include/window.h
+index 0c6b0ca..2613be2 100644
+--- a/include/window.h
++++ b/include/window.h
+@@ -2404,7 +2404,7 @@ MG_EXPORT int GUIAPI PostMessage (HWND hWnd, int iMsg,
+  *
+  * \sa PostMessage
+  */
+-MG_EXPORT int GUIAPI SendMessage (HWND hWnd, int iMsg, 
++MG_EXPORT long GUIAPI SendMessage (HWND hWnd, int iMsg, 
+                 WPARAM wParam, LPARAM lParam);
+ 
+ /**
+diff --git a/src/control/listmodel.c b/src/control/listmodel.c
+index 493e6c5..989436f 100644
+--- a/src/control/listmodel.c
++++ b/src/control/listmodel.c
+@@ -409,21 +409,21 @@ int DefaultItemViewProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam,
+         return 0;
+ 
+     case SVM_SETITEMDRAW:
+-        return (int)mglist_set_itemdraw (mglst, (SVITEM_DRAWFUNC)lParam);
++        return (long)mglist_set_itemdraw (mglst, (SVITEM_DRAWFUNC)lParam);
+ 
+     case SVM_SETITEMINIT:
+     {
+         SVITEM_INITFUNC old_pfn;
+         old_pfn = mglst->iop.initItem;
+         mglst->iop.initItem = (SVITEM_INITFUNC)lParam;
+-        return (int)old_pfn;
++        return (long)old_pfn;
+     }
+     case SVM_SETITEMDESTROY:
+     {
+         SVITEM_DESTROYFUNC old_pfn;
+         old_pfn = mglst->iop.destroyItem;
+         mglst->iop.destroyItem = (SVITEM_DESTROYFUNC)lParam;
+-        return (int)old_pfn;
++        return (long)old_pfn;
+     }
+ 
+     case SVM_GETITEMADDDATA:
+@@ -523,7 +523,7 @@ int DefaultItemViewProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam,
+     {
+         SVITEM_CMP oldcmp = mglst->itemCmp;
+         mglst->itemCmp = (SVITEM_CMP)lParam;
+-        return (int)oldcmp;
++        return (long)oldcmp;
+     }
+ 
+     case SVM_SORTITEMS:
+diff --git a/src/ex_ctrl/animation.c b/src/ex_ctrl/animation.c
+index 602c9ec..c7c70b0 100644
+--- a/src/ex_ctrl/animation.c
++++ b/src/ex_ctrl/animation.c
+@@ -362,11 +362,11 @@ static int AnimationCtrlProc (HWND hwnd, int message, WPARAM wParam, LPARAM lPar
+               //SetTimer (hwnd, ID_TIMER, anim_info->anim->time_unit);
+               SetTimer (hwnd, ID_TIMER, 1);
+           }
+-          return (int)old;
++          return (long)old;
+       }
+       
+     case ANM_GETANIMATION:
+-        return (int)anim_info->anim;
++        return (long)anim_info->anim;
+         
+     case ANM_STARTPLAY: {
+      
+diff --git a/src/ex_ctrl/listview.c b/src/ex_ctrl/listview.c
+index af9c0a5..e249783 100644
+--- a/src/ex_ctrl/listview.c
++++ b/src/ex_ctrl/listview.c
+@@ -1723,7 +1723,7 @@ static int ListViewCtrlProc (HWND hWnd, int message, WPARAM wParam, LPARAM lPara
+                             &plvdata->svdata, hsvi, &svii, &nItem);
+                 }
+ 
+-                return (int)pnew;
++                return (long)pnew;
+             }
+ 
+         case LVM_GETITEM:
+@@ -1759,7 +1759,7 @@ static int ListViewCtrlProc (HWND hWnd, int message, WPARAM wParam, LPARAM lPara
+ 
+                 hsvi = scrollview_get_hilighted_item (&plvdata->svdata);
+                 pi = LV_GET_ITEM (hsvi);
+-                return (int)pi;
++                return (long)pi;
+             }
+ 
+         case LVM_GETRELATEDITEM:
+@@ -1770,16 +1770,16 @@ static int ListViewCtrlProc (HWND hWnd, int message, WPARAM wParam, LPARAM lPara
+                     return 0;
+ 
+                 if (wParam == LVIR_PARENT) {
+-                    return (int)pi->parent;
++                    return (long)pi->parent;
+                 }
+                 else if (wParam == LVIR_FIRSTCHILD) {
+-                    return (int)pi->child;
++                    return (long)pi->child;
+                 }
+                 else if (wParam == LVIR_NEXTSIBLING) {
+-                    return (int)pi->next;
++                    return (long)pi->next;
+                 }
+                 else if (wParam == LVIR_PREVSIBLING) {
+-                    return (int)lvGetPrevSib(plvdata, pi);
++                    return (long)lvGetPrevSib(plvdata, pi);
+                 }
+                 return 0;
+             }
+@@ -1907,7 +1907,7 @@ static int ListViewCtrlProc (HWND hWnd, int message, WPARAM wParam, LPARAM lPara
+             }
+         case LVM_FINDITEM:
+             {
+-                return (int)lvFindItem(plvdata, (PITEMDATA)wParam, (PLVFINDINFO)lParam);
++                return (long)lvFindItem(plvdata, (PITEMDATA)wParam, (PLVFINDINFO)lParam);
+             }
+         case LVM_DELITEM:
+             {
+diff --git a/src/ex_ctrl/treeview.c b/src/ex_ctrl/treeview.c
+index f15f5d2..3a44e73 100644
+--- a/src/ex_ctrl/treeview.c
++++ b/src/ex_ctrl/treeview.c
+@@ -873,7 +873,7 @@ static int TreeViewCtrlProc (HWND hwnd, int message, WPARAM wParam, LPARAM lPara
+ 
+         case TVM_GETROOT:
+             pData = (PTVDATA) GetWindowAdditionalData2 (hwnd);
+-            return (int) pData->root;
++            return (long) pData->root;
+             break;
+ 
+         case TVM_SEARCHITEM:
+@@ -892,7 +892,7 @@ static int TreeViewCtrlProc (HWND hwnd, int message, WPARAM wParam, LPARAM lPara
+                     return 0;
+ 
+                 matched = findStringDepthFirst (pData, root, text);
+-                return (int)matched;
++                return (long)matched;
+             }
+ 
+         case TVM_FINDCHILD:
+@@ -911,12 +911,12 @@ static int TreeViewCtrlProc (HWND hwnd, int message, WPARAM wParam, LPARAM lPara
+                     return 0;
+ 
+                 matched = findStringInChildren (pData, item, text);
+-                return (int)matched;
++                return (long)matched;
+             }
+ 
+         case TVM_GETSELITEM:
+             pData = (PTVDATA) GetWindowAdditionalData2 (hwnd);
+-            return (int)pData->pItemSelected;
++            return (long)pData->pItemSelected;
+ 
+         case TVM_SETSELITEM:
+             {
+@@ -957,7 +957,7 @@ static int TreeViewCtrlProc (HWND hwnd, int message, WPARAM wParam, LPARAM lPara
+                 }
+ #endif
+ 
+-                return (int)old_sel;
++                return (long)old_sel;
+             }
+ 
+         case TVM_GETRELATEDITEM:
+@@ -972,13 +972,13 @@ static int TreeViewCtrlProc (HWND hwnd, int message, WPARAM wParam, LPARAM lPara
+ 
+                 switch (related) {
+                     case TVIR_PARENT:
+-                        return (int)item->parent;
++                        return (long)item->parent;
+                     case TVIR_FIRSTCHILD:
+-                        return (int)item->child;
++                        return (long)item->child;
+                     case TVIR_NEXTSIBLING:
+-                        return (int)item->next;
++                        return (long)item->next;
+                     case TVIR_PREVSIBLING:
+-                        return (int)getPrev (pData, item);
++                        return (long)getPrev (pData, item);
+                 }
+ 
+                 return 0;
+@@ -1158,7 +1158,7 @@ static int TreeViewCtrlProc (HWND hwnd, int message, WPARAM wParam, LPARAM lPara
+                 tvSetVScrollInfo (hwnd, pData, TRUE);
+                 tvSetHScrollInfo (hwnd, pData, TRUE);
+                 InvalidateRect (hwnd, NULL, TRUE);
+-                return (int) newItem;    
++                return (long) newItem;    
+             }
+ 
+         case MSG_KEYDOWN:
+diff --git a/src/font/bitmapfont.c b/src/font/bitmapfont.c
+index 043d1dc..4b64daf 100644
+--- a/src/font/bitmapfont.c
++++ b/src/font/bitmapfont.c
+@@ -379,7 +379,7 @@ build_bmpfont_info (const char *bmpfont_name, const BITMAP* glyph_bmp,
+ 
+     /* set name */
+     strncpy (bmpfont_info->name , bmpfont_name, LEN_UNIDEVFONT_NAME);
+-    bmpfont_info->name [LEN_UNIDEVFONT_NAME] = '\0';
++    bmpfont_info->name [LEN_UNIDEVFONT_NAME - 1] = '\0';
+ 
+     /* set height */
+     if ((bmpfont_info->height 
+@@ -543,7 +543,8 @@ BOOL AddGlyphsToBMPFont (DEVFONT* dev_font, BITMAP* glyph_bmp,
+             info->max_width = glyph_width;
+ 
+         info->ave_width = (info->ave_width * info->node_cnt + glyph_width)/
+-                        (++info->node_cnt);
++                        (info->node_cnt + 1);
++        info->node_cnt ++;
+     }    
+     
+     return TRUE;
+diff --git a/src/ial/pcxvfbial.c b/src/ial/pcxvfbial.c
+index 253abee..03523c1 100644
+--- a/src/ial/pcxvfbial.c
++++ b/src/ial/pcxvfbial.c
+@@ -222,7 +222,7 @@ static void default_cb(void *user_data, const char* str)
+ 
+ /********************  Low Level Input Operations ******************/
+ 
+-static BOOL if_record_ial ()
++static BOOL if_record_ial (void) //lucy:fix warning:"function declaration isn't a prototype"
+ {
+ #ifdef WIN32
+     /* TODO: */
+@@ -232,7 +232,7 @@ static BOOL if_record_ial ()
+ #endif
+ }
+ 
+-static long long int getcurtime()
++static long long int getcurtime(void) //lucy:fix warning:"function declaration isn't a prototype"
+ {
+ #ifdef WIN32
+     /* TODO: */
+@@ -262,7 +262,7 @@ static void write_rec (const void* buf, size_t n)
+ #endif
+ }
+ 
+-static void flush_rec ()
++static void flush_rec (void) //lucy:fix warning:"function declaration isn't a prototype"
+ {
+ #ifdef WIN32
+     /* TODO: */
+diff --git a/src/kernel/desktop-comm.c b/src/kernel/desktop-comm.c
+index 57c77d1..80d0dd0 100644
+--- a/src/kernel/desktop-comm.c
++++ b/src/kernel/desktop-comm.c
+@@ -1358,10 +1358,10 @@ static int WindowMessageHandler(int message, PMAINWIN pWin, LPARAM lParam)
+             return 0;
+ 
+         case MSG_GETACTIVEMAIN:
+-            return (int)dskGetActiveWindow();
++            return (long)dskGetActiveWindow();
+         
+         case MSG_SETACTIVEMAIN:
+-            iRet = (int)dskSetActiveWindow (pWin);
++            iRet = (long)dskSetActiveWindow (pWin);
+             return iRet;
+ 
+         case MSG_GETCAPTURE:
+@@ -1964,7 +1964,7 @@ int DesktopWinProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+             static int n = 1;
+             char buffer[20];
+ 
+-            sprintf (buffer, "%x-%d.bmp", (lParam & KS_CTRL)?
++            sprintf (buffer, "%lx-%d.bmp", (lParam & KS_CTRL)?
+                                     (HWND)active_mainwnd:
+                                     0, n);
+             if (SaveMainWindowContent ((lParam & KS_CTRL)?
+@@ -2131,17 +2131,17 @@ int DesktopWinProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+             return dskOnRemoveCtrlInstance ((PCONTROL)wParam, (PCONTROL)lParam);
+         
+         case MSG_GETCTRLCLASSINFO:
+-            return (int)gui_GetControlClassInfo ((const char*)lParam);
++            return (long)gui_GetControlClassInfo ((const char*)lParam);
+ 
+         case MSG_CTRLCLASSDATAOP:
+             return (int)gui_ControlClassDataOp (wParam, (WNDCLASS*)lParam);
+             
+         case MSG_REGISTERKEYHOOK:
+-            return (int)dskRegisterKeyHook ((void*)wParam, 
++            return (long)dskRegisterKeyHook ((void*)wParam, 
+                             (MSGHOOK)lParam);
+ 
+         case MSG_REGISTERMOUSEHOOK:
+-            return (int)dskRegisterMouseHook ((void*)wParam, 
++            return (long)dskRegisterMouseHook ((void*)wParam, 
+                             (MSGHOOK)lParam);
+ 
+         case MSG_IME_REGISTER:
+diff --git a/src/kernel/desktop.c b/src/kernel/desktop.c
+index 8fc566d..3f520d3 100644
+--- a/src/kernel/desktop.c
++++ b/src/kernel/desktop.c
+@@ -1234,7 +1234,7 @@ post_msg_by_znode_p (const ZORDERINFO* zi, const ZORDERNODE* znode,
+     return ret;
+ }
+ 
+-static int dskSetActiveZOrderNode (int cli, int idx_znode)
++static long dskSetActiveZOrderNode (int cli, int idx_znode)
+ {
+     int old_active = 0;
+     ZORDERINFO* zi = _get_zorder_info(cli);
+@@ -1243,14 +1243,14 @@ static int dskSetActiveZOrderNode (int cli, int idx_znode)
+ 
+     if (idx_znode > zi->max_nr_globals 
+                     + zi->max_nr_topmosts + zi->max_nr_normals) {
+-        return (int)HWND_INVALID;
++        return (long)HWND_INVALID;
+     }
+ 
+     nodes = GET_ZORDERNODE(zi);
+ 
+     if ((__mg_ime_wnd && __mg_ime_wnd == nodes [idx_znode].main_win) ||
+                     nodes [idx_znode].flags & ZOF_TF_TOOLWIN)
+-        return (int)HWND_INVALID;
++        return (long)HWND_INVALID;
+ 
+ #ifdef _MGHAVE_MENU
+     if (zi->cli_trackmenu >= 0)
+diff --git a/src/kernel/message.c b/src/kernel/message.c
+index 0918429..e1ccd2b 100644
+--- a/src/kernel/message.c
++++ b/src/kernel/message.c
+@@ -858,7 +858,7 @@ BOOL GUIAPI PeekPostMessage (PMSG pMsg, HWND hWnd, int iMsgFilterMin,
+     return FALSE;
+ }
+ 
+-int GUIAPI SendMessage (HWND hWnd, int iMsg, WPARAM wParam, LPARAM lParam)
++long GUIAPI SendMessage (HWND hWnd, int iMsg, WPARAM wParam, LPARAM lParam)
+ {
+     WNDPROC WndProc;
+ 
+diff --git a/src/misc/rwops.c b/src/misc/rwops.c
+index ef19c3c..aa93c83 100644
+--- a/src/misc/rwops.c
++++ b/src/misc/rwops.c
+@@ -277,7 +277,7 @@ MG_RWops *MGUI_RWFromMem(void *mem, int size)
+         rwops->eof   = mem_eof;
+         rwops->hidden.mem.base = (Uint8 *)mem;
+         rwops->hidden.mem.here = rwops->hidden.mem.base;
+-        if ((0xFFFFFFFF - (Uint32)mem) < size)
++        if ((0xFFFFFFFF - (Ulong)mem) < size)
+             rwops->hidden.mem.stop = (void*)0xFFFFFFFF;
+         else
+             rwops->hidden.mem.stop = rwops->hidden.mem.base+size;
+@@ -299,7 +299,7 @@ void MGUI_InitMemRW (MG_RWops* area, void *mem, int size)
+     area->eof   = mem_eof;
+     area->hidden.mem.base = (Uint8 *)mem;
+     area->hidden.mem.here = area->hidden.mem.base;
+-    if ((0xFFFFFFFF - (Uint32)mem) < size)
++    if ((0xFFFFFFFF - (Ulong)mem) < size)
+         area->hidden.mem.stop = (void*)0xFFFFFFFF;
+     else
+         area->hidden.mem.stop = area->hidden.mem.base+size;
+diff --git a/src/newgal/fbcon/fb3dfx.c b/src/newgal/fbcon/fb3dfx.c
+index 33e5c8a..88d5278 100644
+--- a/src/newgal/fbcon/fb3dfx.c
++++ b/src/newgal/fbcon/fb3dfx.c
+@@ -55,7 +55,7 @@ static int FillHWRect(_THIS, GAL_Surface *dst, GAL_Rect *rect, Uint32 color)
+ 
+     /* Execute the fill command */
+     tdfx_wait(6);
+-    tdfx_out32(DSTBASE, (Uint32)dst_base);
++    tdfx_out32(DSTBASE, (Ulong)dst_base);
+     tdfx_out32(DSTFORMAT, format);
+     tdfx_out32(COLORFORE, color);
+     tdfx_out32(COMMAND_2D, COMMAND_2D_FILLRECT);
+@@ -120,9 +120,9 @@ static int HWAccelBlit(GAL_Surface *src, GAL_Rect *srcrect,
+         use_colorkey = 0;
+     }
+     tdfx_wait(9);
+-    tdfx_out32(SRCBASE, (Uint32)src_base);
++    tdfx_out32(SRCBASE, (Ulong)src_base);
+     tdfx_out32(SRCFORMAT, src_format);
+-    tdfx_out32(DSTBASE, (Uint32)dst_base);
++    tdfx_out32(DSTBASE, (Ulong)dst_base);
+     tdfx_out32(DSTFORMAT, src_format);
+     tdfx_out32(COMMAND_2D, blitop);
+     tdfx_out32(COMMANDEXTRA_2D, use_colorkey);
+diff --git a/src/newgal/fbcon/fbneomagic.c b/src/newgal/fbcon/fbneomagic.c
+index 249ca95..255dda1 100644
+--- a/src/newgal/fbcon/fbneomagic.c
++++ b/src/newgal/fbcon/fbneomagic.c
+@@ -99,7 +99,7 @@ static int FillHWRect(_THIS, GAL_Surface *dst, GAL_Rect *rect, Uint32 color)
+                        NEO_BC0_SRC_IS_FG    |
+                        NEO_BC3_SKIP_MAPPING |  0x0c0000;
+ 
+-    neo2200->dstStart = (Uint32) dst_base +
++    neo2200->dstStart = (Ulong) dst_base +
+                         (rect->y * dst->pitch) + 
+                         (rect->x * dst->format->BytesPerPixel);
+ 
+diff --git a/src/newgal/pcxvfb/pcxvfb.c b/src/newgal/pcxvfb/pcxvfb.c
+index 6274322..1f864e0 100644
+--- a/src/newgal/pcxvfb/pcxvfb.c
++++ b/src/newgal/pcxvfb/pcxvfb.c
+@@ -548,7 +548,7 @@ static int PCXVFB_VideoInit (_THIS, GAL_PixelFormat *vformat)
+ #endif
+ #endif //end of os (windows, cygwin, linux)
+ 
+-    if ((int)data->shmrgn == -1 || data->shmrgn == NULL) {
++    if ((long)data->shmrgn == -1 || data->shmrgn == NULL) {
+         GAL_SetError ("NEWGAL>PCXVFB: Unable to attach to "
+                 "virtual FrameBuffer server.\n");
+         return -1;
+diff --git a/src/newgdi/drawtext.c b/src/newgdi/drawtext.c
+index fe5c74b..7e2b54f 100644
+--- a/src/newgdi/drawtext.c
++++ b/src/newgdi/drawtext.c
+@@ -292,7 +292,7 @@ static BOOL cb_drawtextex2 (void* context, Glyph32 glyph_value,
+     int adv_x, adv_y;
+     BBOX bbox;
+     int bkmode;
+-
++    adv_x = adv_y = 0;
+     switch (glyph_type) {
+         case MCHAR_TYPE_ZEROWIDTH:
+         case MCHAR_TYPE_CR:
+diff --git a/src/newgdi/gdi.c b/src/newgdi/gdi.c
+index be74ecc..b59cda0 100644
+--- a/src/newgdi/gdi.c
++++ b/src/newgdi/gdi.c
+@@ -665,7 +665,7 @@ static void _dc_draw_pixel_span_set_2 (COMP_CTXT* comp_ctxt, int w)
+                     | (Uint16)comp_ctxt->cur_pixel);
+             Uint32 * dest32;
+             int count;
+-            if ((Uint32)comp_ctxt->cur_dst & 3) // Ensure 4-byte alignment.
++            if ((Ulong)comp_ctxt->cur_dst & 3) // Ensure 4-byte alignment.
+             {
+                 *dest16++ = (Uint16)comp_ctxt->cur_pixel;
+                 --w;
+diff --git a/src/textedit/mtextedit.c b/src/textedit/mtextedit.c
+index 3f9d389..0e9fa8a 100644
+--- a/src/textedit/mtextedit.c
++++ b/src/textedit/mtextedit.c
+@@ -432,7 +432,7 @@ static int mTextBuffer_find(mTextBuffer* self, int start,
+     if(start >= self->char_len)
+         return -1;
+ 
+-    if((int)str == TI_LINERETURN || (int) str == TI_EOF)
++    if((long)str == TI_LINERETURN || (long) str == TI_EOF)
+     {
+         pos = findnstr(self->buffer + start, self->char_len - start, "\n", 1);
+     }
+diff --git a/src/textedit/object.h b/src/textedit/object.h
+index 6b85761..fbeea9e 100644
+--- a/src/textedit/object.h
++++ b/src/textedit/object.h
+@@ -126,9 +126,9 @@ static ClassType(clss) * clss##ClassConstructor(ClassType(clss)* _class) { \
+ 	struct _##Interface { Interface##VTable *_vtable; };
+ 
+ #define IMPLEMENT(Clss,Interface) \
+-	_class->_##Interface##_obj_offset = (unsigned int)(void*)&(((Clss*)0)->Interface##_); \
++	_class->_##Interface##_obj_offset = (unsigned long)(void*)&(((Clss*)0)->Interface##_); \
+ 	_class->_##Interface##_next_offset = 0;                                                \
+-	*_pintfOffset =  (unsigned short)(unsigned int)(void*)&(((ClassType(Clss)*)0)->_##Interface##_obj_offset); \
++	*_pintfOffset =  (unsigned short)(unsigned long)(void*)&(((ClassType(Clss)*)0)->_##Interface##_obj_offset); \
+ 	_pintfOffset = &_class->_##Interface##_next_offset;
+ 
+ #define INTERFACE_CAST(Interface, pobj)  \
+
+-- 
+2.11.0
+

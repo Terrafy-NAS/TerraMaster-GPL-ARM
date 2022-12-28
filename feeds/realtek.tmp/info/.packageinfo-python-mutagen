@@ -1,0 +1,20 @@
+Source-Makefile: feeds/realtek/python-mutagen/Makefile
+Package: python-mutagen
+Submenu: Python
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: language-python
+Category: Languages
+Title: Python mutagen
+Maintainer: 
+Source: 
+Type: ipkg
+Description:   Mutagen is a Python module to handle audio metadata. It supports ASF, FLAC, M4A, Monkey’s Audio, MP3, Musepack, Ogg FLAC, Ogg Speex, Ogg Theora, Ogg Vorbis, True Audio, WavPack and OptimFROG audio files.
+
+@@
+
+

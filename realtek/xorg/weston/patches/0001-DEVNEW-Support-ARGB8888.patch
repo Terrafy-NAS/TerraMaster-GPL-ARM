@@ -1,0 +1,26 @@
+From 965d5057f09ca24282f2a24b777ca7df43d4b095 Mon Sep 17 00:00:00 2001
+From: "william.lee" <william.lee@realtek.com>
+Date: Thu, 23 Nov 2017 17:13:02 +0800
+Subject: [PATCH] [DEVNEW] Support ARGB8888
+
+Support ARGB8888 in drm backend
+---
+ libweston/compositor-drm.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/libweston/compositor-drm.c b/libweston/compositor-drm.c
+index b641d61e..741d23cc 100644
+--- a/libweston/compositor-drm.c
++++ b/libweston/compositor-drm.c
+@@ -2972,6 +2972,8 @@ parse_gbm_format(const char *s, uint32_t default_value, uint32_t *gbm_format)
+ 
+ 	if (s == NULL)
+ 		*gbm_format = default_value;
++	else if (strcmp(s, "argb8888") == 0)
++		*gbm_format = GBM_FORMAT_ARGB8888;	
+ 	else if (strcmp(s, "xrgb8888") == 0)
+ 		*gbm_format = GBM_FORMAT_XRGB8888;
+ 	else if (strcmp(s, "rgb565") == 0)
+-- 
+2.11.0
+

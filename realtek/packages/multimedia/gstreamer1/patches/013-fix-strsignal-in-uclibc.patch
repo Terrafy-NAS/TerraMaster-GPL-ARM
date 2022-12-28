@@ -1,0 +1,13 @@
+Index: gstreamer-1.6.4/libs/gst/check/libcheck/libcompat.h
+===================================================================
+--- gstreamer-1.6.4.orig/libs/gst/check/libcheck/libcompat.h	2015-09-26 06:19:19.000000000 +0800
++++ gstreamer-1.6.4/libs/gst/check/libcheck/libcompat.h	2016-12-09 10:09:27.283705915 +0800
+@@ -100,7 +100,7 @@
+ #define strdup _strdup
+ #endif /* !HAVE_DECL_STRDUP && HAVE__STRDUP */
+ 
+-#if !HAVE_DECL_STRSIGNAL
++#if !HAVE_DECL_STRSIGNAL && !defined(__UCLIBC__)
+ CK_DLL_EXP const char *strsignal (int sig);
+ #endif /* !HAVE_DECL_STRSIGNAL */
+ 

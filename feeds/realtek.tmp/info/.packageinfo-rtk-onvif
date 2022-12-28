@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/rtk-onvif/Makefile
+Package: rtk-onvif
+Submenu: Developing
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +openrtsp +python-netifaces
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: nas
+Category: Realtek
+Title: Realtek NAS ONVIF
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates ONVIF feature with simple NVR prototype system
+
+@@
+
+

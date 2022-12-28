@@ -1,0 +1,45 @@
+From fce9382b4b99178fdbd188bec098b9b085327fef Mon Sep 17 00:00:00 2001
+From: Florian Fainelli <f.fainelli@gmail.com>
+Date: Sat, 4 Feb 2017 18:41:34 -0800
+Subject: [PATCH] cmake: Check for getrandom system call
+
+In case we are building against a kernel that is too old and does not
+support SYS_getrandom, error out with a message indicating so.
+
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+
+- Change to WARNING instead of FATAL_ERROR
+
+---
+ CMakeLists.txt | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6cf0c93..9033493 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -16,10 +16,17 @@ IF(DEBUG)
+   ADD_DEFINITIONS(-DDEBUG -g3)
+ ENDIF()
+ 
+-ADD_EXECUTABLE(getrandom getrandom.c)
+-INSTALL(TARGETS getrandom
+-	RUNTIME DESTINATION bin
+-)
++INCLUDE (CheckSymbolExists)
++CHECK_SYMBOL_EXISTS(SYS_getrandom syscall.h getrandom)
++
++IF(getrandom)
++  ADD_EXECUTABLE(getrandom getrandom.c)
++  INSTALL(TARGETS getrandom
++          RUNTIME DESTINATION bin
++  )
++ELSE()
++  message( WARNING "Kernel too old, missing SYS_getrandom system call")
++ENDIF()
+ 
+ ADD_EXECUTABLE(kmodloader kmodloader.c)
+ TARGET_LINK_LIBRARIES(kmodloader ubox)
+-- 
+2.7.4
+

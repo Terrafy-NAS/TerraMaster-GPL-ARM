@@ -1,0 +1,21 @@
+Source-Makefile: feeds/xorg/weston/Makefile
+Package: weston
+Submenu: Weston
+Version: 3.0.0-71c4f70e08faad6002ec8fe8cd1c7930bee8373b
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +kmod-weston +mali-wayland +libpthread-stubs +libdrm +pixman +libinput +libmtdev +libevdev +libxkbcommon +libxau +xcbproto +xproto +xorg-macros +libudev +wayland-protocols +libjpeg +libpng +libpam +WESTON_ENABLE_DBUS:dbus +WESTON_ENABLE_WESTON_LAUNCH:libpam +cairo
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: libtool libintl libiconv
+Section: xorg-framework
+Category: Xorg
+Title: Weston
+Maintainer: 
+Source: weston-3.0.0-71c4f70e08faad6002ec8fe8cd1c7930bee8373b.tar.gz
+Type: ipkg
+Description:   The Weston compositor is a minimal and fast compositor and is suitable for many embedded and mobile use cases.
+http://cgit.freedesktop.org/wayland/weston
+
+@@
+
+

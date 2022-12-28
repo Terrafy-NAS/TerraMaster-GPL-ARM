@@ -1,0 +1,21 @@
+Source-Makefile: feeds/realtek/openhab/Makefile
+Package: openhab
+Submenu: Java
+Version: 2.1.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 @RTK_OVERRIDE_OVERLAY_FS +zlib +libstdcpp +alsa-lib +libfreetype +zulu
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: lang
+Category: Languages
+Title: Java SE standard Based on OpenJDK
+Maintainer: 
+Require-User: openhab=200:openhab=200
+Source: openhab-2.1.0.tar.gz
+Type: ipkg
+Description:   A vendor and technology agnostic open source automation software for your home
+https://www.openhab.org/
+
+@@
+
+

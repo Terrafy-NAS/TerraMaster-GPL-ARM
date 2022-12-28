@@ -1,0 +1,71 @@
+--- a/libpthread/linuxthreads/sysdeps/mips/tls.h
++++ b/libpthread/linuxthreads/sysdeps/mips/tls.h
+@@ -37,21 +37,33 @@ typedef union dtv
+   } pointer;
+ } dtv_t;
+
++# if defined (__m4281) || defined (__m5281)
++#  define READ_THREAD_POINTER() \
++    ({ void *__result;							      \
++       __asm__ __volatile__ ("mflxc0\t%0, $8" : "=v" (__result));	      \
++       __result; })
++# else
+ # define READ_THREAD_POINTER() \
+     ({ void *__result;							      \
+        __asm__ __volatile__ (".set\tpush\n\t.set\tmips32r2\n\t"			      \
+		     "rdhwr\t%0, $29\n\t.set\tpop" : "=v" (__result));	      \
+        __result; })
++# endif
+
+ #else /* __ASSEMBLER__ */
+ # include <tcb-offsets.h>
+
+ /* Note: rd must be $v1 to be ABI-conformant.  */
++# if defined (__m4281) || defined (__m5281)
++# define READ_THREAD_POINTER(rd) \
++	mflxc0  rd, $8;
++# else
+ # define READ_THREAD_POINTER(rd) \
+	.set	push;							      \
+	.set	mips32r2;						      \
+	rdhwr	rd, $29;						      \
+	.set	pop
++# endif
+ #endif /* __ASSEMBLER__ */
+
+ /* LinuxThreads can only use TLS if both floating stacks (in the MIPS case,
+--- a/libpthread/nptl/sysdeps/mips/tls.h
++++ b/libpthread/nptl/sysdeps/mips/tls.h
+@@ -37,20 +37,32 @@ typedef union dtv
+ } dtv_t;
+
+ /* Note: rd must be $v1 to be ABI-conformant.  */
++# if defined (__m4281) || defined (__m5281)
++# define READ_THREAD_POINTER() \
++    ({ void *__result;							      \
++       __asm__ __volatile__ ("mflxc0\t%0, $8" : "=v" (__result));	      \
++       __result; })
++# else
+ # define READ_THREAD_POINTER() \
+     ({ void *__result;							      \
+        __asm__ __volatile__ (".set\tpush\n\t.set\tmips32r2\n\t"		      \
+		     "rdhwr\t%0, $29\n\t.set\tpop" : "=v" (__result));	      \
+        __result; })
++# endif
+
+ #else /* __ASSEMBLER__ */
+ # include <tcb-offsets.h>
+
++# if defined (__m4281) || defined (__m5281)
++# define READ_THREAD_POINTER(rd) \
++	mflxc0	rd, $8;
++# else
+ # define READ_THREAD_POINTER(rd) \
+	.set	push;							      \
+	.set	mips32r2;						      \
+	rdhwr	rd, $29;						      \
+	.set	pop
++# endif
+ #endif /* __ASSEMBLER__ */
+
+

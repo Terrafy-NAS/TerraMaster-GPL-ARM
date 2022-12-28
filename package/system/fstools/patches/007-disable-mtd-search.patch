@@ -1,0 +1,20 @@
+--- a/block.c
++++ b/block.c
+@@ -1223,7 +1223,7 @@ static int main_mount(int argc, char **a
+ 	if (config_load(NULL))
+ 		return -1;
+ 
+-	cache_load(1);
++	cache_load(0);
+ 	list_for_each_entry(pr, &devices, list)
+ 		mount_device(pr, 0);
+ 
+@@ -1271,7 +1271,7 @@ static int main_info(int argc, char **ar
+ 	int i;
+ 	struct blkid_struct_probe *pr;
+ 
+-	cache_load(1);
++	cache_load(0);
+ 	if (argc == 2) {
+ 		list_for_each_entry(pr, &devices, list)
+ 			print_block_info(pr);

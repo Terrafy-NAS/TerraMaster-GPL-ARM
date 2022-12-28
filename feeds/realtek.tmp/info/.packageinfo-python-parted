@@ -1,0 +1,21 @@
+Source-Makefile: feeds/realtek/python-parted/Makefile
+Package: python-parted
+Submenu: Python
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +python +parted
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: python
+Section: language-python
+Category: Languages
+Title: Python Parted
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  Python-parted is a set of native Python bindings for libparted
+https://github.com/rhinstaller/pyparted
+
+@@
+
+

@@ -1,0 +1,19 @@
+Source-Makefile: feeds/realtek/rtk-supplicant/Makefile
+Package: rtk-supplicant
+Version: 1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295 +gstreamer1-libs-rtk +gstreamer1-rtk +gstreamer1-utils-rtk +gstreamer1-plugins-base-rtk +libgst1app-rtk +gst1-mod-app-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-base-rtk +gstreamer1-plugins-good-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-good-rtk +gstreamer1-plugins-bad-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-bad-rtk +gstreamer1-plugins-ugly-rtk +PACKAGE_rtk-nvr-full:gst1-plugins-ugly-rtk +gstreamer1-plugins-rtk +gst1-omx-1-2 +PACKAGE_rtk-nvr-full:gst1-libav +supportlibs +rtkMediaLib
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: gstreamer-hw-transcode rtk-transcode supportlibs rtkMediaLib
+Section: nas
+Category: Extra packages
+Title: Supplicant
+Maintainer: 
+Source: 
+Type: ipkg
+Description:  This package activates
+
+@@
+
+

@@ -1,0 +1,26 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2011 OpenWrt.org
+
+SERVICE_USE_PID=1
+
+START=75
+
+DESC="nvr server"
+NAME=nvr
+DAEMON=/usr/local/bin/nvr/nvr-restful-api.py
+PIDFILE=/var/run/nvr.pid
+SOCKETFILE=/var/run/nvr.sock
+
+start() {
+	[ -f "$DAEMON" ] || exit 0
+	/usr/bin/python $DAEMON & #push to background
+}
+
+stop() {
+	if [ -f $PIDFILE ]; then
+		kill `cat $PIDFILE`
+		rm $PIDFILE
+		rm $SOCKETFILE
+	fi
+}
+

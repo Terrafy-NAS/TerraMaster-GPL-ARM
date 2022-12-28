@@ -1,0 +1,64 @@
+From 92e7e3a3bf3844942be48aced8b6107b95f2f81e Mon Sep 17 00:00:00 2001
+From: Jan Schmidt <jan@centricular.com>
+Date: Tue, 10 May 2016 03:32:59 +1000
+Subject: h264parse: When input alignment=AU, always drain each packet.
+
+If the input alignment claims AU alignment, each received
+buffer should contain a complete video frame, so never hold over parts
+of buffers for later processing. Also reduces latency, as packets
+are parsed/converted and output immediately instead of 1 buffer
+later.
+
+Fixes a problem where an (arguably disallowed) padding byte on the
+end of a buffer is detected as an extra byte in the following
+start code, and messes up the timestamping that should apply to
+that start code.
+
+diff --git a/gst/videoparsers/gsth264parse.c b/gst/videoparsers/gsth264parse.c
+index e9a9ef8..c7098d0 100644
+--- a/gst/videoparsers/gsth264parse.c
++++ b/gst/videoparsers/gsth264parse.c
+@@ -1086,7 +1086,9 @@ gst_h264_parse_handle_frame (GstBaseParse * parse,
+     GST_LOG_OBJECT (h264parse, "resuming frame parsing");
+   }
+ 
+-  drain = GST_BASE_PARSE_DRAINING (parse);
++  /* Always consume the entire input buffer when in_align == ALIGN_AU */
++  drain = GST_BASE_PARSE_DRAINING (parse)
++      || h264parse->in_align == GST_H264_PARSE_ALIGN_AU;
+   nonext = FALSE;
+ 
+   current_off = h264parse->current_off;
+@@ -1918,6 +1920,8 @@ gst_h264_parse_get_timestamp (GstH264Parse * h264parse,
+   g_return_if_fail (out_ts != NULL);
+ 
+   upstream = *out_ts;
++  GST_LOG_OBJECT (h264parse, "Upstream ts %" GST_TIME_FORMAT,
++      GST_TIME_ARGS (upstream));
+ 
+   if (!frame) {
+     GST_LOG_OBJECT (h264parse, "no frame data ->  0 duration");
+@@ -2611,6 +2615,8 @@ gst_h264_parse_set_caps (GstBaseParse * parse, GstCaps * caps)
+     h264parse->packetized = TRUE;
+   }
+ 
++  h264parse->in_align = align;
++
+   return TRUE;
+ 
+   /* ERRORS */
+diff --git a/gst/videoparsers/gsth264parse.h b/gst/videoparsers/gsth264parse.h
+index f3eb7a5..c71990b 100644
+--- a/gst/videoparsers/gsth264parse.h
++++ b/gst/videoparsers/gsth264parse.h
+@@ -71,6 +71,7 @@ struct _GstH264Parse
+   /* state */
+   GstH264NalParser *nalparser;
+   guint state;
++  guint in_align;
+   guint align;
+   guint format;
+   gint current_off;
+-- 
+cgit v0.10.2
+

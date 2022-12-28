@@ -1,0 +1,21 @@
+Source-Makefile: feeds/xorg/lib/libXtst/Makefile
+Package: libXtst
+Submenu: libraries
+Version: 1.1.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libX11 +libXext +libXi
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: recordproto xextproto inputproto libtool libintl libiconv
+Section: xorg-libraries
+Category: Xorg
+Title: libXtst
+Maintainer: 
+Source: libXtst-1.1.0.tar.bz2
+Type: ipkg
+Description: libXtst
+http://xorg.freedesktop.org/
+
+@@
+
+

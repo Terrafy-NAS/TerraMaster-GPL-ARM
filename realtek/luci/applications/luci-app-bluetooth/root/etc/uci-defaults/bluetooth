@@ -1,0 +1,11 @@
+#!/bin/sh
+
+uci -q batch <<-EOF >/dev/null
+	delete ucitrack.bluetooth
+	set ucitrack.bluetooth=bluetooth
+	set ucitrack.bluetooth.init=bluetoothd
+	commit ucitrack
+EOF
+
+rm -f /tmp/luci-indexcache
+exit 0

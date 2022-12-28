@@ -1,0 +1,20 @@
+Source-Makefile: feeds/xorg/lib/xtrans/Makefile
+Package: xtrans
+Submenu: libraries
+Version: 1.2.5-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread 
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: xorg-libraries
+Category: Xorg
+Title: xtrans
+Maintainer: 
+Source: xtrans-1.2.5.tar.bz2
+Type: ipkg
+Description: xtrans
+http://xorg.freedesktop.org/
+
+@@
+
+

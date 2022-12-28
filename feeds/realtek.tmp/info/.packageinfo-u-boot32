@@ -1,0 +1,18 @@
+Source-Makefile: feeds/realtek/u-boot32/Makefile
+Package: u-boot32
+Version: baebd9b-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1195
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: boot
+Category: Boot Loaders
+Title: Das U-Boot
+Maintainer: 
+Source: u-boot32-baebd9b.tar.bz2
+Type: ipkg
+Description:  Das U-Boot -- the Universal Boot Loader
+
+@@
+
+

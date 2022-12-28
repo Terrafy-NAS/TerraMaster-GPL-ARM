@@ -1,0 +1,21 @@
+Source-Makefile: feeds/realtek/u-boot64/Makefile
+Package: u-boot64
+Version: 3655658-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread @TARGET_rtd1295
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Section: boot
+Category: Boot Loaders
+Title: Das U-Boot
+Maintainer: 
+Source: u-boot64-3655658.tar.bz2
+Type: ipkg
+Description:  Das U-Boot -- the Universal Boot Loader
+
+@@
+Config:
+        source "realtek/realtek/u-boot64/Config.in"
+@@
+
+

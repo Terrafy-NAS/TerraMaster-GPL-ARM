@@ -1,0 +1,21 @@
+Source-Makefile: feeds/xorg/qt5-wayland/Makefile
+Package: qt5-wayland
+Submenu: framework
+Version: 5.8.0-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +glib2 +libstdcpp +libdbus +libdrm +fontconfig +libfreetype +eudev +dejavu-fonts-ttf +mali-wayland +libpng +libxkbcommon +libudev +libmtdev +libinput +libiconv-full +supportlibs +libjpeg +libwayland
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: +libstdcpp
+Section: xorg-framework
+Category: Xorg
+Title: qt5
+Maintainer: 
+Source: qt-everywhere-opensource-src-5.8.0.tar.gz
+Type: ipkg
+Description: qt5
+http://qt-project.org
+
+@@
+
+

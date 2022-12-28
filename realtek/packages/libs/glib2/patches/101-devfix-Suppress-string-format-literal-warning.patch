@@ -1,0 +1,34 @@
+From e30c96d8bcf0103d328198234716ce39c21993a5 Mon Sep 17 00:00:00 2001
+From: "william.lee" <william.lee@realtek.com>
+Date: Mon, 3 Jul 2017 10:18:21 +0800
+Subject: [PATCH] [devfix] Suppress string format literal warning
+
+Newer versions of GCC emit an error here, but we know it's safe.
+https://bugzilla.gnome.org/761550
+https://bugzilla.gnome.org/761550
+---
+ glib/gdate.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/glib/gdate.c b/glib/gdate.c
+index 670f7aa..79b122c 100644
+--- a/glib/gdate.c
++++ b/glib/gdate.c
+@@ -2439,6 +2439,8 @@ win32_strftime_helper (const GDate     *d,
+  *
+  * Returns: number of characters written to the buffer, or 0 the buffer was too small
+  */
++#pragma GCC diagnostic push
++#pragma GCC diagnostic ignored "-Wformat-nonliteral"
+ gsize     
+ g_date_strftime (gchar       *s, 
+                  gsize        slen, 
+@@ -2549,3 +2551,5 @@ g_date_strftime (gchar       *s,
+   return retval;
+ #endif
+ }
++#pragma GCC diagnostic pop
++
+-- 
+2.11.0
+

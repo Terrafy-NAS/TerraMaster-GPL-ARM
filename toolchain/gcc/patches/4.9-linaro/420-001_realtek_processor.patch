@@ -1,0 +1,298 @@
+--- a/gcc/common.opt
++++ b/gcc/common.opt
+@@ -1171,6 +1171,10 @@ ffinite-math-only
+ Common Report Var(flag_finite_math_only) Optimization SetByCombined
+ Assume no NaNs or infinities are generated
+ 
++ffix-bdsl
++Common Report Var(flag_fix_bdsl) Init(1) Optimization
++Forbid the use of load instructions in the branch delay slots for all cases
++
+ ffixed-
+ Common Joined RejectNegative Var(common_deferred_options) Defer
+ -ffixed-<register>	Mark <register> as being unavailable to the compiler
+@@ -2280,6 +2284,10 @@ Use the gold linker instead of the default linker
+ fuse-linker-plugin
+ Common Undocumented Var(flag_use_linker_plugin)
+ 
++fuse-tls
++Common Report RejectNegative Var(flag_use_tls) Init(1)
++Allow compiler to emit TLS related codes.
++
+ ; Positive if we should track variables, negative if we should run
+ ; the var-tracking pass only to discard debug annotations, zero if
+ ; we're not to run it.  When flag_var_tracking == 2 (AUTODETECT_VALUE) it
+--- a/gcc/config.gcc
++++ b/gcc/config.gcc
+@@ -2001,6 +2001,11 @@ mips*-*-linux*)				# Linux MIPS, either endian.
+                 ;;
+         mipsisa32*)
+ 		tm_defines="${tm_defines} MIPS_ISA_DEFAULT=32"
++                ;;
++	*)
++		tm_defines="${tm_defines} MIPS_ISA_DEFAULT=1"
++		target_cpu_default="MASK_SOFT_FLOAT_ABI"
++                ;;
+         esac
+ 	;;
+ mips*-mti-elf*)
+@@ -2089,6 +2094,18 @@ mipsisa64sb1-*-elf* | mipsisa64sb1el-*-elf*)
+ mips-*-elf* | mipsel-*-elf* | mipsr5900-*-elf* | mipsr5900el-*-elf*)
+ 	tm_file="elfos.h newlib-stdint.h ${tm_file} mips/elf.h"
+ 	tmake_file="mips/t-elf"
++	case ${target} in
++        mipsisa32r2*)
++		tm_defines="${tm_defines} MIPS_ISA_DEFAULT=33"
++                ;;
++        mipsisa32*)
++		tm_defines="${tm_defines} MIPS_ISA_DEFAULT=32"
++                ;;
++	*)
++		tm_defines="${tm_defines} MIPS_ISA_DEFAULT=1"
++		target_cpu_default="MASK_SOFT_FLOAT_ABI"
++                ;;
++        esac
+ 	;;
+ mips64r5900-*-elf* | mips64r5900el-*-elf*)
+ 	tm_file="elfos.h newlib-stdint.h ${tm_file} mips/elf.h mips/n32-elf.h"
+--- a/gcc/config/mips/mips-cpus.def
++++ b/gcc/config/mips/mips-cpus.def
+@@ -152,3 +152,7 @@ MIPS_CPU ("octeon", PROCESSOR_OCTEON, 65, PTF_AVOID_BRANCHLIKELY)
+ MIPS_CPU ("octeon+", PROCESSOR_OCTEON, 65, PTF_AVOID_BRANCHLIKELY)
+ MIPS_CPU ("octeon2", PROCESSOR_OCTEON2, 65, PTF_AVOID_BRANCHLIKELY)
+ MIPS_CPU ("xlp", PROCESSOR_XLP, 65, PTF_AVOID_BRANCHLIKELY)
++
++/* RLX processors */
++MIPS_CPU ("4281", PROCESSOR_RLX4281, 1, 0)
++MIPS_CPU ("5281", PROCESSOR_RLX5281, 1, 0)
+--- a/gcc/config/mips/mips-tables.opt
++++ b/gcc/config/mips/mips-tables.opt
+@@ -642,3 +642,9 @@ Enum(mips_arch_opt_value) String(octeon2) Value(89) Canonical
+ EnumValue
+ Enum(mips_arch_opt_value) String(xlp) Value(90) Canonical
+ 
++EnumValue
++Enum(mips_arch_opt_value) String(4281) Value(91) Canonical
++
++EnumValue
++Enum(mips_arch_opt_value) String(5281) Value(92) Canonical
++
+--- a/gcc/config/mips/mips.c
++++ b/gcc/config/mips/mips.c
+@@ -1654,13 +1654,21 @@ mips16_rdhwr_one_only_stub::get_name ()
+ void
+ mips16_rdhwr_one_only_stub::output_body ()
+ {
+-  fprintf (asm_out_file,
+-	   "\t.set\tpush\n"
+-	   "\t.set\tmips32r2\n"
+-	   "\t.set\tnoreorder\n"
+-	   "\trdhwr\t$3,$29\n"
+-	   "\t.set\tpop\n"
+-	   "\tj\t$31\n");
++  if (!TARGET_RLX)
++    fprintf (asm_out_file,
++             "\t.set\tpush\n"
++             "\t.set\tmips32r2\n"
++             "\t.set\tnoreorder\n"
++             "\trdhwr\t$3,$29\n"
++             "\t.set\tpop\n"
++             "\tj\t$31\n");
++  else if (TARGET_RLX)
++    fprintf (asm_out_file,
++             "\t.set\tpush\n"
++             "\t.set\tnoreorder\n"
++             "\tmflxc0\t$3,$8\n"
++             "\t.set\tpop\n"
++             "\tj\t$31\n");
+ }
+ 
+ /* A stub for moving the FCSR into GET_FCSR_REGNUM.  */
+@@ -13185,6 +13193,8 @@ mips_issue_rate (void)
+     case PROCESSOR_R9000:
+     case PROCESSOR_OCTEON:
+     case PROCESSOR_OCTEON2:
++    case PROCESSOR_RLX4281:
++    case PROCESSOR_RLX5281:
+       return 2;
+ 
+     case PROCESSOR_SB1:
+@@ -16978,6 +16988,10 @@ mips_option_override (void)
+   if (mips_arch_info == 0)
+     mips_set_architecture (mips_default_arch ());
+ 
++  /* flag_fix_bdsl only works for Taroko processors */
++  if (flag_fix_bdsl && !TARGET_RLX)
++    flag_fix_bdsl = false;
++
+   if (ABI_NEEDS_64BIT_REGS && !ISA_HAS_64BIT_REGS)
+     error ("%<-march=%s%> is not compatible with the selected ABI",
+ 	   mips_arch_info->name);
+--- a/gcc/config/mips/mips.h
++++ b/gcc/config/mips/mips.h
+@@ -233,6 +233,12 @@ struct mips_cpu_info {
+ #define TARGET_SR71K                (mips_arch == PROCESSOR_SR71000)
+ #define TARGET_XLP                  (mips_arch == PROCESSOR_XLP)
+ 
++#define TARGET_RLX4281              (mips_arch == PROCESSOR_RLX4281)
++#define TARGET_RLX5281              (mips_arch == PROCESSOR_RLX5281)
++
++/* All RLX processor */
++#define TARGET_RLX                  (TARGET_RLX4281 || TARGET_RLX5281)
++
+ /* Scheduling target defines.  */
+ #define TUNE_20KC		    (mips_tune == PROCESSOR_20KC)
+ #define TUNE_24K		    (mips_tune == PROCESSOR_24KC	\
+@@ -571,6 +577,20 @@ struct mips_cpu_info {
+ 									\
+       if (TARGET_CACHE_BUILTIN)						\
+ 	builtin_define ("__GCC_HAVE_BUILTIN_MIPS_CACHE");		\
++									\
++      if (TARGET_RLX4281)						\
++	builtin_define ("__m4281");					\
++      else if (TARGET_RLX5281)						\
++	builtin_define ("__m5281");					\
++                                                                        \
++      builtin_define ("__USE_ULS__");					\
++									\
++      if (flag_use_tls)							\
++	builtin_define ("__USE_TLS__");					\
++									\
++      if (flag_fix_bdsl)						\
++	builtin_define ("__FIX_BDSL__");				\
++									\
+     }									\
+   while (0)
+ 
+@@ -713,6 +733,7 @@ struct mips_cpu_info {
+   "%{mhard-float|msoft-float|mno-float|march=mips*:; \
+      march=vr41*|march=m4k|march=4k*|march=24kc|march=24kec \
+      |march=34kc|march=34kn|march=74kc|march=1004kc|march=5kc \
++     |march=4281|march=5281 \
+      |march=m14k*|march=octeon|march=xlr: -msoft-float;		  \
+      march=*: -mhard-float}"
+ 
+@@ -861,7 +882,8 @@ struct mips_cpu_info {
+    ST Loongson 2E/2F.  */
+ #define ISA_HAS_CONDMOVE        (ISA_HAS_FP_CONDMOVE			\
+ 				 || TARGET_MIPS5900			\
+-				 || TARGET_LOONGSON_2EF)
++				 || TARGET_LOONGSON_2EF			\
++                                 || (!TARGET_MIPS16 && TARGET_RLX))
+ 
+ /* ISA has LDC1 and SDC1.  */
+ #define ISA_HAS_LDC1_SDC1	(!ISA_MIPS1				\
+@@ -1054,6 +1076,7 @@ struct mips_cpu_info {
+ 				 && !TARGET_MIPS3900			\
+ 				 && !TARGET_MIPS5900			\
+ 				 && !TARGET_MIPS16			\
++				 && !TARGET_RLX				\
+ 				 && !TARGET_MICROMIPS)
+ 
+ /* Likewise mtc1 and mfc1.  */
+@@ -1084,7 +1107,8 @@ struct mips_cpu_info {
+ 				 || ISA_MIPS64R2			\
+ 				 || TARGET_MIPS5500			\
+ 				 || TARGET_MIPS5900			\
+-				 || TARGET_LOONGSON_2EF)
++				 || TARGET_LOONGSON_2EF			\
++				 || TARGET_RLX)
+ 
+ /* ISA includes synci, jr.hb and jalr.hb.  */
+ #define ISA_HAS_SYNCI ((ISA_MIPS32R2		\
+@@ -1092,7 +1116,8 @@ struct mips_cpu_info {
+ 		       && !TARGET_MIPS16)
+ 
+ /* ISA includes sync.  */
+-#define ISA_HAS_SYNC ((mips_isa >= 2 || TARGET_MIPS3900) && !TARGET_MIPS16)
++#define ISA_HAS_SYNC ((mips_isa >= 2 || TARGET_MIPS3900 || TARGET_RLX)	\
++		      && !TARGET_MIPS16)
+ #define GENERATE_SYNC			\
+   (target_flags_explicit & MASK_LLSC	\
+    ? TARGET_LLSC && !TARGET_MIPS16	\
+@@ -1101,7 +1126,8 @@ struct mips_cpu_info {
+ /* ISA includes ll and sc.  Note that this implies ISA_HAS_SYNC
+    because the expanders use both ISA_HAS_SYNC and ISA_HAS_LL_SC
+    instructions.  */
+-#define ISA_HAS_LL_SC (mips_isa >= 2 && !TARGET_MIPS5900 && !TARGET_MIPS16)
++#define ISA_HAS_LL_SC ((mips_isa >= 2 || TARGET_RLX) && !TARGET_MIPS5900 \
++		       && !TARGET_MIPS16)
+ #define GENERATE_LL_SC			\
+   (target_flags_explicit & MASK_LLSC	\
+    ? TARGET_LLSC && !TARGET_MIPS16	\
+@@ -1204,6 +1230,7 @@ struct mips_cpu_info {
+ %{mfp32} %{mfp64} %{mnan=*} \
+ %{mshared} %{mno-shared} \
+ %{msym32} %{mno-sym32} \
++%{ffix-bdsl} \
+ %{mtune=*}" \
+ FP_ASM_SPEC "\
+ %(subtarget_asm_spec)"
+@@ -1230,6 +1257,8 @@ FP_ASM_SPEC "\
+ 
+ #undef CC1_SPEC
+ #define CC1_SPEC "\
++%{m4281:-march=4281} \
++%{m5281:-march=5281} \
+ %{G*} %{EB:-meb} %{EL:-mel} %{EB:%{EL:%emay not use both -EB and -EL}} \
+ %(subtarget_cc1_spec)"
+ 
+--- a/gcc/config/mips/mips.md
++++ b/gcc/config/mips/mips.md
+@@ -65,6 +65,8 @@
+   sr71000
+   xlr
+   xlp
++  rlx4281
++  rlx5281
+ ])
+ 
+ (define_c_enum "unspec" [
+@@ -707,11 +709,16 @@
+ 
+ ;; Can the instruction be put into a delay slot?
+ (define_attr "can_delay" "no,yes"
+-  (if_then_else (and (eq_attr "type" "!branch,call,jump")
+-		     (eq_attr "hazard" "none")
+-		     (match_test "get_attr_insn_count (insn) == 1"))
+-		(const_string "yes")
+-		(const_string "no")))
++  (cond [(and (eq (symbol_ref "flag_fix_bdsl") (const_int 1))
++	      (ior (eq_attr "type" "load,fpload,fpidxload")
++		   (match_test "TARGET_MIPS16")))
++	 (const_string "no")
++
++	 (and (eq_attr "type" "!branch,call,jump")
++	      (eq_attr "hazard" "none")
++	      (match_test "get_attr_insn_count (insn) == 1"))
++	 (const_string "yes")]
++	(const_string "no")))
+ 
+ ;; Attribute defining whether or not we can use the branch-likely
+ ;; instructions.
+@@ -7039,7 +7046,7 @@
+ (define_insn "*tls_get_tp_<mode>_split"
+   [(set (reg:P TLS_GET_TP_REGNUM)
+ 	(unspec:P [(const_int 0)] UNSPEC_TLS_GET_TP))]
+-  "HAVE_AS_TLS && !TARGET_MIPS16"
++  "!TARGET_RLX && HAVE_AS_TLS && !TARGET_MIPS16"
+   ".set\tpush\;.set\tmips32r2\t\;rdhwr\t$3,$29\;.set\tpop"
+   [(set_attr "type" "unknown")
+    ; Since rdhwr always generates a trap for now, putting it in a delay
+@@ -7047,6 +7054,16 @@
+    (set_attr "can_delay" "no")
+    (set_attr "mode" "<MODE>")])
+ 
++(define_insn "*rlx_tls_get_tp_<mode>_split"
++  [(set (reg:P TLS_GET_TP_REGNUM)
++	(unspec:P [(const_int 0)] UNSPEC_TLS_GET_TP))]
++  "TARGET_RLX && HAVE_AS_TLS && !TARGET_MIPS16"
++  "mflxc0\t$3,$8"
++  [(set_attr "type" "unknown")
++   (set_attr "can_delay" "no")
++   (set_attr "mode" "<MODE>")])
++
++
+ ;; In MIPS16 mode, the TLS base pointer is accessed by a
+ ;; libgcc helper function __mips16_rdhwr(), as 'rdhwr' is not
+ ;; accessible in MIPS16.

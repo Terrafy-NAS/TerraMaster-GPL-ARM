@@ -1,0 +1,24 @@
+From: Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH] bridge: no EAP forward
+
+When bridging, do not forward EAP frames to other ports, only deliver
+them locally.
+Fixes WPA authentication issues with multiples APs that are connected to
+each other via bridges.
+---
+Index: linux-4.4.18/net/bridge/br_input.c
+===================================================================
+--- linux-4.4.18.orig/net/bridge/br_input.c	2017-05-11 17:23:21.333880871 +0800
++++ linux-4.4.18/net/bridge/br_input.c	2017-05-11 17:25:39.291808802 +0800
+@@ -472,6 +472,11 @@
+ 	if (IS_ENABLED(CONFIG_INET) && skb->protocol == htons(ETH_P_ARP))
+ 		br_do_proxy_arp(skb, br, vid, p);
+ 
++	if (skb->protocol == htons(ETH_P_PAE)) {
++		skb2 = skb;
++		/* Do not forward 802.1x/EAP frames */
++		skb = NULL;
++	} else
+ #if !defined(CONFIG_RTL_IGMP_SNOOPING)
+ 	if (is_broadcast_ether_addr(dest)) {
+ 		skb2 = skb;

@@ -1,0 +1,7 @@
+TARGET_CROSS=
+GCC_VERSION=unknown
+GCC_PKG_VERSION=unknown
+LIBC_TYPE=unknown
+LIBC_URL=unknown
+LIBC_VERSION=unknown
+LIBC_SO_VERSION=unknown

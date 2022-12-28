@@ -1,0 +1,35 @@
+From 860ffe49dd60b149b097f492db9754cd8bfb3ca3 Mon Sep 17 00:00:00 2001
+From: eccheng <eccheng@realtek.com>
+Date: Mon, 2 Apr 2018 14:20:16 +0800
+Subject: [PATCH] Add RANGE for continue https upload
+
+---
+ proc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/proc.c b/proc.c
+index 4819e08..eb28874 100644
+--- a/proc.c
++++ b/proc.c
+@@ -34,8 +34,8 @@
+ 	__header(user_agent, user-agent) \
+ 	__header(content_type, content-type) \
+ 	__header(content_length, content-length) \
+-	__header(x_http_method_override, x-http-method-override)
+-
++	__header(x_http_method_override, x-http-method-override) \
++	__header(range, range)
+ #undef __header
+ #define __header __enum_header
+ enum client_hdr {
+@@ -66,6 +66,7 @@ static const struct {
+ 	{ "HTTP_X_HTTP_METHOD_OVERRIDE", HDR_x_http_method_override },
+ 	{ "CONTENT_TYPE", HDR_content_type },
+ 	{ "CONTENT_LENGTH", HDR_content_length },
++	{ "RANGE", HDR_range }, 
+ };
+ 
+ enum extra_vars {
+-- 
+1.9.1
+

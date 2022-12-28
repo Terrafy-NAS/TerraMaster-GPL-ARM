@@ -1,0 +1,95 @@
+From 3a1b3d9a4ef609ea6b526cf075e127959c93cc18 Mon Sep 17 00:00:00 2001
+From: "william.lee" <william.lee@realtek.com>
+Date: Thu, 15 Mar 2018 14:45:41 +0800
+Subject: [PATCH] [DEVFIX] For OpenWRT Compile
+
+Fix compile issue for Openwrt
+---
+ CMakeLists.txt  |  4 ++--
+ src/pikaqiu.cpp | 45 ++++++++++++++++++++++++++++++++++-----------
+ 2 files changed, 36 insertions(+), 13 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index acbcf4a..da8cfac 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8)
+ project(main)
+ 
+ set(QMAKE_CXXFLAGS "-std=c++11")
+-include_directories(/home/liqi/SoftInstallPart/openblas/include)
+-link_directories(/home/liqi/SoftInstallPart/openblas/lib)
++include_directories(/usr/include)
++link_directories(/usr/lib)
+ 
+ find_package( OpenCV REQUIRED)
+ 
+diff --git a/src/pikaqiu.cpp b/src/pikaqiu.cpp
+index 34e9ff6..a02084a 100644
+--- a/src/pikaqiu.cpp
++++ b/src/pikaqiu.cpp
+@@ -1,18 +1,41 @@
+ #include "network.h"
+ #include "mtcnn.h"
+ #include <time.h>
++#include <sys/time.h>
+ 
+-int main()
++unsigned long get_cur_time(void)
+ {
+-    Mat image = imread("4.jpg");
++	struct timeval tv;
++	unsigned long ts;
++
++	gettimeofday(&tv,NULL);
++
++	ts=tv.tv_sec*1000000+tv.tv_usec;
++
++	return ts;
++}
++int main(int argc, char* argv[])
++{
++    Mat image;
++    if (argc>1)
++        image = imread(argv[1]);
++    else
++        image = imread("4.jpg");
++
++
++    unsigned long start;
++
++    start = get_cur_time();
+     mtcnn find(image.rows, image.cols);
+-    clock_t start;
+-    start = clock();
++    std::cout<<"Examing "<<argv[1]<<" "<<image.cols<<image.rows<<"x"<<std::endl;
+     find.findFace(image);
+-    imshow("result", image);
+-    imwrite("result.jpg",image);
+-    start = clock() -start;
+-    cout<<"time is  "<<start/10e3<<endl;
++//    imshow("result", image);
++    start = get_cur_time() -start;
++    if (argc>2)
++        imwrite(argv[2],image);
++    else
++        imwrite("result.jpg",image);
++    cout<<"time is "<<start<<"usec "<<endl;
+     // Mat image;
+     // VideoCapture cap(0);
+     // if(!cap.isOpened())  
+@@ -36,7 +59,7 @@ int main()
+     //     cout<<"time is  "<<start/10e3<<endl;
+     // }
+ 
+-    waitKey(0);
+-    image.release();
++ //   waitKey(0);
++//    image.release();
+     return 0;
+-}
+\ No newline at end of file
++}
+-- 
+2.7.4
+

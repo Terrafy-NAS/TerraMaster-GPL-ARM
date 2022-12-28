@@ -1,0 +1,5 @@
+# UBIFS parameters
+# This is 8GB MLC NAND FLASH, should be filled in by your NAND property.
+NAND_PAGE_SIZE=2048
+NAND_BLOCK_SIZE=131072
+#NAND_LEB_SIZE := $(shell expr $(NAND_BLOCK_SIZE) - $(NAND_PAGE_SIZE) \* 2 ) # unit is byte. LEB size = block size - (8192byte x 2)

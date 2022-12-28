@@ -1,0 +1,19 @@
+Source-Makefile: feeds/packages/multimedia/gst-rtsp-server/Makefile
+Package: gst-rtsp-server
+Version: 1.6.4-1
+Depends: +libc +SSP_SUPPORT:libssp +USE_GLIBC:librt +USE_GLIBC:libpthread +libgstreamer1-rtk +gst1-plugins-base-rtk +libgst1app +libgst1net +libgst1rtp +libgst1rtsp +libgst1sdp
+Conflicts: 
+Menu-Depends: 
+Provides: 
+Build-Depends: +libgstreamer1-rtk +gst1-plugins-base-rtk
+Section: multimedia
+Category: Multimedia
+Title: GStreamer RTSP Server Library
+Maintainer: 
+Source: gst-rtsp-server-1.6.4.tar.xz
+Type: ipkg
+Description:  gst-rtsp-server is a library on top of GStreamer for building an RTSP server
+
+@@
+
+

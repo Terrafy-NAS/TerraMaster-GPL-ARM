@@ -1,0 +1,4 @@
+###
+###	  part = (name mount_point filesystem file size)
+part = rootfs / ext4 omv/root.bin 524288000  /dev/sda2
+part = etc boot ext4 omv/boot.bin 52428800  /dev/sda1

@@ -1,0 +1,30 @@
+diff --git a/block.c b/block.c
+index 42b012c..9f333dd 100644
+--- a/block.c
++++ b/block.c
+@@ -557,7 +557,24 @@ static int print_block_uci(struct blkid_struct_probe *pr)
+ 	else
+ 		printf("\toption\tdevice\t'%s'\n", pr->dev);
+ 	printf("\toption\tfstype\t'%s'\n", (!strcmp(pr->id->name, "ntfs") ? "ntfs-3g" : pr->id->name));
+-	printf("\toption\tenabled\t'0'\n\n");
++	if (strncmp(basename(pr->dev), "sd", 2) == 0 || strncmp(basename(pr->dev), "sata", 4) == 0) {
++		if (strncmp(pr->id->name, "ext", 3) == 0 || strcmp(pr->id->name, "btrfs") == 0) {
++			printf("\toption\toptions\t'noatime'\n");
++			printf("\toption\tenabled\t'1'\n\n");
++		}
++		else if (strncmp(pr->id->name, "hfs", 3) == 0 || strcmp(pr->id->name, "ntfs") == 0 || strcmp(pr->id->name, "exfat") == 0) {
++			printf("\toption\toptions\t'force,nls=utf8,uid=1023,gid=1023,umask=0007,noatime,user_xattr=1'\n");
++			printf("\toption\tenabled\t'1'\n\n");
++		}
++		else if (strcmp(pr->id->name, "vfat") == 0) {
++			printf("\toption\toptions\t'utf8,uid=1023,gid=1023,dmask=0007,fmask=0007,shortname=mixed'\n");
++			printf("\toption\tenabled\t'1'\n\n");
++		}
++		else
++			printf("\toption\tenabled\t'0'\n\n");
++	}
++	else
++		printf("\toption\tenabled\t'0'\n\n");
+ 
+ 	return 0;
+ }
